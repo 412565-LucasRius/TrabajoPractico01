@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine - Iniciar Sesión</title>
+    <link rel="stylesheet" href="../Styles/LogStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="landing-container">
+    <h1>¡Bienvenido de Nuevo!</h1>
+    <p>Inicia sesión para continuar disfrutando de las mejores películas.</p>
+    
+    <div class="form-container">
+        <form action="login_action.html" method="POST" class="login-form">
+            <div class="input-group">
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
+            <button type="submit" class="button">Iniciar Sesión</button>
+            <div class="login-prompt">
+                <p><a href="register.html" class="login-link">¿No tienes cuenta? Regístrate</a></p>
+            </div>
+        </form>
+        <button onclick="window.location.href='index.html'" class="button volver">Volver</button>
+    </div>
+</div>
+
+</body>
+</html>

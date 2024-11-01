@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cine - Registro</title>
+    <link rel="stylesheet" href="../Styles/logStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="landing-container">
+    <h1>¡Bienvenido a Nuestro Cine!</h1>
+    <p>Descubre las últimas películas y disfruta de una experiencia cinematográfica inolvidable.</p>
+    
+    <div class="form-container">
+        <form action="registro_action.html" method="POST" class="registration-form">
+            <div class="input-group">
+                <input type="text" name="username" placeholder="Nombre de usuario" required>
+                <input type="email" name="email" placeholder="Correo electrónico" required>
+                <input type="password" name="password" placeholder="Contraseña" required>
+            </div>
+            <button type="submit" class="button">Registrarse</button>
+            <div class="login-prompt">
+                <p><a href="login.html" class="login-link">¿Ya tienes una cuenta? Iniciar Sesión</a></p>
+            </div>
+        </form>
+        <button onclick="window.location.href='index.html'" class="button volver">Volver</button>
+    </div>
+</div>
+
+</body>
+</html>

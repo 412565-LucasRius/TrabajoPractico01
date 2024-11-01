@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CINES - Cartelera</title>
+    <link rel="stylesheet" href="../Styles/IndexStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">CINES-MAX</div>
+            <div class="date-selector">
+                <label for="dateSelect">Seleccionar Fecha:</label>
+                <select id="dateSelect" class="date-select">
+                    <option value="" disabled selected>Seleccionar Fecha</option>
+                    <option value="2024-11-01">1 Nov 2024</option>
+                    <option value="2024-11-02">2 Nov 2024</option>
+                    <option value="2024-11-03">3 Nov 2024</option>
+                    <option value="2024-11-04">4 Nov 2024</option>
+                    <option value="2024-11-05">5 Nov 2024</option>
+                </select>
+            </div>
+            <div class="location-selector">
+                <select id="locationSelect" class="location-select">
+                    <option value="" disabled selected>Seleccionar Ubicación</option>
+                    <option value="colon">Avenida Colón 1234</option>
+                    <option value="sanjuan">Bv. San Juan 4567</option>
+                    <option value="belgrano">Calle Belgrano 789</option>
+                    <option value="velez">Calle Velez Sarsfield 321</option>
+                    <option value="maipu">Avenida Maipú 654</option>
+                    <option value="nunez">Avenida Rafael Núñez 987</option>
+                    <option value="abril">Calle 27 de Abril 543</option>
+                </select>
+            </div>
+            <div class="menu">
+                <a href="register.html" class="user-icon">
+                    <i class="fas fa-user"></i>
+                </a>
+                <a href="logros.html" class="achievements-icon">
+                    <i class="fas fa-medal"></i> Tus Logros
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main">
+        <!-- Próximos Estrenos -->
+        <section class="movie-section">
+            <h2 class="section-title">Próximos Estrenos</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película 1', 'Descripción de la película 1')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película 1">
+                        <div class="movie-info">
+                            <span class="release-date">Estreno: 15 Dic</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película 1</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Comedia -->
+        <section class="movie-section">
+            <h2 class="section-title">Comedia</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Comedia', 'Descripción de la película comedia')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Comedia">
+                        <div class="movie-info">
+                            <span class="rating">ATP</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Comedia</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Drama -->
+        <section class="movie-section">
+            <h2 class="section-title">Drama</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Drama', 'Descripción de la película drama')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Drama">
+                        <div class="movie-info">
+                            <span class="rating">+13</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Drama</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Acción -->
+        <section class="movie-section">
+            <h2 class="section-title">Acción</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Acción', 'Descripción de la película acción')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Acción">
+                        <div class="movie-info">
+                            <span class="rating">+16</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Acción</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Ciencia Ficción -->
+        <section class="movie-section">
+            <h2 class="section-title">Ciencia Ficción</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Ciencia Ficción', 'Descripción de la película ciencia ficción')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Ciencia Ficción">
+                        <div class="movie-info">
+                            <span class="rating">+12</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Ciencia Ficción</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Horror -->
+        <section class="movie-section">
+            <h2 class="section-title">Horror</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Horror', 'Descripción de la película horror')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Horror">
+                        <div class="movie-info">
+                            <span class="rating">+18</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Horror</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Romance -->
+        <section class="movie-section">
+            <h2 class="section-title">Romance</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Romance', 'Descripción de la película romance')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Romance">
+                        <div class="movie-info">
+                            <span class="rating">+13</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Romance</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Fantasía -->
+        <section class="movie-section">
+            <h2 class="section-title">Fantasía</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Fantasía', 'Descripción de la película fantasía')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Fantasía">
+                        <div class="movie-info">
+                            <span class="rating">ATP</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Fantasía</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Thriller -->
+        <section class="movie-section">
+            <h2 class="section-title">Thriller</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Thriller', 'Descripción de la película thriller')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Thriller">
+                        <div class="movie-info">
+                            <span class="rating">+16</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Thriller</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Animación -->
+        <section class="movie-section">
+            <h2 class="section-title">Animación</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Animación', 'Descripción de la película animación')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Animación">
+                        <div class="movie-info">
+                            <span class="rating">ATP</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Animación</h3>
+                </a>
+            </div>
+        </section>
+
+        <!-- Documental -->
+        <section class="movie-section">
+            <h2 class="section-title">Documental</h2>
+            <div class="movie-grid">
+                <a href="#" class="movie-card" onclick="openModal('Detalles de la Película Documental', 'Descripción de la película documental')">
+                    <div class="movie-poster">
+                        <img src="https://via.placeholder.com/300x450" alt="Película Documental">
+                        <div class="movie-info">
+                            <span class="rating">ATP</span>
+                        </div>
+                    </div>
+                    <h3>Título de la Película Documental</h3>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>NOSOTROS</h3>
+                <a href="nosotros.html">¿Quiénes somos?</a>
+            </div>
+            <div class="footer-column">
+                <h3>Redes Sociales</h3>
+                <a href="https://www.instagram.com" target="_blank">IG</a>
+                <a href="https://www.facebook.com" target="_blank">FB</a>
+                <a href="https://www.twitter.com" target="_blank">TW</a>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle">Título de la Película</h2>
+            <p id="modalDescription">Descripción de la película.</p>
+        </div>
+    </div>
+</body>
+</html>
