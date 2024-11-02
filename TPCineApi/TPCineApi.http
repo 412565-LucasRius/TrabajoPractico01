@@ -1,6 +1,0 @@
-@TPCineApi_HostAddress = http://localhost:5085
-
-GET {{TPCineApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###

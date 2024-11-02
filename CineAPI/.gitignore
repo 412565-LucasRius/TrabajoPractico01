@@ -1,0 +1,50 @@
+.vs/# Visual Studio
+.vscode/
+.vs/
+*.csproj.user
+
+# Archivos de build
+bin/
+obj/
+**/bin/
+**/obj/
+!bin/*.gitkeep
+!obj/*.gitkeep
+
+# Configuración y paquetes
+packages/
+*.nupkg
+*.snupkg
+project.lock.json
+project.fragment.lock.json
+
+# Archivos de usuario
+*.user
+*.userosscache
+*.suo
+
+# Archivos de publicación y cache de dotnet
+publish/
+out/
+artifacts/
+wwwroot/
+libman.json
+*.pdb
+
+# Archivos temporales de depuración
+.DS_Store
+*.log
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# Archivos de Rider y otros IDEs
+.idea/
+*.sln.DotSettings.user
+
+# Archivos de configuración de OS específicos
+Thumbs.db
+desktop.ini
