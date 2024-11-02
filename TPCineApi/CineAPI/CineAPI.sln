@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34723.18
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineAPI", "CineAPI\CineAPI.csproj", "{43494393-C08E-4A57-8382-EB08BC4FF914}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineRepository", "CineRepository\CineRepository.csproj", "{D954C2C9-E78F-427C-88D6-88BC1FAE92D3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43494393-C08E-4A57-8382-EB08BC4FF914}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43494393-C08E-4A57-8382-EB08BC4FF914}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43494393-C08E-4A57-8382-EB08BC4FF914}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43494393-C08E-4A57-8382-EB08BC4FF914}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D954C2C9-E78F-427C-88D6-88BC1FAE92D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D954C2C9-E78F-427C-88D6-88BC1FAE92D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D954C2C9-E78F-427C-88D6-88BC1FAE92D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D954C2C9-E78F-427C-88D6-88BC1FAE92D3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {24F88756-C436-42DC-9144-2BD0AC8679D9}
+	EndGlobalSection
+EndGlobal
