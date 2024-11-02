@@ -1,0 +1,146 @@
+﻿{
+   "CodeGenerationMode": 3,
+   "ContextClassName": "Cine_1W3_TPContext",
+   "ContextNamespace": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Models\/Entities",
+   "PreserveCasingWithRegex": true,
+   "ProjectRootNamespace": "CineRepository",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 2,
+   "SelectedToBeGenerated": 0,
+   "T4TemplatePath": null,
+   "Tables": [
+      {
+         "Name": "[dbo].[Achievements]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[actors]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[booking_states]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[bookings]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[cinemas]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[clasification]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[contact_type]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[contacts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[customers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[directors]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[genres]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[movie_cast]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[movie_directors]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[movies]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[payment_methods]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[payment_methods_booking]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[producers]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[reviews]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[screens]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[screens_types]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[showtimes]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[tickets]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[user_accounts]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User_achievements]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User_Genre_Stats]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User_Movie_History]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": null,
+   "UncountableWords": null,
+   "UseAsyncStoredProcedureCalls": true,
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDateOnlyTimeOnly": false,
+   "UseDbContextSplitting": false,
+   "UseDecimalDataAnnotationForSprocResult": true,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseHierarchyId": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseManyToManyEntity": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UsePrefixNavigationNaming": false,
+   "UseSchemaFolders": false,
+   "UseSchemaNamespaces": false,
+   "UseSpatial": false,
+   "UseT4": false
+}
