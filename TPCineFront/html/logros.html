@@ -3,294 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Logros Cinematográficos</title>
+    <title>Logros de Cine</title>
     <link rel="stylesheet" href="../Styles/logrosStyle.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 </head>
 <body>
-    <button class="back-button" onclick="location.href='index.html'">Volver a Inicio</button>
-    
     <div class="container">
-        <h1>Logros Cinematográficos</h1>
+        <button class="back-button" onclick="location.href='index.html'">
+            <i class="fas fa-arrow-left"></i> Volver
+        </button>
         
-        <!-- Movie Counter -->
+
+        <div class="points-counter">
+            <h2>Puntos Totales</h2>
+            <div class="points">0</div>
+        </div>
+
+        <h1>Logros de Cine</h1>
+
         <div class="movie-counter">
             <h2>Películas Vistas</h2>
             <div class="count">0</div>
         </div>
-        
+
         <div class="categories-container">
-            <!-- Comedia -->
             <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">🎭</div>
-                    <h2>Comedia</h2>
-                </div>
                 <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Iniciado en la Risa</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Cinéfilo Novato</h3>
+                            <p>Viste 5 películas</p>
+                        </div>
+                        <div class="achievement-points">10</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🎪</div>
-                        <h3>Artista de la Comedia</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">👑</div>
-                        <h3>Leyenda del Humor</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Drama -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">🎬</div>
-                    <h2>Drama</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Primer Acto</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Cinéfilo Experimentado</h3>
+                            <p>Viste 20 películas</p>
+                        </div>
+                        <div class="achievement-points">20</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🎭</div>
-                        <h3>Actor Principal</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🏆</div>
-                        <h3>Director Dramático</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Acción -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">💥</div>
-                    <h2>Acción</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Iniciado en la Acción</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Cinéfilo Experto</h3>
+                            <p>Viste 50 películas</p>
+                        </div>
+                        <div class="achievement-points">30</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🦸‍♂️</div>
-                        <h3>Héroe de Acción</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">⚡</div>
-                        <h3>Leyenda Imparable</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Ciencia Ficción -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">🚀</div>
-                    <h2>Ciencia Ficción</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Viajero Espacial</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Crítico de Cine</h3>
+                            <p>Dejaste 10 reseñas</p>
+                        </div>
+                        <div class="achievement-points">15</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🛸</div>
-                        <h3>Explorador Galáctico</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🌌</div>
-                        <h3>Maestro del Universo</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Horror -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">👻</div>
-                    <h2>Horror</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Superviviente</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Fanático de un Actor</h3>
+                            <p>Viste 5 películas con el mismo actor</p>
+                        </div>
+                        <div class="achievement-points">10</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🦇</div>
-                        <h3>Cazador Nocturno</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">💀</div>
-                        <h3>Amo del Terror</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Romance -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">💝</div>
-                    <h2>Romance</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Cupido Novato</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-film"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Descubridor de Géneros</h3>
+                            <p>Viste películas de 5 géneros diferentes</p>
+                        </div>
+                        <div class="achievement-points">20</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">💑</div>
-                        <h3>Poeta del Amor</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">💘</div>
-                        <h3>Romeo Eterno</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Fantasía -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">✨</div>
-                    <h2>Fantasía</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Aprendiz Mágico</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-ticket-alt"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Asistente al Estreno</h3>
+                            <p>Asististe a un estreno de película</p>
+                        </div>
+                        <div class="achievement-points">25</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🐉</div>
-                        <h3>Domador de Dragones</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🧙‍♂️</div>
-                        <h3>Archimago Supremo</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Thriller -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">🔍</div>
-                    <h2>Thriller</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Detective Novel</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Cazador de Promociones</h3>
+                            <p>Usaste una promoción en 3 películas</p>
+                        </div>
+                        <div class="achievement-points">15</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🕵️‍♂️</div>
-                        <h3>Inspector Jefe</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🎯</div>
-                        <h3>Maestro del Misterio</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Animación -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">🎨</div>
-                    <h2>Animación</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Artista Novel</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Maratón de Películas</h3>
+                            <p>Viste 3 películas en un solo día</p>
+                        </div>
+                        <div class="achievement-points">20</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">✏️</div>
-                        <h3>Creador de Sueños</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🎬</div>
-                        <h3>Leyenda Animada</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Documental -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">📚</div>
-                    <h2>Documental</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Observador</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Boleto VIP</h3>
+                            <p>Compraste 5 boletos VIP</p>
+                        </div>
+                        <div class="achievement-points">30</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🔬</div>
-                        <h3>Investigador</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🎓</div>
-                        <h3>Erudito</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- 3D -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">👓</div>
-                    <h2>3D</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Espectador 3D</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-moon"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Noche de Cine</h3>
+                            <p>Asististe a 10 noches de cine</p>
+                        </div>
+                        <div class="achievement-points">20</div>
                     </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🎥</div>
-                        <h3>Maestro de la Profundidad</h3>
-                    </div>
-                    <div class="achievement">
-                        <div class="achievement-icon">🏆</div>
-                        <h3>Visionario 3D</h3>
-                    </div>
-                </div>
-            </div>
 
-            <!-- 4D -->
-            <div class="category-card">
-                <div class="category-header">
-                    <div class="category-icon">🎢</div>
-                    <h2>4D</h2>
-                </div>
-                <div class="achievements-list">
                     <div class="achievement">
-                        <div class="achievement-icon">🌟</div>
-                        <h3>Aventurero 4D</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-images"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Coleccionista de Carteles</h3>
+                            <p>Coleccionaste 10 carteles de películas</p>
+                        </div>
+                        <div class="achievement-points">15</div>
                     </div>
+
                     <div class="achievement">
-                        <div class="achievement-icon">💺</div>
-                        <h3>Experto Sensorial</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Socializador de Cine</h3>
+                            <p>Compartiste 5 recomendaciones de películas</p>
+                        </div>
+                        <div class="achievement-points">10</div>
                     </div>
+
                     <div class="achievement">
-                        <div class="achievement-icon">🌈</div>
-                        <h3>Leyenda Inmersiva</h3>
+                        <div class="achievement-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Explorador de Documentales</h3>
+                            <p>Viste 10 documentales</p>
+                        </div>
+                        <div class="achievement-points">25</div>
+                    </div>
+
+                    <div class="achievement">
+                        <div class="achievement-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="achievement-content">
+                            <h3>Crítico Social</h3>
+                            <p>Dejaste reseñas en 5 redes sociales diferentes</p>
+                        </div>
+                        <div class="achievement-points">20</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        // Simple counter initialization - you might want to load this from localStorage or a backend
-        let movieCount = localStorage.getItem('movieCount') || 0;
-        document.querySelector('.count').textContent = movieCount;
-    </script>
 </body>
 </html>

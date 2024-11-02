@@ -1,0 +1,24 @@
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Configuración de IDEs y editores
+.vscode/
+.vs/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Configuración de OS específicos
+desktop.ini
+
+# Archivos de compilación o producción
+dist/
+build/
+
+# Variables de entorno y archivos sensibles
+.env
+.env.*
