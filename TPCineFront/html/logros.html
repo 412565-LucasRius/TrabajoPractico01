@@ -1,11 +1,294 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>lucas a</title>
+    <title>Logros Cinematográficos</title>
+    <link rel="stylesheet" href="../Styles/logrosStyle.css">
 </head>
 <body>
+    <button class="back-button" onclick="location.href='index.html'">Volver a Inicio</button>
     
+    <div class="container">
+        <h1>Logros Cinematográficos</h1>
+        
+        <!-- Movie Counter -->
+        <div class="movie-counter">
+            <h2>Películas Vistas</h2>
+            <div class="count">0</div>
+        </div>
+        
+        <div class="categories-container">
+            <!-- Comedia -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🎭</div>
+                    <h2>Comedia</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Iniciado en la Risa</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🎪</div>
+                        <h3>Artista de la Comedia</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">👑</div>
+                        <h3>Leyenda del Humor</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Drama -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🎬</div>
+                    <h2>Drama</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Primer Acto</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🎭</div>
+                        <h3>Actor Principal</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🏆</div>
+                        <h3>Director Dramático</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Acción -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">💥</div>
+                    <h2>Acción</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Iniciado en la Acción</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🦸‍♂️</div>
+                        <h3>Héroe de Acción</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">⚡</div>
+                        <h3>Leyenda Imparable</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Ciencia Ficción -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🚀</div>
+                    <h2>Ciencia Ficción</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Viajero Espacial</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🛸</div>
+                        <h3>Explorador Galáctico</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🌌</div>
+                        <h3>Maestro del Universo</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Horror -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">👻</div>
+                    <h2>Horror</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Superviviente</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🦇</div>
+                        <h3>Cazador Nocturno</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">💀</div>
+                        <h3>Amo del Terror</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Romance -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">💝</div>
+                    <h2>Romance</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Cupido Novato</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">💑</div>
+                        <h3>Poeta del Amor</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">💘</div>
+                        <h3>Romeo Eterno</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Fantasía -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">✨</div>
+                    <h2>Fantasía</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Aprendiz Mágico</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🐉</div>
+                        <h3>Domador de Dragones</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🧙‍♂️</div>
+                        <h3>Archimago Supremo</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thriller -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🔍</div>
+                    <h2>Thriller</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Detective Novel</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🕵️‍♂️</div>
+                        <h3>Inspector Jefe</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🎯</div>
+                        <h3>Maestro del Misterio</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Animación -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🎨</div>
+                    <h2>Animación</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Artista Novel</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">✏️</div>
+                        <h3>Creador de Sueños</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🎬</div>
+                        <h3>Leyenda Animada</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Documental -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">📚</div>
+                    <h2>Documental</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Observador</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🔬</div>
+                        <h3>Investigador</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🎓</div>
+                        <h3>Erudito</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3D -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">👓</div>
+                    <h2>3D</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Espectador 3D</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🎥</div>
+                        <h3>Maestro de la Profundidad</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🏆</div>
+                        <h3>Visionario 3D</h3>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4D -->
+            <div class="category-card">
+                <div class="category-header">
+                    <div class="category-icon">🎢</div>
+                    <h2>4D</h2>
+                </div>
+                <div class="achievements-list">
+                    <div class="achievement">
+                        <div class="achievement-icon">🌟</div>
+                        <h3>Aventurero 4D</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">💺</div>
+                        <h3>Experto Sensorial</h3>
+                    </div>
+                    <div class="achievement">
+                        <div class="achievement-icon">🌈</div>
+                        <h3>Leyenda Inmersiva</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Simple counter initialization - you might want to load this from localStorage or a backend
+        let movieCount = localStorage.getItem('movieCount') || 0;
+        document.querySelector('.count').textContent = movieCount;
+    </script>
 </body>
 </html>

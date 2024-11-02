@@ -46,8 +46,8 @@ body {
   margin: 0 1rem;
 }
 
- /* Estilos para el modal */
- .modal {
+/* Estilos mejorados para el modal */
+.modal {
   display: none;
   position: fixed;
   z-index: 1000;
@@ -56,26 +56,62 @@ body {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
 }
+
 .modal-content {
-  background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
+  background-color: #2c2c2c;
+  color: #ffffff;
+  margin: 10% auto;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transform: translateY(20px);
+  opacity: 0;
+  transition: all 0.3s ease-out;
 }
+
+.modal.show .modal-content {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 .close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  color: #ffffff;
+  font-size: 1.8rem;
   font-weight: bold;
-}
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
   cursor: pointer;
+  transition: color 0.3s;
+}
+
+.close:hover {
+  color: #ff4444;
+}
+
+#modalTitle {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  color: whitesmoke;
+}
+
+#modalDetails {
+  line-height: 1.6;
+}
+
+#modalDetails p {
+  margin-bottom: 1rem;
+}
+
+#modalDetails strong {
+  color: whitesmoke;
+  margin-right: 0.5rem;
 }
 
 .location-select {
@@ -95,36 +131,30 @@ body {
   background-size: 20px;
 }
 
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .menu a {
   display: inline-flex;
   align-items: center;
-  margin-left: 30px; /* Aumentar espaciado entre botones */
-  padding: 8px 12px; /* Espaciado interno */
-  border-radius: 5px; /* Bordes redondeados */
-  text-decoration: none; /* Sin subrayado */
-  color: white; /* Color del texto */
-  transition: background-color 0.3s; /* Transición suave */
+  padding: 8px 12px;
+  border-radius: 5px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .menu a:hover {
-  background-color: #e0e0e0; /* Color al pasar el mouse */
+  background-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
-
-.location-select:focus {
-  outline: none;
-  border-color: whitesmoke;
-}
-
-.location-select option {
-  background-color: #3c3c3c;
-  color: #ffffff;
-}
-
-.user-icon {
-  color: #ffffff;
-  font-size: 1.2rem;
-  flex: 0 0 auto;
+.menu i {
+  margin-right: 0.5rem;
 }
 
 /* Main content */
@@ -139,14 +169,26 @@ body {
 /* Secciones de películas */
 .movie-section {
   margin-bottom: 3rem;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+      opacity: 1;
+      transform: translateY(0);
+  }
 }
 
 .section-title {
   font-size: 1.5rem;
-  margin-bottom: 1rem;
-  color: #ffffff;
-  padding-left: 0.5rem;
+  margin-bottom: 1.5rem;
+  color: whitesmoke;
+  padding-left: 1rem;
   border-left: 4px solid whitesmoke;
+  display: flex;
+  align-items: center;
 }
 
 .movie-grid {
@@ -159,9 +201,10 @@ body {
 .movie-card {
   text-decoration: none;
   color: #ffffff;
-  transition: transform 0.3s;
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
 }
 
 .movie-card:hover {
@@ -174,17 +217,18 @@ body {
   overflow: hidden;
   aspect-ratio: 2/3;
   background-color: #2c2c2c;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
 }
 
 .movie-poster img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s;
+  transition: transform 0.5s ease;
 }
 
 .movie-card:hover .movie-poster img {
-  transform: scale(1.05);
+  transform: scale(1.08);
 }
 
 .movie-info {
@@ -192,8 +236,14 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 0.5rem;
-  background: linear-gradient(transparent, rgba(0,0,0,0.8));
+  padding: 1rem 0.5rem 0.5rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.9));
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-info {
+  transform: translateY(0);
 }
 
 .rating, .release-date {
@@ -202,18 +252,24 @@ body {
   border-radius: 3px;
   font-size: 0.8rem;
   background-color: rgba(229, 9, 20, 0.8);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .movie-card h3 {
-  margin-top: 0.5rem;
+  margin-top: 0.8rem;
   font-size: 1rem;
   text-align: center;
+  transition: color 0.3s;
+}
+
+.movie-card:hover h3 {
+  color: whitesmoke;
 }
 
 /* Footer */
 .footer {
   background-color: rgba(44, 44, 44, 0.95);
-  padding: 1.5rem 1rem;
+  padding: 2rem 1rem;
   margin-top: auto;
   box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
 }
@@ -228,8 +284,20 @@ body {
 
 .footer-column h3 {
   color: whitesmoke;
-  margin-bottom: 0.75rem;
+  margin-bottom: 1rem;
   font-size: 1.1rem;
+  position: relative;
+  padding-bottom: 0.5rem;
+}
+
+.footer-column h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 40px;
+  height: 2px;
+  background-color: whitesmoke;
 }
 
 .footer-column a {
@@ -237,12 +305,14 @@ body {
   color: #ffffff;
   text-decoration: none;
   margin-bottom: 0.5rem;
-  transition: color 0.3s;
-  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  opacity: 0.8;
 }
 
 .footer-column a:hover {
   color: whitesmoke;
+  opacity: 1;
+  transform: translateX(5px);
 }
 
 /* Responsive adjustments */
@@ -263,8 +333,14 @@ body {
       gap: 1rem;
   }
 
-  .section-title {
-      font-size: 1.3rem;
+  .modal-content {
+      margin: 20% auto;
+      padding: 1.5rem;
+      width: 95%;
+  }
+
+  #modalTitle {
+      font-size: 1.5rem;
   }
 }
 
@@ -289,5 +365,14 @@ body {
   .footer-content {
       grid-template-columns: 1fr;
       gap: 1.5rem;
+  }
+
+  .modal-content {
+      margin: 30% auto;
+      padding: 1rem;
+  }
+
+  #modalTitle {
+      font-size: 1.3rem;
   }
 }
