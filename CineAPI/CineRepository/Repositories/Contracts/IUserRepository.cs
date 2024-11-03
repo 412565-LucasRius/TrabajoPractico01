@@ -7,6 +7,6 @@ namespace CineRepository.Repositories.Contracts
     Task RegisterAsync(UserAccount newUser);
     Task<UserAccount> GetUserByNameAsync(string username);
     Task<IEnumerable<UserAccount>> GetAllUsersAsync();
-
+    Task<string> GetUserEmailAsync(int userAccountId);
     }
   }
