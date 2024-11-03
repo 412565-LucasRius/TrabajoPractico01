@@ -18,9 +18,6 @@ async function login() {
 
     const data = await response.json();
 
-    console.log('User login successful:', data);
-
-
     const token = data.token;
 
     localStorage.setItem('JWT-Token', token)
