@@ -23,35 +23,56 @@ namespace CineAPI.Controllers
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterRequestDTO registerRequest)
       {
-      if (registerRequest == null)
+
+      try
         {
-        return BadRequest("User cannot be null");
+        if (registerRequest == null)
+          {
+          return BadRequest("User cannot be null");
+          }
+
+        await _userService.RegisterAsync(registerRequest);
+
+        return Ok("User registered successfully");
+        }
+      catch (Exception ex)
+        {
+        Console.WriteLine(ex.Message);
+        throw;
         }
 
-      await _userService.RegisterAsync(registerRequest);
 
-      return Ok("User registered successfully");
       }
 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequest)
       {
-      if (await IsValidUser(loginRequest))
+
+      try
         {
-
-        var user = await _userService.GetUserByNameAsync(loginRequest.Username);
-        var token = await GenerateJwtToken(user);
-
-        var response = new LoginResponseDTO
+        if (await IsValidUser(loginRequest))
           {
-          Username = loginRequest.Username,
-          Token = token
-          };
 
-        return Ok(response);
+          var user = await _userService.GetUserByNameAsync(loginRequest.Username);
+          var token = await GenerateJwtToken(user);
+
+          var response = new LoginResponseDTO
+            {
+            Username = loginRequest.Username,
+            Token = token
+            };
+
+          return Ok(response);
+          }
+
+        return Unauthorized("Invalid username or password");
+
         }
-
-      return Unauthorized("Invalid username or password");
+      catch (Exception ex)
+        {
+        Console.WriteLine(ex.Message);
+        throw;
+        }
       }
 
 
@@ -81,7 +102,7 @@ namespace CineAPI.Controllers
           issuer: "*",
           audience: "*",
           claims: claims,
-          expires: DateTime.Now.AddMinutes(60),
+          expires: DateTime.Now.AddMinutes(5),
           signingCredentials: credentials
         );
 
