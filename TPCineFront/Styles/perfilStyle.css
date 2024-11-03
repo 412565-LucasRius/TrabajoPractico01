@@ -1,4 +1,4 @@
-/* styles.css */
+
 * {
     margin: 0;
     padding: 0;
@@ -75,7 +75,7 @@ body {
 
 .player-title h3 {
     margin-top: 5px;
-    color: #fff;
+    color: #4a90e2;
     font-size: 18px;
 }
 
@@ -107,6 +107,66 @@ body {
     border-bottom: 2px solid #4a90e2;
 }
 
+.achievements-section {
+    margin-bottom: 30px;
+}
+
+.achievements-dropdown {
+    width: 100%;
+    padding: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(74, 144, 226, 0.3);
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    margin-bottom: 15px;
+}
+
+.achievement-details {
+    display: none;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+}
+
+.achievement-details.active {
+    display: block;
+}
+
+.achievement-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+}
+
+.achievement-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(74, 144, 226, 0.2);
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.achievement-text {
+    flex: 1;
+}
+
+.achievement-points {
+    background: rgba(74, 144, 226, 0.2);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    min-width: 50px;
+    text-align: center;
+}
+
 .reservations-list {
     display: grid;
     gap: 20px;
@@ -127,36 +187,10 @@ body {
     background: rgba(255, 255, 255, 0.08);
 }
 
-.reservation-info {
-    display: grid;
-    gap: 5px;
-}
-
-.reservation-date {
-    font-size: 18px;
-    font-weight: bold;
-    color: #4a90e2;
-}
-
-.reservation-time, .reservation-court {
-    font-size: 14px;
-    color: #ffffff;
-}
-
-.cancel-button {
-    padding: 8px 16px;
-    background: #e74c3c;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
 .back-button {
-    position: absolute; /* Posicionamiento absoluto */
-    bottom: 20px; /* Espacio desde la parte inferior */
-    left: 20px; /* Espacio desde la izquierda */
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
     padding: 10px 20px;
     background: #2662a7;
     border: none;
@@ -167,12 +201,7 @@ body {
 }
 
 .back-button:hover {
-    background: #357ABD; /* Color al pasar el mouse */
-}
-
-
-.cancel-button:hover {
-    background: #c0392b;
+    background: #357ABD;
 }
 
 @media (max-width: 768px) {
