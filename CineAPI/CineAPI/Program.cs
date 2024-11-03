@@ -7,6 +7,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
+
+builder.Services.AddScoped<IUserAchievementsRepository, UserAchievementsRepository>();
+builder.Services.AddScoped<IUserAchievementsService, UserAchievementsService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
