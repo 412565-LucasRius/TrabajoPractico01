@@ -11,11 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-
 
 
 
@@ -24,11 +21,12 @@ builder.Services.AddDbContext<Cine_1W3_TPContext>(options => options.UseSqlServe
 //builder.Services.AddScoped<IMoviesRepository, MoviesRepository>();
 //builder.Services.AddScoped<IMoviesService, MoviesService>();
 
-//builder.Services.AddScoped<IUserRepository, UserRepository>();
-//builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IUserAchievementsRepository, UserAchievementsRepository>();
 builder.Services.AddScoped<IUserAchievementsService, UserAchievementsService>();
+
 
 var app = builder.Build();
 
