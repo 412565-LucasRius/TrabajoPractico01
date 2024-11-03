@@ -1,11 +1,13 @@
-﻿using CineRepository.Models.Entities;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 
 namespace CineRepository.Services.Interfaces
   {
   public interface IUserService
     {
     Task<UserAccount> AuthenticateAsync(string username, string password);
-    Task RegisterAsync(UserAccount newUser);
+    Task RegisterAsync(RegisterRequestDTO registerRequest);
     Task<IEnumerable<UserAccount>> GetAllUsersAsync();
+    Task<UserAccount> GetUserByNameAsync(string username);
     }
   }

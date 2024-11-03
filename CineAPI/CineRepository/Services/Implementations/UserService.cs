@@ -1,4 +1,5 @@
-﻿using CineRepository.Models.Entities;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 using CineRepository.Repositories.Contracts;
 using CineRepository.Services.Interfaces;
 using System.Text.RegularExpressions;
@@ -34,27 +35,50 @@ namespace CineRepository.Services.Implementations
       return await _userRepository.GetAllUsersAsync();
       }
 
-    public async Task RegisterAsync(UserAccount newUser)
+    public async Task RegisterAsync(RegisterRequestDTO registerRequest)
       {
-
-      if (string.IsNullOrWhiteSpace(newUser.Username) || string.IsNullOrWhiteSpace(newUser.PasswordHash))
+      // Validaciones
+      if (string.IsNullOrWhiteSpace(registerRequest.Username) || string.IsNullOrWhiteSpace(registerRequest.Password))
         {
         throw new ArgumentException("Username and password are required");
         }
 
-      if (newUser.PasswordHash.Length < 6)
+      if (registerRequest.Password.Length < 6)
         {
         throw new ArgumentException("Password must be at least 6 characters long.");
         }
 
-      //if (!IsValidEmail(email))
-      //  {
-      //  throw new ArgumentException("Invalid email format.");
-      //  }
+      if (!IsValidEmail(registerRequest.Email))
+        {
+        throw new ArgumentException("Invalid email format.");
+        }
 
-      newUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.PasswordHash);
+      var newUser = new UserAccount
+        {
+        Username = registerRequest.Username,
+        PasswordHash = BCrypt.Net.BCrypt.HashPassword(registerRequest.Password),
+        CreatedAt = DateTime.UtcNow,
+        LastLogin = DateTime.UtcNow,
+        Customer = new Customer
+          {
+          Name = registerRequest.Name,
+          BornDate = registerRequest.BornDate,
+          Retired = false,
+          Contacts = new List<Contact>
+            {
+                new Contact
+                {
+                    ContactTypeId = 2,
+                    Contact1 = registerRequest.Email
+                }
+            }
+          }
+        };
+
+      // Llamar al repositorio para registrar
       await _userRepository.RegisterAsync(newUser);
       }
+
 
 
     private bool VerifyPasswordHash(string password, string passwordHash)
@@ -62,9 +86,14 @@ namespace CineRepository.Services.Implementations
       return BCrypt.Net.BCrypt.Verify(password, passwordHash);
       }
 
-    private bool IsValidEmail(string email)
+    private static bool IsValidEmail(string email)
       {
       return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
+      }
+
+    public Task<UserAccount> GetUserByNameAsync(string username)
+      {
+      return _userRepository.GetUserByNameAsync(username);
       }
     }
   }
