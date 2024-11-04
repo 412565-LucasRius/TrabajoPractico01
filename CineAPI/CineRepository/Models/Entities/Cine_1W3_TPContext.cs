@@ -505,8 +505,7 @@ public partial class Cine_1W3_TPContext : DbContext
                 .HasColumnType("date")
                 .HasColumnName("last_login");
             entity.Property(e => e.PasswordHash)
-                .IsRequired()
-                .HasMaxLength(50)
+                .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("password_hash");
             entity.Property(e => e.Username)
@@ -552,7 +551,7 @@ public partial class Cine_1W3_TPContext : DbContext
             entity.Property(e => e.UserAccountId).HasColumnName("user_account_id");
             entity.Property(e => e.GenreId).HasColumnName("genre_id");
             entity.Property(e => e.ViewCount)
-                .HasDefaultValueSql("((0))")
+                .HasDefaultValue(0)
                 .HasColumnName("view_count");
 
             entity.HasOne(d => d.Genre).WithMany(p => p.UserGenreStats)

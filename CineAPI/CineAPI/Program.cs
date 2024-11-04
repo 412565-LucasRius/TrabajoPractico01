@@ -38,6 +38,9 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAchievementsRepository, UserAchievementsRepository>();
 builder.Services.AddScoped<IUserAchievementsService, UserAchievementService>();
 
+builder.Services.AddScoped<IMoviesRepository, MovieRepository>();
+builder.Services.AddScoped<IMovieService, MovieService>();
+
 
 var app = builder.Build();
 

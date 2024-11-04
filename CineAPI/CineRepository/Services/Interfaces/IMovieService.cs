@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineRepository.Repositories.Contracts
+namespace CineRepository.Services.Interfaces
 {
-    public interface IMoviesRepository
+    public interface IMovieService
     {
-        Task<IEnumerable<Movie>> GetAllPremiereAsync();
-        Task <Movie> GetMovieByIdAsync(int id);
-        Task<IEnumerable<Movie>> GetMovieByGenreAsync(int genre);
-      
 
-        
+        Task<IEnumerable<Movie>> GetAllPremiereAsync();
+        Task<Movie> GetMovieByIdAsync(int id);
+        Task<IEnumerable<Movie>> GetMovieByGenreAsync(int genre);
+
+
     }
 }
