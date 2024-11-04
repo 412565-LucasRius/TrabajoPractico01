@@ -25,7 +25,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
 
 builder.Services.AddScoped<IUserAchievementsRepository, UserAchievementsRepository>();
-builder.Services.AddScoped<IUserAchievementsService, UserAchievementsService>();
+builder.Services.AddScoped<IUserAchievementsService, UserAchievementService>();
 
 
 var app = builder.Build();

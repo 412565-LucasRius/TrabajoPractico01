@@ -9,8 +9,13 @@ namespace CineRepository.Repositories.Contracts
 {
     public interface IUserAchievementsRepository
     {
-        Task<UserAchievement> GetAchievementByUsurnameAsync(string usurname);
-        Task<UserAchievement> PostAchievementAsync(UserAchievement newUserAchievement);
+        Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username);
+        Task<bool> UsernameExistsAsync(string username);
+
+        //create
+        Task<UserAchievement> CreateAchievementAsync(UserAchievement userAchievement);
+        Task<bool> UserExistsAsync(int userAccountId);
+        Task<bool> AchievementExistsAsync(int achievementId);
 
     }
 }

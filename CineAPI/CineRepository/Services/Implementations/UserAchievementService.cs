@@ -1,6 +1,8 @@
 ﻿using CineRepository.Models.Entities;
 using CineRepository.Repositories.Contracts;
+using CineRepository.Repositories.Implementations;
 using CineRepository.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,25 +20,36 @@ namespace CineRepository.Services.Implementations
             _userAchievementsRepository = userAchievementsRepository;
         }
 
-        public async Task<UserAchievement> GetAchievementByUsurnameAsync(string usurname)
+        public async Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username)
         {
-            var newAchievement = await _userAchievementsRepository.GetAchievementByUsurnameAsync(usurname);
-
-            if (newAchievement != null)
-                return newAchievement;
-
-            return null;
+            return await _userAchievementsRepository.GetAchievementByUsurnameAsync(username);
         }
 
-        public async Task<UserAchievement> PostAchievementAsync(UserAchievement newUserAchievement)
+        public async Task<bool> ValidateUsernameAsync(string username)
         {
-            if (newUserAchievement.AchievementId == null || newUserAchievement.AchievementId == 0)
-                return null;
-            if (newUserAchievement.UserAccountId == null || newUserAchievement.UserAccountId == 0)
-                return null;
+            if (string.IsNullOrWhiteSpace(username))
+                return false;
 
-            var result = await _userAchievementsRepository.PostAchievementAsync(newUserAchievement);
-            return result;
+            return await _userAchievementsRepository.UsernameExistsAsync(username);
         }
+
+        //create
+
+        public async Task<UserAchievement> CreateAchievementAsync(UserAchievement userAchievement)
+        {
+            userAchievement.AchievedAt = DateTime.UtcNow;
+            return await _userAchievementsRepository.CreateAchievementAsync(userAchievement);
+        }
+
+        public async Task<bool> UserExistsAsync(int userAccountId)
+        {
+            return await _userAchievementsRepository.UserExistsAsync(userAccountId);
+        }
+
+        public async Task<bool> AchievementExistsAsync(int achievementId)
+        {
+            return await _userAchievementsRepository.AchievementExistsAsync(achievementId);
+        }
+
     }
 }
