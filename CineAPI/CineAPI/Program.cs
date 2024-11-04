@@ -9,6 +9,17 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy("AllowAllOrigins",
+    policy =>
+    {
+      policy.AllowAnyOrigin()
+      .AllowAnyHeader()
+      .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -29,6 +40,8 @@ builder.Services.AddScoped<IUserAchievementsService, UserAchievementService>();
 
 
 var app = builder.Build();
+
+app.UseCors("AllowAllOrigins");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

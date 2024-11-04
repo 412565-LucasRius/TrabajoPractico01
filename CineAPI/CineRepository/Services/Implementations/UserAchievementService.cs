@@ -9,16 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineRepository.Services.Implementations
-{
-    public class UserAchievementService : IUserAchievementsService
-    {
-        private readonly IUserAchievementsRepository _userAchievementsRepository;
 
-        public UserAchievementService(IUserAchievementsRepository userAchievementsRepository)
-        {
-            _userAchievementsRepository = userAchievementsRepository;
-        }
+namespace CineRepository.Services.Implementations
+  {
+  public class UserAchievementService : IUserAchievementsService
+    {
+    private readonly IUserAchievementsRepository _userAchievementsRepository;
+
+    public UserAchievementService(IUserAchievementsRepository userAchievementsRepository)
+      {
+      _userAchievementsRepository = userAchievementsRepository;
+      }
 
         public async Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username)
         {
@@ -50,6 +51,5 @@ namespace CineRepository.Services.Implementations
         {
             return await _userAchievementsRepository.AchievementExistsAsync(achievementId);
         }
-
     }
-}
+  }
