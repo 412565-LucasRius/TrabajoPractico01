@@ -17,7 +17,7 @@ namespace CineAPI.Controllers
 
         [HttpGet("GetAllPremiere")]
 
-        public async Task<IActionResult> GetAllPremiereAsync()
+        public async Task<IActionResult> GetAllPremiere()
         {
             try
             {
@@ -31,7 +31,7 @@ namespace CineAPI.Controllers
         }
 
         [HttpGet("GetMovieById")]
-        public async Task<IActionResult> GetMovieByIdAsync(int id)
+        public async Task<IActionResult> GetMovieById(int id)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace CineAPI.Controllers
         }
 
         [HttpGet("GetMovieByGenre")]
-        public async Task<IActionResult> GetMovieByGenreAsync(int genre)
+        public async Task<IActionResult> GetMovieByGenre(int genre)
         {
             try
             {
@@ -58,6 +58,20 @@ namespace CineAPI.Controllers
             }
         }
 
+        [HttpGet("GetMovieByType")]
+        public async Task<IActionResult> GetMovieByType(int screenTypeId)
+        {
+            try
+            {
+                var movies = await _movieService.GetMoviesByScreenTypeAsync(screenTypeId);
+                return Ok(movies);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
 
+
+        }
     }
 }

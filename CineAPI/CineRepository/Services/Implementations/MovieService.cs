@@ -31,5 +31,10 @@ namespace CineRepository.Services.Implementations
         {
             return await _movieRepository.GetMovieByIdAsync(id);
         }
+
+        public async Task<IEnumerable<Movie>> GetMoviesByScreenTypeAsync(int screenTypeId)
+        {
+            return await _movieRepository.GetMoviesByScreenTypeAsync(screenTypeId);
+        }
     }
 }

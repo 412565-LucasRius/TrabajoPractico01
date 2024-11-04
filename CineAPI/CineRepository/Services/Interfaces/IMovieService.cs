@@ -13,6 +13,7 @@ namespace CineRepository.Services.Interfaces
         Task<IEnumerable<Movie>> GetAllPremiereAsync();
         Task<Movie> GetMovieByIdAsync(int id);
         Task<IEnumerable<Movie>> GetMovieByGenreAsync(int genre);
+        Task<IEnumerable<Movie>> GetMoviesByScreenTypeAsync(int screenTypeId);
 
 
     }
