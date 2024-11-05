@@ -41,6 +41,12 @@ builder.Services.AddScoped<IUserAchievementsService, UserAchievementService>();
 builder.Services.AddScoped<IMoviesRepository, MovieRepository>();
 builder.Services.AddScoped<IMovieService, MovieService>();
 
+builder.Services.AddScoped<ICinemaRepository, CinemaRepository>();
+builder.Services.AddScoped<ICinemaService, CinemaService>();
+
+builder.Services.AddScoped<IShowTimeRepository, ShowTimeRepository>();
+builder.Services.AddScoped<IShowTimeService, ShowTimeService>();
+
 
 var app = builder.Build();
 
