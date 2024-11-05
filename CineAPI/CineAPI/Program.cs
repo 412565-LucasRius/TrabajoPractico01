@@ -47,6 +47,8 @@ builder.Services.AddScoped<ICinemaService, CinemaService>();
 builder.Services.AddScoped<IShowTimeRepository, ShowTimeRepository>();
 builder.Services.AddScoped<IShowTimeService, ShowTimeService>();
 
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 
