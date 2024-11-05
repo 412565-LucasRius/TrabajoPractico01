@@ -16,19 +16,7 @@ namespace CineAPI.Controllers
             _showTimeService = showTimeService;
         }
 
-        [HttpGet("GetAllShowTimes")]
-        public async Task<IActionResult> GetAllShowTimes()
-        {
-            try
-            {
-                var showTimes = await _showTimeService.GetAllShowTimesAsync();
-                return Ok(showTimes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+      
 
         [HttpGet("GetAllShowTimesAvaibles")]
 
@@ -45,35 +33,6 @@ namespace CineAPI.Controllers
             }
         }
 
-        [HttpGet("GetShowTimesByCinemaAndDate")]
-
-        public async Task<IActionResult> GetShowTimesByCinemaAndDate(int cinemaId, DateTime date)
-        {
-            try
-            {
-                var showTimes = await _showTimeService.GetShowTimesByCinemaAndDateAsync(cinemaId, date);
-                return Ok(showTimes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
-        [HttpGet("GetShowTimesByCinemaAndMovie")]
-
-        public async Task<IActionResult> GetShowTimesByCinemaAndMovie(int cinemaId, int movieId)
-        {
-            try
-            {
-                var showTimes = await _showTimeService.GetShowTimesByCinemaAndMovieAsync(cinemaId, movieId);
-                return Ok(showTimes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
 
         [HttpGet("GetShowTimesByCinemaId")]
 
@@ -82,66 +41,6 @@ namespace CineAPI.Controllers
             try
             {
                 var showTimes = await _showTimeService.GetShowTimesByCinemaIdAsync(cinemaId);
-                return Ok(showTimes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
-        [HttpGet("GetShowTimesByCinemaMovieAndDate")]
-
-        public async Task<IActionResult> GetShowTimesByCinemaMovieAndDate(int cinemaId, int movieId, DateTime date)
-        {
-            try
-            {
-                var showTimes = await _showTimeService.GetShowTimesByCinemaMovieAndDateAsync(cinemaId, movieId, date);
-                return Ok(showTimes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
-        [HttpGet("GetShowTimesByDate")]
-
-        public async Task<IActionResult> GetShowTimesByDate(DateTime date)
-        {
-            try
-            {
-                var showTimes = await _showTimeService.GetShowTimesByDateAsync(date);
-                return Ok(showTimes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
-        [HttpGet("GetShowTimesByMovieAndDate")]
-
-        public async Task<IActionResult> GetShowTimesByMovieAndDate(int movieId, DateTime date)
-        {
-            try
-            {
-                var showTimes = await _showTimeService.GetShowTimesByMovieAndDateAsync(movieId, date);
-                return Ok(showTimes);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
-
-        [HttpGet("GetShowTimesByMovieId")]
-
-        public async Task<IActionResult> GetShowTimesByMovieId(int movieId)
-        {
-            try
-            {
-                var showTimes = await _showTimeService.GetShowTimesByMovieIdAsync(movieId);
                 return Ok(showTimes);
             }
             catch (Exception ex)

@@ -22,19 +22,11 @@ namespace CineRepository.Services.Implementations
             return await _movieRepository.GetAllPremiereAsync();
         }
 
-        public async Task<IEnumerable<Movie>> GetMovieByGenreAsync(int genre)
-        {
-            return await _movieRepository.GetMovieByGenreAsync(genre);
-        }
-
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
             return await _movieRepository.GetMovieByIdAsync(id);
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesByScreenTypeAsync(int screenTypeId)
-        {
-            return await _movieRepository.GetMoviesByScreenTypeAsync(screenTypeId);
-        }
+       
     }
 }

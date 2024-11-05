@@ -29,15 +29,7 @@ namespace CineRepository.Repositories.Implementations
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<Movie>> GetMovieByGenreAsync(int genre)
-        {
-            DateTime currentDate = DateTime.Now;
 
-            return await _context.Movies
-                .Where(m => m.GenreId == genre && _context.Showtimes
-                    .Any(s => s.MovieId == m.MovieId && s.EndDate <= currentDate))
-                .ToListAsync();
-        }
 
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
@@ -45,16 +37,6 @@ namespace CineRepository.Repositories.Implementations
                 .FirstOrDefaultAsync(m => m.MovieId == id);
         }
 
-        public async Task<IEnumerable<Movie>> GetMoviesByScreenTypeAsync(int screenTypeId)
-        {
-            DateTime currentDate = DateTime.Now;
-
-            return await _context.Movies
-                .Where(m => _context.Showtimes
-                    .Any(s => s.MovieId == m.MovieId && s.EndDate <= currentDate && _context.Screens
-                        .Any(sc => sc.ScreenId == s.ScreenId && sc.ScreenType == screenTypeId)))
-                .ToListAsync();
-        }
 
     }
 

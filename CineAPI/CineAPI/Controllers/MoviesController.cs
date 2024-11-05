@@ -44,34 +44,8 @@ namespace CineAPI.Controllers
             }
         }
 
-        [HttpGet("GetMovieByGenre")]
-        public async Task<IActionResult> GetMovieByGenre(int genre)
-        {
-            try
-            {
-                var movies = await _movieService.GetMovieByGenreAsync(genre);
-                return Ok(movies);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-        }
+       
 
-        [HttpGet("GetMovieByType")]
-        public async Task<IActionResult> GetMovieByType(int screenTypeId)
-        {
-            try
-            {
-                var movies = await _movieService.GetMoviesByScreenTypeAsync(screenTypeId);
-                return Ok(movies);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
-            }
-
-
-        }
+        
     }
 }
