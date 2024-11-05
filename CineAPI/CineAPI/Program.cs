@@ -38,6 +38,8 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IUserAchievementsRepository, UserAchievementsRepository>();
 builder.Services.AddScoped<IUserAchievementsService, UserAchievementService>();
 
+builder.Services.AddScoped<IBookingRepository, BookingRepository>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 var app = builder.Build();
 

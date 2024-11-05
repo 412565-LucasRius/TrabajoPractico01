@@ -1,9 +1,15 @@
 ﻿using CineRepository.Models.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace CineRepository.Repositories.Contracts
-  {
-  public interface IBookingRepository
+namespace CineRepository.Services.Interfaces
+{
+    public interface IBookingService
     {
+     
     Task<IEnumerable<Booking>> GetBookingsByUser(int userId);
 
     Task<List<Booking>> GetBookingsByUserAccountIdAsync(int userAccountId);
@@ -14,4 +20,4 @@ namespace CineRepository.Repositories.Contracts
 
     Task<bool> UpdateBookingState(int id, int state);
     }
-  }
+}

@@ -2,11 +2,13 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
 public partial class Booking
 {
+    [JsonIgnore]
     public int BookingId { get; set; }
 
     public int? CustomerId { get; set; }
@@ -15,11 +17,12 @@ public partial class Booking
 
     public int? BookingStateId { get; set; }
 
+    [JsonIgnore]
     public virtual BookingState BookingState { get; set; }
-
+    [JsonIgnore]
     public virtual Customer Customer { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<PaymentMethodsBooking> PaymentMethodsBookings { get; set; } = new List<PaymentMethodsBooking>();
-
+    [JsonIgnore]
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }
