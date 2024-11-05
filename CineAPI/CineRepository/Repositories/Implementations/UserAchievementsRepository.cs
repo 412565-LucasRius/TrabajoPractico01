@@ -2,6 +2,7 @@
 using CineRepository.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,18 +20,37 @@ namespace CineRepository.Repositories.Implementations
                 _context = context;
         }
 
-        public async Task<UserAchievement> GetAchievementByUsurnameAsync(string username)
+        public async Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username)
         {
             return await _context.UserAchievements
-            .Include(u => u.UserAccount) 
-            .FirstOrDefaultAsync(u => u.UserAccount.Username == username);
+                .Include(ua => ua.UserAccount)
+                .Where(ua => ua.UserAccount.Username.ToLower() == username.ToLower()).ToListAsync();
         }
 
-        public async Task<UserAchievement> PostAchievementAsync(UserAchievement newUserAchievement)
+        public async Task<bool> UsernameExistsAsync(string username)
         {
-            await _context.UserAchievements.AddAsync(newUserAchievement);
-            await _context.SaveChangesAsync();
-            return newUserAchievement;
+            return await _context.UserAccounts
+                .AnyAsync(u => u.Username.ToLower() == username.ToLower());
         }
+
+        //create
+
+        public async Task<UserAchievement> CreateAchievementAsync(UserAchievement userAchievement)
+        {
+            await _context.UserAchievements.AddAsync(userAchievement);
+            await _context.SaveChangesAsync();
+            return userAchievement;
+        }
+
+        public async Task<bool> UserExistsAsync(int userAccountId)
+        {
+            return await _context.UserAccounts.AnyAsync(u => u.UserAccountId == userAccountId);
+        }
+
+        public async Task<bool> AchievementExistsAsync(int achievementId)
+        {
+            return await _context.Achievements.AnyAsync(a => a.AchievementId == achievementId);
+        }
+
     }
 }
