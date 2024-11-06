@@ -15,9 +15,13 @@ public partial class Screen
 
     public int? Capacity { get; set; }
 
+    public int? SeatsTaken { get; set; }
+
     public virtual Cinema Cinema { get; set; }
 
     public virtual ScreensType ScreenTypeNavigation { get; set; }
+
+    public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
 
     public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 }
