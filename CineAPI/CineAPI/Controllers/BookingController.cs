@@ -2,6 +2,7 @@
 using CineRepository.Models.Entities;
 using CineRepository.Services.Implementations;
 using CineRepository.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,7 @@ namespace CineAPI.Controllers
         }
 
         [HttpGet("GetBookingById")]
+        [Authorize]
         public async Task<IActionResult> GetbyIdGetBookingById(int id)
         {
             try
