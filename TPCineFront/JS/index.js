@@ -53,7 +53,7 @@ function generateMovieCards(movies) {
             movieCard.onclick = () => openModal(movie.title, movie.description);
 
             movieCard.innerHTML = `
-                <div class="card card-body movie-poster">
+                <div class="card card-body movie-poster" >
                     <img class="img-fluid" src="${movie.posterUrl}" alt="${movie.title}">
                     <div class="movie-info">
                         <span class="release-date">Estreno: ${movie.releaseDate}</span>
@@ -84,14 +84,14 @@ document.addEventListener("DOMContentLoaded", function () {
 async function fetchMovies() {
     try {
         const response = await fetch('https://localhost:7276/api/Movies/GetAllPremiere');
-        const ordenes = await response.json();
-        loadComponents(ordenes);
+        const movies = await response.json();
+        loadMovies(movies);
     } catch (error) {
-        console.error('Error al obtener los componentes:', error);
+        console.error('Error al obtener las peliculas:', error);
     }
 }
 
-function loadComponents(movies) {
+function loadMovies(movies) {
     const movieGrid = document.getElementById('premiere-list');
     // Group the movies into sets of 4 for each carousel item
     for (let i = 0; i < movies.length; i += 4) {
@@ -114,7 +114,7 @@ function loadComponents(movies) {
                 <div class="card card-body movie-poster" >
                     <img class="img-fluid" src="${movie.posterUrl}" alt="${movie.title}">
                     <div class="movie-info">
-                        <span class="release-date">Estreno: ${releaseDate}</span>
+                        <span class="release-date">Disponible hasta: ${releaseDate}</span>
                     </div>
                 </div>
                 <h3>${movie.title}</h3>
@@ -125,6 +125,48 @@ function loadComponents(movies) {
 
         movieGrid.appendChild(carouselItem);
     }
+}
+
+    document.addEventListener('DOMContentLoaded', fetchMovies);
+
+
+    async function fetchCinemas() {
+        try {
+            const response = await fetch('https://localhost:7276/api/Cinema/GetAllCinemas');
+            const cinemas = await response.json();
+            loadCinemas(cinemas);
+        } catch (error) {
+            console.error('Error al obtener los Cines:', error);
+        }
+    }
+
+    function loadCinemas(cinemas) {
+        const select = document.getElementById("locationSelect");
+
+        // Limpiar cualquier opción existente antes de agregar las nuevas
+        select.innerHTML = '';
+
+        // Agregar la opción predeterminada
+        const opcionPredeterminada = document.createElement('option');
+        opcionPredeterminada.value = '';
+        opcionPredeterminada.disabled = true;
+        opcionPredeterminada.selected = true;
+        opcionPredeterminada.textContent = 'Seleccionar Cine';
+        select.appendChild(opcionPredeterminada);
+
+        // Agregar las opciones del arreglo
+        cinemas.forEach(cinema => {
+            const option = document.createElement('option');
+            option.value = cinema.cinemaId;
+            option.textContent = cinema.name;
+            select.appendChild(option);
+        });
+    }
+
+
+
+    document.addEventListener('DOMContentLoaded', fetchCinemas);
+
 
 
 
@@ -160,9 +202,9 @@ function loadComponents(movies) {
 
 
     // })
-}
 
-document.addEventListener('DOMContentLoaded', fetchMovies);
+
+
 
 //   $('.carousel .carousel-item').each(function(){
 //       var minPerSlide = 4;

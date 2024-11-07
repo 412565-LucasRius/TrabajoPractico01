@@ -23,10 +23,10 @@ namespace CineRepository.Repositories.Implementations
         {
             DateTime currentDate = DateTime.Now;
 
-            return await _context.Movies
-                .Where(m => _context.Showtimes
-                    .Any(s => s.MovieId == m.MovieId && s.EndDate < currentDate))
-                .ToListAsync();
+            return await (from movie in _context.Movies
+                          join showtime in _context.Showtimes on movie.MovieId equals showtime.MovieId
+                          where showtime.EndDate >= currentDate && showtime.StartDate <= currentDate
+                          select movie).ToListAsync();
         }
 
 
