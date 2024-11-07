@@ -15,8 +15,6 @@ public partial class UserAchievement
     public int? AchievementId { get; set; }
 
     public DateTime? AchievedAt { get; set; }
-
-    [JsonIgnore]
     public virtual Achievement Achievement { get; set; }
     [JsonIgnore]
     public virtual UserAccount UserAccount { get; set; }
