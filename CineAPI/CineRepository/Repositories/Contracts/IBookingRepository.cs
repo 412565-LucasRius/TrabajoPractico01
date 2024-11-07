@@ -1,4 +1,5 @@
-﻿using CineRepository.Models.Entities;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 
 namespace CineRepository.Repositories.Contracts
   {
@@ -10,7 +11,7 @@ namespace CineRepository.Repositories.Contracts
 
     Task<Booking> GetBookingById(int id);
 
-    Task<bool> SaveBooking(Booking booking);
+    Task<bool> SaveBooking(BookingRequest bookingRequest, List<TicketRequest> ticketRequest);
 
     Task<bool> UpdateBookingState(int id, int state);
     }

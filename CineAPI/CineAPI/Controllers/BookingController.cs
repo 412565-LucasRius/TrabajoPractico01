@@ -1,129 +1,131 @@
 ﻿using CineRepository.Models.DTO;
-using CineRepository.Models.Entities;
-using CineRepository.Services.Implementations;
 using CineRepository.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CineAPI.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class BookingController : ControllerBase
+  {
+  [Route("api/[controller]")]
+  [ApiController]
+  public class BookingController : ControllerBase
     {
-        public readonly IBookingService _bookingService;
+    public readonly IBookingService _bookingService;
 
-        public BookingController(IBookingService bookingService)
+    public BookingController(IBookingService bookingService)
+      {
+      _bookingService = bookingService;
+      }
+
+    [HttpGet("GetBookingById")]
+    [Authorize]
+    public async Task<IActionResult> GetbyIdGetBookingById(int id)
+      {
+      try
         {
-            _bookingService = bookingService;
-        }
+        var booking = await _bookingService.GetBookingById(id);
 
-        [HttpGet("GetBookingById")]
-        [Authorize]
-        public async Task<IActionResult> GetbyIdGetBookingById(int id)
+        if (booking == null)
+          {
+          return BadRequest("Booking no existe");
+          }
+
+        return Ok(booking);
+        }
+      catch (Exception ex)
         {
-            try
-            {
-                var booking = await _bookingService.GetBookingById(id);
-
-                if (booking == null)
-                {
-                    return BadRequest("Booking no existe");
-                }
-
-                return Ok(booking);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
-            }
+        return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
         }
-        [HttpGet("GetBookingByUser")]
-        public async Task<IActionResult> GetbyIdGetBookingByUser(int userId)
+      }
+    [HttpGet("GetBookingByUser")]
+    public async Task<IActionResult> GetbyIdGetBookingByUser(int userId)
+      {
+      try
         {
-            try
-            {
-                var booking = await _bookingService.GetBookingById(userId);
+        var booking = await _bookingService.GetBookingsByUser(userId);
 
-                if (booking == null)
-                {
-                    return BadRequest("Booking no existe");
-                }
+        if (booking == null)
+          {
+          return BadRequest("Booking no existe");
+          }
 
-                return Ok(booking);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
-            }
+        return Ok(booking);
         }
-
-        [HttpGet("GetBookingByUserwithSP")]
-        public async Task<IActionResult> GetbyIdGetBookingByUserWihSP(int userId)
+      catch (Exception ex)
         {
-            try
-            {
-                var booking = await _bookingService.GetBookingsByUserAccountIdAsync(userId);
-
-                if (booking == null)
-                {
-                    return BadRequest("Booking no existe");
-                }
-
-                return Ok(booking);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
-            }
+        return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
         }
+      }
 
-        [HttpPost]
-
-        public async Task<IActionResult> SaveBooking([FromBody] Booking booking)
+    [HttpGet("GetBookingByUserwithSP")]
+    //[Authorize]
+    public async Task<IActionResult> GetbyIdGetBookingByUserWihSP(int userId)
+      {
+      try
         {
-            try
-            {
-                var obooking = await _bookingService.SaveBooking(booking);
+        var booking = await _bookingService.GetBookingsByUserAccountIdAsync(userId);
 
-                if (obooking == null)
-                {
-                    return BadRequest("Booking no existe");
-                }
+        if (booking == null)
+          {
+          return BadRequest("Booking no existe");
+          }
 
-                return Ok(booking);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
-            }
+        return Ok(booking[0]);
         }
-
-        [HttpPut("{id}/{state}")]
-        public async Task<IActionResult> UpdateBookingState(int id, int state)
+      catch (Exception ex)
         {
-            try
-            {
-                bool updated = await _bookingService.UpdateBookingState(id, state);
-
-                if (updated)
-                {
-                    return Ok(new { message = "Componente actualizado con éxito", id, state });
-                }
-                else
-                {
-                    return NotFound(new { message = "No se encontró la reserva o el estado no cambió.", id });
-                }
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
-            }
+        return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
         }
+      }
+
+    [HttpPost]
+    //[Authorize]
+    public async Task<IActionResult> SaveBooking([FromBody] BookingWithTicketsRequest bookingWithTicketsRequest)
+      {
+      try
+        {
+        var isSuccess = await _bookingService.SaveBooking(bookingWithTicketsRequest.BookingRequest, bookingWithTicketsRequest.TicketRequest);
+
+        if (!isSuccess)
+          {
+          return BadRequest("No se puedo crear la reserva o los tickets");
+          }
+
+        return Ok(new
+          {
+          message = "Reserva y tickets creados correctamente",
+          booking = bookingWithTicketsRequest.BookingRequest,
+          tickets = bookingWithTicketsRequest.TicketRequest,
+          });
+        }
+      catch (Exception ex)
+        {
+        return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
+        }
+      }
+
+    [HttpPut("{id}/{state}")]
+    public async Task<IActionResult> UpdateBookingState(int id, int state)
+      {
+      try
+        {
+        bool updated = await _bookingService.UpdateBookingState(id, state);
+
+        if (updated)
+          {
+          return Ok(new { message = "Componente actualizado con éxito", id, state });
+          }
+        else
+          {
+          return NotFound(new { message = "No se encontró la reserva o el estado no cambió.", id });
+          }
+        }
+      catch (Exception ex)
+        {
+        return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
+        }
+      }
 
     }
 
 
-}
+  }
