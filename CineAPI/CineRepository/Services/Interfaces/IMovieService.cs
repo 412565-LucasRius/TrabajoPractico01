@@ -1,18 +1,14 @@
-﻿using CineRepository.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 
 namespace CineRepository.Services.Interfaces
-{
-    public interface IMovieService
+  {
+  public interface IMovieService
     {
 
-        Task<IEnumerable<Movie>> GetAllPremiereAsync();
-        Task<Movie> GetMovieByIdAsync(int id);
+    Task<IEnumerable<Movie>> GetAllPremiereAsync();
+    Task<MovieDTO> GetMovieByIdAsync(int id);
 
 
     }
-}
+  }

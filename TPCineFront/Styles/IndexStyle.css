@@ -326,6 +326,9 @@ body {
   height: 100%;
 }
 
+.carousel-control-prev {
+  margin-left: -10%
+}
 /* Media query adjustments for smaller screens */
 @media (max-width: 768px) {
   .movie-card {

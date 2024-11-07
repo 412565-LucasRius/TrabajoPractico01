@@ -1,13 +1,26 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Selección de Asientos</title>
   <link rel="stylesheet" href="../Styles/asStyle.css">
 </head>
+
 <body>
   <div class="container">
+    <div id="movieDetails">
+      <h2 id="movieTitle"></h2>
+      <p><strong>Género:</strong> <span id="movieGenre"></span></p>
+      <p><strong>Productor:</strong> <span id="movieProducer"></span></p>
+      <p><strong>Duración:</strong> <span id="movieDuration"></span> minutos</p>
+      <label for="showtimeSelector">Elige el horario:</label>
+      <select id="showtimeSelector">
+        <option value="">Selecciona un horario</option>
+      </select>
+    </div>
+
     <h1>Selecciona tu asiento</h1>
     <div class="seating-chart">
       <!-- Aquí se generarán los asientos -->
@@ -15,68 +28,7 @@
     <button id="confirm-btn" disabled>Confirmar Selección</button>
   </div>
 
-  <script>document.addEventListener("DOMContentLoaded", () => {
-    // Ejemplo de asientos: 1 = disponible, 0 = ocupado, 2 = seleccionado
-    const seats = [
-      [1, 1, 1, 1, 1],
-      [1, 1, 1, 1, 1],
-      [1, 1, 0, 1, 1],
-      [1, 0, 1, 1, 1],
-      [1, 1, 1, 1, 0]
-    ];
-
-    console.log(seats);
-    
-  
-    const seatingChart = document.querySelector('.seating-chart');
-    const confirmBtn = document.getElementById('confirm-btn');
-    let selectedSeats = [];
-  
-    // Crear los asientos en el DOM
-    seats.forEach((row, rowIndex) => {
-      row.forEach((seat, seatIndex) => {
-        const seatElement = document.createElement('div');
-        seatElement.classList.add('seat');
-        
-        if (seat === 1) {
-          seatElement.classList.add('available');
-          seatElement.addEventListener('click', () => selectSeat(rowIndex, seatIndex, seatElement));
-        } else if (seat === 0) {
-          seatElement.classList.add('occupied');
-        }
-        
-        seatingChart.appendChild(seatElement);
-      });
-    });
-  
-    // Función para seleccionar o deseleccionar un asiento
-    function selectSeat(rowIndex, seatIndex, seatElement) {
-      if (!seatElement.classList.contains('occupied')) {
-        if (seatElement.classList.contains('available')) {
-          seatElement.classList.remove('available');
-          seatElement.classList.add('selected');
-          selectedSeats.push({ row: rowIndex, seat: seatIndex });
-        } else if (seatElement.classList.contains('selected')) {
-          seatElement.classList.remove('selected');
-          seatElement.classList.add('available');
-          selectedSeats = selectedSeats.filter(seat => seat.row !== rowIndex || seat.seat !== seatIndex);
-        }
-      }
-      confirmBtn.disabled = selectedSeats.length === 0;
-    }
-  
-    // Confirmar la selección
-    confirmBtn.addEventListener('click', () => {
-      if (selectedSeats.length > 0) {
-        alert(`Has seleccionado los asientos: ${selectedSeats.map(seat => `Fila ${seat.row + 1} Asiento ${seat.seat + 1}`).join(', ')}`);
-        selectedSeats.map(seat => {
-            seats[seat.row][seat.seat] = 0
-        })
-    console.log(seats);
-
-      }
-    });
-  });
-  </script>
+  <script src="../JS/asientos.js"></script>
 </body>
+
 </html>

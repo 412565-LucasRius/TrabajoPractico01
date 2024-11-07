@@ -1,32 +1,28 @@
-﻿using CineRepository.Models.Entities;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 using CineRepository.Repositories.Contracts;
 using CineRepository.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CineRepository.Services.Implementations
-{
-    public class MovieService : IMovieService
+  {
+  public class MovieService : IMovieService
     {
-        private readonly IMoviesRepository _movieRepository;
+    private readonly IMoviesRepository _movieRepository;
 
-        public MovieService(IMoviesRepository movieRepository)
-        {
-            _movieRepository = movieRepository;
-        }
-        public async Task<IEnumerable<Movie>> GetAllPremiereAsync()
-        {
-            return await _movieRepository.GetAllPremiereAsync();
-        }
+    public MovieService(IMoviesRepository movieRepository)
+      {
+      _movieRepository = movieRepository;
+      }
+    public async Task<IEnumerable<Movie>> GetAllPremiereAsync()
+      {
+      return await _movieRepository.GetAllPremiereAsync();
+      }
 
-        public async Task<Movie> GetMovieByIdAsync(int id)
-        {
-            return await _movieRepository.GetMovieByIdAsync(id);
-        }
+    public async Task<MovieDTO> GetMovieByIdAsync(int id)
+      {
+      return await _movieRepository.GetMovieByIdAsync(id);
+      }
 
-       
+
     }
-}
+  }
