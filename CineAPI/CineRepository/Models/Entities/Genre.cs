@@ -15,5 +15,6 @@ public partial class Genre
     [JsonIgnore]
     public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
 
+    [JsonIgnore]
     public virtual ICollection<UserGenreStat> UserGenreStats { get; set; } = new List<UserGenreStat>();
 }
