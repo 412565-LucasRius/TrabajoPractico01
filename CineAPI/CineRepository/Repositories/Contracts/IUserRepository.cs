@@ -1,4 +1,5 @@
-﻿using CineRepository.Models.Entities;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 
 namespace CineRepository.Repositories.Contracts
   {
@@ -8,5 +9,7 @@ namespace CineRepository.Repositories.Contracts
     Task<UserAccount> GetUserByNameAsync(string username);
     Task<IEnumerable<UserAccount>> GetAllUsersAsync();
     Task<string> GetUserEmailAsync(int userAccountId);
+
+    Task<UserResponseDTO> GetUserAccountById(int userAccountId);
     }
   }

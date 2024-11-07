@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,11 +9,12 @@
     <link rel="stylesheet" href="../Styles/perfilStyle.css">
 
 </head>
+
 <body>
     <div class="container">
         <div class="profile-card">
             <button class="back-button" onclick="location.href='index.html'">Volver a Inicio</button>
-            
+
             <div class="profile-sidebar">
                 <div class="profile-avatar">
                     <img src="/api/placeholder/150/150" alt="Avatar">
@@ -34,16 +36,12 @@
                         <p id="userName">Nombre del Usuario</p>
                     </div>
                     <div class="info-group">
-                        <label>Teléfono:</label>
-                        <p id="userPhone">+34 XXX XXX XXX</p>
-                    </div>
-                    <div class="info-group">
                         <label>Email:</label>
                         <p id="userEmail">usuario@ejemplo.com</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="profile-content">
                 <h2>Mis Reservas</h2>
                 <div class="reservations-list" id="reservationsList">
@@ -52,5 +50,7 @@
             </div>
         </div>
     </div>
+    <script src="../JS/Profile.js"></script>
 </body>
+
 </html>

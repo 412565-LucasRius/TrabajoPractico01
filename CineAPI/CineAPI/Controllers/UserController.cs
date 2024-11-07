@@ -58,6 +58,7 @@ namespace CineAPI.Controllers
 
           var response = new LoginResponseDTO
             {
+            UserId = user.UserAccountId.ToString(),
             Username = loginRequest.Username,
             Token = token
             };
@@ -67,6 +68,27 @@ namespace CineAPI.Controllers
 
         return Unauthorized("Invalid username or password");
 
+        }
+      catch (Exception ex)
+        {
+        Console.WriteLine(ex.Message);
+        throw;
+        }
+      }
+
+    [HttpGet("byid")]
+    public async Task<IActionResult> GetUserById([FromQuery] int userAccountId)
+      {
+      try
+        {
+        if (userAccountId == 0)
+          {
+          return BadRequest("Usuario invalido");
+          }
+
+        var userData = await _userService.GetUserAccountById(userAccountId);
+
+        return Ok(userData);
         }
       catch (Exception ex)
         {
@@ -102,7 +124,7 @@ namespace CineAPI.Controllers
           issuer: "*",
           audience: "*",
           claims: claims,
-          expires: DateTime.Now.AddMinutes(5),
+          expires: DateTime.Now.AddMinutes(30),
           signingCredentials: credentials
         );
 

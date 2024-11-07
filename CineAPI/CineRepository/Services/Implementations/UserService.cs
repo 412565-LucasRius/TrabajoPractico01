@@ -95,5 +95,10 @@ namespace CineRepository.Services.Implementations
       {
       return _userRepository.GetUserByNameAsync(username);
       }
+
+    public Task<UserResponseDTO> GetUserAccountById(int userAccountId)
+      {
+      return _userRepository.GetUserAccountById(userAccountId);
+      }
     }
   }

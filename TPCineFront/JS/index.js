@@ -10,7 +10,7 @@ function closeModal() {
 }
 
 // Cerrar el modal si se hace clic fuera de él
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == document.getElementById("myModal")) {
         closeModal();
     }
@@ -39,7 +39,7 @@ function generateMovieCards(movies) {
     // });
 
     const movieGrid = document.getElementById('premiere-list');
-    
+
     // Group the movies into sets of 4 for each carousel item
     for (let i = 0; i < movies.length; i += 4) {
         const carouselItem = document.createElement('div');
@@ -61,7 +61,7 @@ function generateMovieCards(movies) {
                 </div>
                 <h3>${movie.title}</h3>
             `;
-            
+
             carouselItem.appendChild(movieCard);
         }
 
@@ -69,15 +69,15 @@ function generateMovieCards(movies) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     flatpickr("#datePicker", {
-      dateFormat: "Y-m-d",  // Set your preferred date format, e.g., "Y-m-d" for "YYYY-MM-DD"
-      minDate: "today",     // Prevents selecting past dates
-      defaultDate: "today", // Sets default date to today
-      allowInput: true,     // Allows users to type in a date manually
-      enableTime: true,
+        dateFormat: "Y-m-d",  // Set your preferred date format, e.g., "Y-m-d" for "YYYY-MM-DD"
+        minDate: "today",     // Prevents selecting past dates
+        defaultDate: "today", // Sets default date to today
+        allowInput: true,     // Allows users to type in a date manually
+        enableTime: true,
     });
-  });
+});
 
 //   document.addEventListener('DOMContentLoaded', generateMovieCards);
 
@@ -118,7 +118,7 @@ function loadComponents(movies) {
                 </div>
                 <h3>${movie.title}</h3>
             `;
-            
+
             carouselItem.appendChild(movieCard);
         }
 
@@ -157,11 +157,11 @@ function loadComponents(movies) {
     //     producer_id.textContent = componente.motivoBaja;
     //     row.appendChild(producer_id);
 
-        
+
     // })
 }
 
-  document.addEventListener('DOMContentLoaded', fetchMovies);
+document.addEventListener('DOMContentLoaded', fetchMovies);
 
 //   $('.carousel .carousel-item').each(function(){
 //       var minPerSlide = 4;
@@ -170,13 +170,23 @@ function loadComponents(movies) {
 //       next = $(this).siblings(':first');
 //       }
 //       next.children(':first-child').clone().appendTo($(this));
-      
+
 //       for (var i=0;i<minPerSlide;i++) {
 //           next=next.next();
 //           if (!next.length) {
 //               next = $(this).siblings(':first');
 //               }
-          
+
 //           next.children(':first-child').clone().appendTo($(this));
 //           }
 //   });
+
+
+window.addEventListener("DOMContentLoaded", () => {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('JWT-Token');
+
+    if (userId && token) {
+        document.getElementById("userIconLink").setAttribute('href', 'perfil.html')
+    }
+})

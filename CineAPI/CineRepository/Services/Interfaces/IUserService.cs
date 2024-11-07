@@ -9,5 +9,7 @@ namespace CineRepository.Services.Interfaces
     Task RegisterAsync(RegisterRequestDTO registerRequest);
     Task<IEnumerable<UserAccount>> GetAllUsersAsync();
     Task<UserAccount> GetUserByNameAsync(string username);
+    Task<UserResponseDTO> GetUserAccountById(int userAccountId);
+
     }
   }

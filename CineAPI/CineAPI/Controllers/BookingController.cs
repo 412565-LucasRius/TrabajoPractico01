@@ -37,6 +37,7 @@ namespace CineAPI.Controllers
         }
       }
     [HttpGet("GetBookingByUser")]
+    [Authorize]
     public async Task<IActionResult> GetbyIdGetBookingByUser(int userId)
       {
       try
@@ -57,7 +58,6 @@ namespace CineAPI.Controllers
       }
 
     [HttpGet("GetBookingByUserwithSP")]
-    //[Authorize]
     public async Task<IActionResult> GetbyIdGetBookingByUserWihSP(int userId)
       {
       try
@@ -78,7 +78,7 @@ namespace CineAPI.Controllers
       }
 
     [HttpPost]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> SaveBooking([FromBody] BookingWithTicketsRequest bookingWithTicketsRequest)
       {
       try

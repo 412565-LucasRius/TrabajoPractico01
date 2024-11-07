@@ -18,9 +18,11 @@ async function login() {
 
     const data = await response.json();
 
+    const userId = data.userId
     const token = data.token;
 
     localStorage.setItem('JWT-Token', token)
+    localStorage.setItem('userId', userId)
 
     window.location.href = 'index.html'
   } catch (error) {

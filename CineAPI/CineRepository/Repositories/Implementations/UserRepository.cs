@@ -21,6 +21,38 @@ namespace CineRepository.Repositories.Implementations
       return await _context.UserAccounts.ToListAsync();
       }
 
+    public async Task<UserResponseDTO> GetUserAccountById(int userAccountId)
+      {
+      var userResponse = await _context.UserAccounts
+        .Where(ua => ua.UserAccountId == userAccountId)
+        .Join(
+          _context.Customers,
+          ua => ua.CustomerId,
+          cu => cu.CustomerId,
+          (ua, cu) => new { ua, cu })
+        .Join(
+            _context.Contacts,
+            combined => combined.cu.CustomerId,
+            co => co.CustomerId,
+            (combined, co) => new { combined.ua, combined.cu, co })
+        .Join(
+            _context.ContactTypes,
+            combined => combined.co.ContactTypeId,
+            ct => ct.ContactTypeId,
+            (combined, ct) => new { combined.ua, combined.cu, combined.co, ct })
+        .Where(result => result.ct.ContactTypeId == 2)
+        .Select(result => new UserResponseDTO
+          {
+          UserId = result.ua.UserAccountId,
+          Name = result.cu.Name,
+          Username = result.ua.Username,
+          Email = result.co.Contact1
+          })
+        .FirstOrDefaultAsync();
+
+      return userResponse;
+      }
+
     public async Task<UserAccount> GetUserByNameAsync(string username)
       {
       return await _context.UserAccounts
