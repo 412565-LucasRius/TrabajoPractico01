@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -16,7 +17,7 @@ public partial class Review
     public int? Rating { get; set; }
 
     public string Comment { get; set; }
-
+    [JsonIgnore]
     public virtual Movie Movie { get; set; }
 
     public virtual UserAccount UserAccount { get; set; }

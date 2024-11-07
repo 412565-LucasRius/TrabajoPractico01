@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -16,9 +17,9 @@ public partial class Showtime
     public DateTime? StartDate { get; set; }
 
     public DateTime? EndDate { get; set; }
-
+    [JsonIgnore]
     public virtual Movie Movie { get; set; }
-
+    [JsonIgnore]
     public virtual Screen Screen { get; set; }
 
     public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
