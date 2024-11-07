@@ -1,3 +1,13 @@
+document.addEventListener("DOMContentLoaded", () => {
+
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("JWT-Token")
+
+  if (!userId || !token) {
+    window.location.href = 'login.html';
+  }
+})
+
 let selectedSeats = [];
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -135,9 +145,6 @@ document.getElementById('confirm-btn').addEventListener('click', async function 
     customerId: userId,
     bookingDate: formatDate(new Date(selectedShowtime.startDate))
   };
-
-  console.log(bookingRequest);
-
 
   const ticketRequest = selectedSeats.map(seat => {
     const seatNumber = `A${seat.row + 1}${seat.seat + 1}`;
