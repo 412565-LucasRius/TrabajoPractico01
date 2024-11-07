@@ -9,12 +9,10 @@ namespace CineRepository.Repositories.Contracts
 {
     public interface IMoviesRepository
     {
-        List<Movie> GetAllMovies();
-        Movie GetMovieById(int id);
-        Movie GetMovieByTitle(string title);
-        void AddMovie(Movie movie);
-        void UpdateMovie(Movie movie);
-        void DeleteMovie(int id);
+        Task<IEnumerable<Movie>> GetAllPremiereAsync(); // Trae todas las peliculas en Estreno.
+        Task <Movie> GetMovieByIdAsync(int id); // Trae peliculas segun ID.
+      
 
+        
     }
 }

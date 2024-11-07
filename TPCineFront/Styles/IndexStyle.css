@@ -316,6 +316,10 @@ body {
   transform: translateX(5px);
 }
 
+h1{
+  color: #ffffff;
+}
+
 /* Responsive adjustments */
 @media (max-width: 768px) {
   .nav {

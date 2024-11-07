@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -15,7 +14,8 @@ public partial class UserAchievement
     public int? AchievementId { get; set; }
 
     public DateTime? AchievedAt { get; set; }
+
     public virtual Achievement Achievement { get; set; }
-    [JsonIgnore]
+
     public virtual UserAccount UserAccount { get; set; }
 }
