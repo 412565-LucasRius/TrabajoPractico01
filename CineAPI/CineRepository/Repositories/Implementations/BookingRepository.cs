@@ -56,11 +56,10 @@ namespace CineRepository.Repositories.Implementations
 
     public async Task<bool> SaveBooking(BookingRequest bookingRequest, List<TicketRequest> ticketRequest)
       {
-
       using var transaction = _context.Database.BeginTransaction();
       try
         {
-
+        // Crear la reserva de la compra
         var booking = new Booking
           {
           CustomerId = bookingRequest.CustomerId,
@@ -69,33 +68,73 @@ namespace CineRepository.Repositories.Implementations
           };
 
         _context.Bookings.Add(booking);
-
         await _context.SaveChangesAsync();
 
         foreach (var ticket in ticketRequest)
           {
+          // Obtener el screen_id asociado al ShowtimeId del ticket
+          var showtime = await _context.Showtimes
+              .Where(s => s.ShowtimeId == ticket.ShowtimeId)
+              .FirstOrDefaultAsync();
+
+          if (showtime == null)
+            {
+            // Si no se encuentra el Showtime, puedes lanzar un error o hacer alguna validación
+            throw new Exception("Showtime no encontrado.");
+            }
+
+          // Obtener la capacidad de la sala desde la tabla Screens
+          var screen = await _context.Screens
+              .Where(s => s.ScreenId == showtime.ScreenId)
+              .FirstOrDefaultAsync();
+
+          if (screen == null)
+            {
+            // Si no se encuentra la sala, puedes lanzar un error
+            throw new Exception("Sala no encontrada.");
+            }
+
+          // Obtener la cantidad de tickets vendidos, incluyendo el ticket que se está intentando agregar
+          var totalTickets = await _context.Tickets
+              .Where(t => t.ShowtimeId == ticket.ShowtimeId)
+              .CountAsync();
+
+          // Verificar si la capacidad de la sala se ha superado
+          if (1 + screen.SeatsTaken > screen.Capacity)
+            {
+            throw new Exception("La capacidad de la sala ha sido superada.");
+            }
+
+          // Crear el ticket
           var ticketEntity = new Ticket
             {
             ShowtimeId = ticket.ShowtimeId,
             BookingId = booking.BookingId,
             SeatNumber = ticket.SeatNumber,
             SaleDate = ticket.SaleDate,
-            Price = ticket.Price,
+            Price = ticket.Price
             };
 
           _context.Tickets.Add(ticketEntity);
+
+          // Actualizar el número de asientos ocupados en la sala (SeatsTaken)
+          screen.SeatsTaken++;
+          _context.Screens.Update(screen);
           }
 
         await _context.SaveChangesAsync();
         await transaction.CommitAsync();
         return true;
         }
-      catch (Exception)
+      catch (Exception ex)
         {
         await transaction.RollbackAsync();
+        Console.WriteLine(ex.Message);
         return false;
         }
       }
+
+
 
     public async Task<bool> UpdateBookingState(int id, int state)
       {

@@ -78,7 +78,7 @@ namespace CineAPI.Controllers
       }
 
     [HttpPost]
-    [Authorize]
+    //[Authorize]
     public async Task<IActionResult> SaveBooking([FromBody] BookingWithTicketsRequest bookingWithTicketsRequest)
       {
       try
