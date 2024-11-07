@@ -310,6 +310,7 @@ body {
 
 .carousel-inner {
   display: flex;
+  width: 90% !important;
 }
 
 .movie-card-group {
