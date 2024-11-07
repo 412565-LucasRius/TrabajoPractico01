@@ -34,6 +34,12 @@ namespace CineRepository.Repositories.Implementations
         public async Task<Movie> GetMovieByIdAsync(int id)
         {
             return await _context.Movies
+                .Include(m => m.Genre)
+                .Include(m => m.Producer)
+                .Include(m => m.MovieDirectors)
+                    .ThenInclude(md => md.Director)
+                .Include(m => m.Showtimes)
+                    .ThenInclude(s => s.Screen)
                 .FirstOrDefaultAsync(m => m.MovieId == id);
         }
 

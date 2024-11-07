@@ -25,5 +25,6 @@ public partial class Screen
 
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
 
+    [JsonIgnore]
     public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 }

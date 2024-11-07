@@ -23,8 +23,23 @@ namespace CineRepository.Repositories.Implementations
         public async Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username)
         {
             return await _context.UserAchievements
-                .Include(ua => ua.UserAccount)
-                .Where(ua => ua.UserAccount.Username.ToLower() == username.ToLower()).ToListAsync();
+             .Include(ua => ua.UserAccount)
+             .Include(ua => ua.Achievement)
+             .Where(ua => ua.UserAccount.Username.ToLower() == username.ToLower())
+             .Select(ua => new UserAchievement
+             {
+            UserAchievementId = ua.UserAchievementId,
+            UserAccountId = ua.UserAccountId,
+            AchievementId = ua.AchievementId,
+            AchievedAt = ua.AchievedAt,
+            Achievement = new Achievement
+                 {
+                    AchievementId = ua.Achievement.AchievementId,
+                    Name = ua.Achievement.Name,
+                    Description = ua.Achievement.Description
+                 }
+             }      )
+        .ToListAsync();
         }
 
         public async Task<bool> UsernameExistsAsync(string username)

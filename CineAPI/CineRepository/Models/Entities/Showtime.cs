@@ -16,11 +16,10 @@ public partial class Showtime
 
   public DateTime? StartDate { get; set; }
 
-  public DateTime? EndDate { get; set; }
-
+    public DateTime? EndDate { get; set; }
+    [JsonIgnore]
     public virtual Movie Movie { get; set; }
-
-  [JsonIgnore]
+    [JsonIgnore]
     public virtual Screen Screen { get; set; }
 
   [JsonIgnore]

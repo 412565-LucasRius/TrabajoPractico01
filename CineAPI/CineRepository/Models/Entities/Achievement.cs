@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -15,5 +16,6 @@ public partial class Achievement
 
     public int Points { get; set; }
 
+    [JsonIgnore]
     public virtual ICollection<UserAchievement> UserAchievements { get; set; } = new List<UserAchievement>();
 }
