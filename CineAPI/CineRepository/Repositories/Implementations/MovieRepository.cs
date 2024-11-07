@@ -19,10 +19,11 @@ namespace CineRepository.Repositories.Implementations
       {
       DateTime currentDate = DateTime.Now;
 
-      return await (from movie in _context.Movies
-                    join showtime in _context.Showtimes on movie.MovieId equals showtime.MovieId
-                    select movie).ToListAsync();
-      }
+            return await (from movie in _context.Movies
+                          join showtime in _context.Showtimes on movie.MovieId equals showtime.MovieId
+                          where showtime.EndDate >= currentDate && showtime.StartDate <= currentDate
+                          select movie).Distinct().ToListAsync();
+        }
 
 
 

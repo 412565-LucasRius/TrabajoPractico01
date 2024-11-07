@@ -22,6 +22,8 @@ public partial class Movie
 
     public int? Duration { get; set; }
 
+    public string ImageName { get; set; }
+
     public virtual Clasification Clasification { get; set; }
 
     public virtual Genre Genre { get; set; }

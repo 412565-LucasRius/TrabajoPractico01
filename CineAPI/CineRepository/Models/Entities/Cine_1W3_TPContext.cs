@@ -271,6 +271,10 @@ public partial class Cine_1W3_TPContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("title");
+            entity.Property(e => e.ImageName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("image_name");
 
             entity.HasOne(d => d.Clasification).WithMany(p => p.Movies)
                 .HasForeignKey(d => d.ClasificationId)
