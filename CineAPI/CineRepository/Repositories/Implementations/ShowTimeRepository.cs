@@ -28,11 +28,12 @@ namespace CineRepository.Repositories.Implementations
 
        
 
-        public async Task<IEnumerable<Showtime>> GetShowTimesByCinemaIdAsync(int cinemaId)
+        public  async Task<IEnumerable<Showtime>> GetShowTimesByCinemaIdAsync(int cinemaId)
         {
+            var currentDate = DateTime.Now;
             return await (from showtime in _context.Showtimes
                           join screen in _context.Screens on showtime.ScreenId equals screen.ScreenId
-                          where screen.CinemaId == cinemaId
+                          where screen.CinemaId == cinemaId && showtime.EndDate >= currentDate && showtime.StartDate <= currentDate
                           select showtime).ToListAsync();
         }
 
