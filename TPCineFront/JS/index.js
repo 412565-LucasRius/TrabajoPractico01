@@ -90,6 +90,7 @@ async function fetchMovies() {
         console.error('Error al obtener los componentes:', error);
     }
 }
+
 function loadComponents(movies) {
     const movieGrid = document.getElementById('premiere-list');
     // Group the movies into sets of 4 for each carousel item

@@ -37,8 +37,8 @@ namespace CineAPI.Controllers
         }
       }
     [HttpGet("GetBookingByUser")]
-    [Authorize]
-    public async Task<IActionResult> GetbyIdGetBookingByUser(int userId)
+    //[Authorize]
+    public async Task<IActionResult> GetBookingByUser(int userId)
       {
       try
         {

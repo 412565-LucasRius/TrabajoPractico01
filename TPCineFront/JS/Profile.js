@@ -1,11 +1,11 @@
 
 
-async function FetchBookings() {
+async function FetchUserBookings() {
 
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("JWT-Token")
   console.log(token, userId);
-  
+
 
   if (!userId || !token) {
     console.error("Usuario no autenticado.");
@@ -22,8 +22,36 @@ async function FetchBookings() {
     })
 
     if (response.ok) {
-      const userData = await response.json();
-      console.log("Reservas del usuario: ", userData);
+      const bookings = await response.json();
+      const reservationsList = document.getElementById("reservationsList");
+      reservationsList.innerHTML = ""; // Limpiar la lista actual
+
+      // Recorremos las reservas y creamos el HTML dinámicamente
+      bookings.forEach(booking => {
+        const bookingElement = document.createElement("div");
+        bookingElement.classList.add("reservation-item");
+
+        // Crear el contenido de la reserva
+        const bookingDetails = `
+                    <div>
+                        <strong>Fecha de Reserva:</strong> ${new Date(booking.bookingDate).toLocaleDateString()}
+                    </div>
+                    <div>
+                        <strong>Asientos:</strong>
+                        <ul>
+                            ${booking.tickets.map(ticket => `<li>Asiento ${ticket.seatNumber} - Precio: $${ticket.price}</li>`).join('')}
+                        </ul>
+                    </div>
+                    <div>
+                        <strong>Pelicula:</strong> ${booking.tickets[0].showtime.movie.title}
+                    </div>
+                `;
+
+        bookingElement.innerHTML = bookingDetails;
+        reservationsList.appendChild(bookingElement);
+      });
+    } else {
+      console.error("Error al obtener las reservas:", response.statusText);
     }
   } catch (error) {
     console.error("Error al hacer la solicitud:", error);
@@ -63,4 +91,4 @@ async function LoadUserProfile() {
 }
 
 window.addEventListener("DOMContentLoaded", LoadUserProfile)
-window.addEventListener("DOMContentLoaded", FetchBookings)
+window.addEventListener("DOMContentLoaded", FetchUserBookings)
