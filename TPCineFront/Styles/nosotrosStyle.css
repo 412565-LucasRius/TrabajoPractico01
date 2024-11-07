@@ -28,7 +28,49 @@ header {
 header h1 {
     font-size: 2.5em;
     color: #fff;
+    position: relative;
+    z-index: 1;
 }
+
+        /* Estilos para el botón en la esquina superior izquierda */
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #296094;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+            text-align: center;
+            display: inline-block; /* Asegura que el botón no se haga más grande */
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Hacer que el enlace ocupe todo el área del botón sin cambiar su tamaño */
+        .back-btn a {
+            display: block; /* El enlace ocupa todo el espacio */
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            line-height: 30px; /* Centra el texto verticalmente */
+        }
+
+        .back-btn a:hover {
+            text-decoration: underline;
+        }
+
 
 /* Estilo para el contenido principal */
 main {
@@ -61,6 +103,7 @@ main ul li {
     border-radius: 5px;
     margin-bottom: 8px;
 }
+
 
 /* Estilo para el pie de página */
 footer {

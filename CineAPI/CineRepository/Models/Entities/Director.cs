@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -12,6 +13,6 @@ public partial class Director
     public string Name { get; set; }
 
     public DateTime? BirthDate { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<MovieDirector> MovieDirectors { get; set; } = new List<MovieDirector>();
 }
