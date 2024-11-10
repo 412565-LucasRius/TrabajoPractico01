@@ -11,5 +11,8 @@ namespace CineRepository.Repositories.Contracts
     Task<string> GetUserEmailAsync(int userAccountId);
 
     Task<UserResponseDTO> GetUserAccountById(int userAccountId);
+
+    Task<UserAccount> UpdateUsernameAsync(int userAccountId, string newUsername);
+    Task UpdateLastLoginAsync(UserAccount userAccount);
     }
   }

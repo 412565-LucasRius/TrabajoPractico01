@@ -31,13 +31,20 @@
                 </select>
             </div>
             <div class="menu">
-                <a href="login.html" class="user-icon" id="userIconLink">
-                    <i class="fas fa-user"></i>
-                </a>
+                <div class="dropdown">
+                    <a href="#" class="user-icon" id="userIconLink">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="dropdown-content">
+                        <a href="perfil.html">Perfil</a>
+                        <a href="logout.html" onclick="logout()">Cerrar sesión</a>
+                    </div>
+                </div>
                 <a href="logros.html" class="achievements-icon">
-                    <i class="fas fa-medal"></i> Tus Logros
+                    <i class="fas fa-medal"></i> Logros
                 </a>
             </div>
+
         </nav>
     </header>
 
@@ -63,7 +70,6 @@
             </div>
 
         </section>
-
     </main>
 
     <footer class="footer">

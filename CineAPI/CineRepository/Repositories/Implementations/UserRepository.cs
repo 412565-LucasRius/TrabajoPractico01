@@ -89,5 +89,31 @@ namespace CineRepository.Repositories.Implementations
           new SqlParameter("@Email", emailContact.Contact1)
       );
       }
+
+    public async Task UpdateLastLoginAsync(UserAccount userAccount)
+      {
+      userAccount.LastLogin = DateTime.Now;
+      await _context.SaveChangesAsync();
+      }
+
+    public async Task<UserAccount> UpdateUsernameAsync(int userAccountId, string newUsername)
+      {
+      var user = await _context.UserAccounts.FindAsync(userAccountId);
+      if (user == null)
+        return null;
+
+      var isUsernameTaken = await _context.UserAccounts.
+        AnyAsync(u => u.Username == newUsername && u.UserAccountId != userAccountId);
+
+      if (isUsernameTaken)
+        {
+        throw new Exception("El nombre de usuario ya está en uso.");
+        }
+
+      user.Username = newUsername;
+      await _context.SaveChangesAsync();
+
+      return user;
+      }
     }
   }

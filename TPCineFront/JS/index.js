@@ -48,14 +48,16 @@ function loadMovies(movies) {
 
             movieCard.innerHTML = `
                 <div class="card card-body movie-poster">
-                    <img class="img-fluid" src="assets/${movie.imageName}.jfif" alt="${movie.title}">
+                    // <img class="img-fluid" src="assets/${movie.imageName}.jfif" alt="${movie.title}">
                    <div class="movie-info">
                         <span class="duration" style="color: white; background-color: red; padding: 5px; border-radius: 5px;">Duración: ${movie.duration} minutos</span>
                     </div>
                 </div>
                 <div class="movie-details">
                 <h3>${movie.title}</h3>
-                <a href="asientos.html?movieId=${movie.movieId}" class="btn btn-primary">Seleccionar Asientos</a>
+                <a href="asientos.html?movieId=${movie.movieId}" class="btn btn-primary">
+                    <button onclick="${CheckUserSession()}">Seleccionar Asientos</button>                    
+                </a>
             `;
 
             carouselItem.appendChild(movieCard);
@@ -101,14 +103,17 @@ function loadCinemas(cinemas) {
 
 document.addEventListener('DOMContentLoaded', fetchCinemas);
 
+
 // Comprobación de sesión de usuario
-window.addEventListener("DOMContentLoaded", () => {
+
+async function CheckUserSession() {
     const userId = localStorage.getItem('userId');
     const token = localStorage.getItem('JWT-Token');
+
 
     if (!userId || !token) {
         window.location.href = 'login.html'; // Redirigir a la página de login si no hay sesión
     } else {
         document.getElementById("userIconLink").setAttribute('href', 'perfil.html');
     }
-});
+}

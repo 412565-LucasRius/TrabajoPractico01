@@ -25,6 +25,7 @@ namespace CineRepository.Services.Implementations
       if (!VerifyPasswordHash(password, userAccount.PasswordHash))
         return null;
 
+      await _userRepository.UpdateLastLoginAsync(userAccount);
 
       return userAccount;
       }
@@ -99,6 +100,16 @@ namespace CineRepository.Services.Implementations
     public Task<UserResponseDTO> GetUserAccountById(int userAccountId)
       {
       return _userRepository.GetUserAccountById(userAccountId);
+      }
+
+    public async Task<UserAccount> UpdateUserData(UserAccount userData)
+      {
+      if (string.IsNullOrEmpty(userData.Username))
+        {
+        throw new ArgumentException("El nombre de usuario no puede estar vacío.");
+        }
+
+      return await _userRepository.UpdateUsernameAsync(userData.UserAccountId, userData.Username);
       }
     }
   }

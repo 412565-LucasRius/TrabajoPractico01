@@ -97,6 +97,32 @@ namespace CineAPI.Controllers
         }
       }
 
+    [HttpPut("update")]
+    public async Task<IActionResult> UpdateUserData([FromBody] UserAccount userData)
+      {
+      try
+        {
+        if (string.IsNullOrEmpty(userData.Username))
+          {
+          return BadRequest("El nombre de usuario no puede estar vacío.");
+          }
+
+        var userUpdated = await _userService.UpdateUserData(userData);
+        if (userUpdated != null)
+          {
+          return Ok(userUpdated);
+          }
+        else
+          {
+          return BadRequest("No se pudo actualizar el nombre de usuario.");
+          }
+        }
+      catch (Exception ex)
+        {
+        Console.WriteLine(ex.Message);
+        return StatusCode(500, "Ocurrió un error en el servidor.");
+        }
+      }
 
     private async Task<bool> IsValidUser(LoginRequestDTO loginRequest)
       {
