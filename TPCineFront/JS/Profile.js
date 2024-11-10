@@ -1,94 +1,99 @@
+    // Función para obtener los datos del perfil de usuario (incluyendo la imagen desde la API)
+    async function LoadUserProfile() {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("JWT-Token");
 
-
-async function FetchUserBookings() {
-
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("JWT-Token")
-  console.log(token, userId);
-
-
-  if (!userId || !token) {
-    console.error("Usuario no autenticado.");
-    return;
-  }
-
-  try {
-    const response = await fetch(`https://localhost:7276/api/Booking/GetBookingByUser?userId=${userId}`, {
-      method: 'GET',
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
+      if (!userId || !token) {
+          console.error("Usuario no autenticado.");
+          return;
       }
-    })
 
-    if (response.ok) {
-      const bookings = await response.json();
-      const reservationsList = document.getElementById("reservationsList");
-      reservationsList.innerHTML = ""; // Limpiar la lista actual
+      try {
+          const response = await fetch(`https://localhost:7276/api/User/byid?userAccountId=${userId}`, {
+              method: 'GET',
+              headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+              }
+          });
 
-      // Recorremos las reservas y creamos el HTML dinámicamente
-      bookings.forEach(booking => {
-        const bookingElement = document.createElement("div");
-        bookingElement.classList.add("reservation-item");
-
-        // Crear el contenido de la reserva
-        const bookingDetails = `
-                    <div>
-                        <strong>Fecha de Reserva:</strong> ${new Date(booking.bookingDate).toLocaleDateString()}
-                    </div>
-                    <div>
-                        <strong>Asientos:</strong>
-                        <ul>
-                            ${booking.tickets.map(ticket => `<li>Asiento ${ticket.seatNumber} - Precio: $${ticket.price}</li>`).join('')}
-                        </ul>
-                    </div>
-                    <div>
-                        <strong>Pelicula:</strong> ${booking.tickets[0].showtime.movie.title}
-                    </div>
-                `;
-
-        bookingElement.innerHTML = bookingDetails;
-        reservationsList.appendChild(bookingElement);
-      });
-    } else {
-      console.error("Error al obtener las reservas:", response.statusText);
-    }
-  } catch (error) {
-    console.error("Error al hacer la solicitud:", error);
-  }
-}
-
-async function LoadUserProfile() {
-  const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("JWT-Token")
-  console.log(token, userId);
-
-  if (!userId || !token) {
-    console.error("Usuario no autenticado.");
-    return;
-  }
-
-  try {
-    const response = await fetch(`https://localhost:7276/api/User/byid?userAccountId=${userId}`, {
-      method: 'GET',
-      headers: {
-        "Authorization": `Bearer ${token}`,
-        "Content-Type": "application/json"
+          if (response.ok) {
+              const userData = await response.json();
+              // Actualiza el nombre, email de perfil
+              document.getElementById("userName").textContent = userData.username;
+              document.getElementById("userEmail").textContent = userData.email;
+          }
+      } catch (error) {
+          console.error("Error al hacer la solicitud:", error);
       }
-    })
-
-    if (response.ok) {
-      const userData = await response.json();
-      console.log("Datos del usuario: ", userData);
-
-      document.getElementById("userName").textContent = userData.username
-      document.getElementById("userEmail").textContent = userData.email
-
-    }
-  } catch (error) {
-    console.error("Error al hacer la solicitud:", error);
   }
-}
 
-window.addEventListener("DOMContentLoaded", LoadUserProfile)
-window.addEventListener("DOMContentLoaded", FetchUserBookings)
+  // Función para obtener las reservas del usuario
+  async function FetchUserBookings() {
+      const userId = localStorage.getItem("userId");
+      const token = localStorage.getItem("JWT-Token");
+
+      if (!userId || !token) {
+          console.error("Usuario no autenticado.");
+          return;
+      }
+
+      try {
+          const response = await fetch(`https://localhost:7276/api/Booking/GetBookingByUser?userId=${userId}`, {
+              method: 'GET',
+              headers: {
+                  "Authorization": `Bearer ${token}`,
+                  "Content-Type": "application/json"
+              }
+          });
+
+          if (response.ok) {
+              const bookings = await response.json();
+              const reservationsList = document.getElementById("reservationsList");
+              reservationsList.innerHTML = ""; // Limpiar la lista actual
+
+              // Recorremos las reservas y creamos el HTML dinámicamente
+              bookings.forEach(booking => {
+                  const bookingElement = document.createElement("tr");
+
+                  // Crear el contenido de la reserva
+                  const bookingDetails = `
+                      <td>${new Date(booking.bookingDate).toLocaleDateString()}</td>
+                      <td>${booking.status}</td>
+                      <td>${booking.movieTitle}</td>
+                      <td>${booking.cinemaLocation}</td>
+                      <td>${booking.seats}</td> <!-- Nueva celda para los asientos -->
+                      <td>
+                          <button class="update-reservation" onclick="updateReservation(${booking.id})">Actualizar</button>
+                          <button class="delete-reservation" onclick="deleteReservation(${booking.id})">Eliminar</button>
+                      </td>
+                  `;
+
+                  bookingElement.innerHTML = bookingDetails;
+                  reservationsList.appendChild(bookingElement);
+              });
+          } else {
+              console.error("Error al obtener las reservas:", response.statusText);
+          }
+      } catch (error) {
+          console.error("Error al hacer la solicitud:", error);
+      }
+  }
+
+  // Función para actualizar una reserva (ejemplo de acción)
+  function updateReservation(bookingId) {
+      alert(`Actualizar reserva con ID: ${bookingId}`);
+      // Aquí se podría agregar lógica para redirigir o mostrar un formulario para editar la reserva
+  }
+
+  // Función para eliminar una reserva (ejemplo de acción)
+  function deleteReservation(bookingId) {
+      if (confirm(`¿Estás seguro de que deseas eliminar esta reserva?`)) {
+          console.log(`Eliminando reserva con ID: ${bookingId}`);
+          // Aquí se podría agregar lógica para eliminar la reserva mediante una solicitud a la API
+      }
+  }
+
+  // Llamamos a las funciones cuando el DOM esté completamente cargado
+  window.addEventListener("DOMContentLoaded", LoadUserProfile);
+  window.addEventListener("DOMContentLoaded", FetchUserBookings);

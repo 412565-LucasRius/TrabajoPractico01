@@ -7,50 +7,68 @@
     <title>Perfil de Usuario</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="../Styles/perfilStyle.css">
-
 </head>
 
 <body>
     <div class="container">
         <div class="profile-card">
-            <button class="back-button" onclick="location.href='index.html'">Volver a Inicio</button>
-
             <div class="profile-sidebar">
                 <div class="profile-avatar">
-                    <img src="/api/placeholder/150/150" alt="Avatar">
+                    <!-- La imagen se obtiene desde la API -->
+                    <img id="profileImage" src="/api/placeholder/150/150" alt="Avatar">
                 </div>
                 <div class="user-title">
-                    <div class="achievements-section">
+                    <div class="profile-info">
                         <div class="info-group">
-                            <label>Mis logros:</label>
+                            <label>Nombre:</label>
+                            <p id="userName">Nombre del Usuario</p>
                         </div>
-                        <select id="achievementsDropdown" class="achievements-dropdown">
-                            <option value="" disabled selected>Selecciona un logro</option>
-                        </select>
-                        <div id="achievementDetails" class="achievement-details"></div>
+                        <div class="info-group">
+                            <label>Email:</label>
+                            <p id="userEmail">usuario@ejemplo.com</p>
+                        </div>
                     </div>
                 </div>
-                <div class="profile-info">
-                    <div class="info-group">
-                        <label>Nombre:</label>
-                        <p id="userName">Nombre del Usuario</p>
-                    </div>
-                    <div class="info-group">
-                        <label>Email:</label>
-                        <p id="userEmail">usuario@ejemplo.com</p>
-                    </div>
+
+                <!-- Botón para redirigir a la página de logros -->
+                <div class="logros-button">
+                    <a href="logros.html"><button>Mis Logros</button></a>
+                </div>
+
+                <!-- Botones de acción: Editar y Eliminar usuario -->
+                <div class="profile-actions">
+                    <button id="edit-user">Editar Usuario</button>
+                    <button id="delete-user">Eliminar Usuario</button>
+                </div>
+                <div>
+                    <button class="back-button" onclick="location.href='index.html'">Volver a Inicio</button>
                 </div>
             </div>
 
             <div class="profile-content">
                 <h2>Mis Reservas</h2>
-                <div class="reservations-list" id="reservationsList">
-                    <!-- Las reservas se cargarán dinámicamente aquí -->
-                </div>
+                <!-- Tabla para mostrar las reservas -->
+                <table id="reservationsTable">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Cine</th>
+                            <th>Pelicula</th>
+                            <th>Asientos</th>
+                            <th>Estado</th> <!-- Nueva columna -->
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservationsList">
+                        <!-- Las reservas se cargarán dinámicamente aquí -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-    <script src="../JS/Profile.js"></script>
+
+    <script  src="../JS/Profile.js">
+    </script>
 </body>
 
 </html>
