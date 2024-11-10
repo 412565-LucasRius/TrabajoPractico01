@@ -30,6 +30,7 @@ namespace CineRepository.Repositories.Implementations
               .ThenInclude(t => t.Showtime)
                   .ThenInclude(s => s.Screen)
                       .ThenInclude(sc => sc.Cinema)
+          .Include(b => b.BookingState)
           .AsNoTracking()
           .ToListAsync();
       return bookingData;

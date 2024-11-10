@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -11,5 +12,6 @@ public partial class BookingState
 
     public string Description { get; set; }
 
+  [JsonIgnore]
     public virtual ICollection<Booking> Bookings { get; set; } = new List<Booking>();
 }

@@ -165,7 +165,7 @@ async function FetchUserBookings() {
         <td>${booking.tickets[0].showtime.screenId}</td>
         <td>${booking.tickets[0].showtime.movie.title}</td>
         <td>${booking.tickets.map(ticket => ticket.seatNumber).join(', ')}</td>
-        <td>${booking.status}</td> <!-- Columna de estado -->
+        <td>${booking.bookingState.description}</td> <!-- Columna de estado -->
         <td>
           <button class="update-reservation" onclick="updateReservation(${booking.id})">Actualizar</button>
           <button class="delete-reservation" onclick="deleteReservation(${booking.id})">Eliminar</button>
