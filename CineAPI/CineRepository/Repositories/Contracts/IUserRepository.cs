@@ -14,5 +14,7 @@ namespace CineRepository.Repositories.Contracts
 
     Task<UserAccount> UpdateUsernameAsync(int userAccountId, string newUsername);
     Task UpdateLastLoginAsync(UserAccount userAccount);
+
+    Task<bool> DeactivateUserAsync(int userId);
     }
   }

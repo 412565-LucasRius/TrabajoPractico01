@@ -10,7 +10,7 @@ namespace CineRepository.Services.Interfaces
     Task<IEnumerable<UserAccount>> GetAllUsersAsync();
     Task<UserAccount> GetUserByNameAsync(string username);
     Task<UserResponseDTO> GetUserAccountById(int userAccountId);
-    Task<UserAccount> UpdateUserData(UserAccount userData);
-
+    Task<UserAccount> UpdateUserData(UserAccountUpdateRequestDTO userData);
+    Task<bool> DeactivateUser(int authenticatedUserId, int userId);
     }
   }

@@ -262,6 +262,10 @@ public partial class Cine_1W3_TPContext : DbContext
             entity.Property(e => e.ClasificationId).HasColumnName("clasification_id");
             entity.Property(e => e.Duration).HasColumnName("duration");
             entity.Property(e => e.GenreId).HasColumnName("genre_id");
+            entity.Property(e => e.ImageName)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("image_name");
             entity.Property(e => e.ProducerId).HasColumnName("producer_id");
             entity.Property(e => e.ReleaseDate)
                 .HasColumnType("date")
@@ -271,10 +275,6 @@ public partial class Cine_1W3_TPContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("title");
-            entity.Property(e => e.ImageName)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("image_name");
 
             entity.HasOne(d => d.Clasification).WithMany(p => p.Movies)
                 .HasForeignKey(d => d.ClasificationId)
@@ -466,7 +466,7 @@ public partial class Cine_1W3_TPContext : DbContext
         {
             entity.HasKey(e => e.ShowtimeId).HasName("PK__showtime__A406B5185748D8A7");
 
-            entity.ToTable("showtimes");
+            entity.ToTable("showtimes", tb => tb.HasTrigger("ResetSeatsTaken"));
 
             entity.Property(e => e.ShowtimeId).HasColumnName("showtime_id");
             entity.Property(e => e.EndDate)
@@ -529,6 +529,9 @@ public partial class Cine_1W3_TPContext : DbContext
                 .HasColumnType("date")
                 .HasColumnName("created_at");
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true)
+                .HasColumnName("is_active");
             entity.Property(e => e.LastLogin)
                 .HasColumnType("date")
                 .HasColumnName("last_login");

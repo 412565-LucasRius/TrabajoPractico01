@@ -14,7 +14,6 @@
     <div class="container">
         <div class="profile-card">
             <button class="back-button" onclick="location.href='index.html'">Volver a Inicio</button>
-
             <div class="profile-sidebar">
                 <div class="profile-avatar">
                     <img src="/api/placeholder/150/150" alt="Avatar">
@@ -38,6 +37,16 @@
                     <div class="info-group">
                         <label>Email:</label>
                         <p id="userEmail">usuario@ejemplo.com</p>
+                    </div>
+                    <button class="update-button">Actualizar Información</button>
+                </div>
+
+                <div id="editUsernameModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close-btn" onclick="closeModal()" id="closeModalBtn">&times;</span>
+                        <h3>Editar Nombre de Usuario</h3>
+                        <input type="text" id="newUsername" placeholder="Nuevo nombre de usuario">
+                        <button id="confirmEditBtn" onclick="UpdateUserData()">Confirmar Cambios</button>
                     </div>
                 </div>
             </div>

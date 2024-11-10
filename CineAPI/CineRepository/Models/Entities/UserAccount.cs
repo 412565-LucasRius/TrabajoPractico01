@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -20,12 +19,14 @@ public partial class UserAccount
 
     public DateTime? LastLogin { get; set; }
 
+    public bool IsActive { get; set; }
+
     public virtual Customer Customer { get; set; }
 
     public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
     public virtual ICollection<UserAchievement> UserAchievements { get; set; } = new List<UserAchievement>();
-    [JsonIgnore]
+
     public virtual ICollection<UserGenreStat> UserGenreStats { get; set; } = new List<UserGenreStat>();
 
     public virtual ICollection<UserMovieHistory> UserMovieHistories { get; set; } = new List<UserMovieHistory>();

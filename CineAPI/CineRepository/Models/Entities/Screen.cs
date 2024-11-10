@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -18,13 +17,11 @@ public partial class Screen
 
     public int? SeatsTaken { get; set; }
 
-  [JsonIgnore]
     public virtual Cinema Cinema { get; set; }
 
     public virtual ScreensType ScreenTypeNavigation { get; set; }
 
     public virtual ICollection<Seat> Seats { get; set; } = new List<Seat>();
 
-    [JsonIgnore]
     public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 }

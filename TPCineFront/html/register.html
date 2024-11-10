@@ -16,7 +16,7 @@
         <p>Descubre las últimas películas y disfruta de una experiencia cinematográfica inolvidable.</p>
 
         <div class="form-container">
-            <form action="registro_action.html" method="POST" class="registration-form">
+            <form  class="registration-form">
                 <div class="input-group">
                     <input type="text" id="name" name="name" placeholder="Nombre" required>
                     <input type="text" id="username" name="username" placeholder="Nombre de usuario" required>
@@ -24,7 +24,7 @@
                     <input type="date" id="birthdate" name="birthdate" required>
                     <input type="password" id="password" name="password" placeholder="Contraseña" required>
                 </div>
-                <button type="submit" class="button">Registrarse</button>
+                <button type="submit" onclick="register()" class="button">Registrarse</button>
                 <div class="login-prompt">
                     <p><a href="login.html" class="login-link">¿Ya tienes una cuenta? Iniciar Sesión</a></p>
                 </div>
@@ -33,6 +33,7 @@
         </div>
     </div>
 
+    <script src="../JS/Auth.js"></script>
 </body>
 
 </html>

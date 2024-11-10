@@ -16,6 +16,20 @@ namespace CineRepository.Repositories.Implementations
       _context = context;
       }
 
+    public async Task<bool> DeactivateUserAsync(int userId)
+      {
+      var user = await _context.UserAccounts.FindAsync(userId);
+      if (user == null)
+        {
+        return false;
+        }
+
+      user.IsActive = false;
+      await _context.SaveChangesAsync();
+
+      return true;
+      }
+
     public async Task<IEnumerable<UserAccount>> GetAllUsersAsync()
       {
       return await _context.UserAccounts.ToListAsync();

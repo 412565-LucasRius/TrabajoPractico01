@@ -37,16 +37,26 @@ async function register() {
   const username = document.getElementById('username').value;
   const email = document.getElementById('email').value;
   const password = document.getElementById('password').value;
-  const birthdate = document.getElementById('birthdate').value;
+  const borndate = document.getElementById('birthdate').value;
 
   try {
-    const response = await fetch(`${API_URL}/register`, {
+    const response = await fetch('https://localhost:7276/api/User/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ name, username, email, password, birthdate })
+      body: JSON.stringify({ name, username, email, password, borndate })
     })
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log('Usuario registrado:', data);
+      alert('Registro exitoso');
+      window.location.href = 'login.html';
+    } else {
+      const errorData = await response.json();
+      alert("Error al registrar el usuario: " + errorData.message || "Error desconocido");
+    }
   } catch (error) {
     console.error("Error en el registro:", error.message);
     alert("Hubo un error al registrar el usuario: " + error.message);

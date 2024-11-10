@@ -2,7 +2,6 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -20,7 +19,6 @@ public partial class Ticket
 
     public decimal? Price { get; set; }
 
-  [JsonIgnore]
     public virtual Booking Booking { get; set; }
 
     public virtual Showtime Showtime { get; set; }

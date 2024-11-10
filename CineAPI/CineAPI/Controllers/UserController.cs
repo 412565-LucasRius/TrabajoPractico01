@@ -14,10 +14,12 @@ namespace CineAPI.Controllers
   public class UserController : ControllerBase
     {
     private readonly IUserService _userService;
+    private readonly IConfiguration _configuration;
 
-    public UserController(IUserService userService)
+    public UserController(IUserService userService, IConfiguration configuration)
       {
       _userService = userService;
+      _configuration = configuration;
       }
 
     [HttpPost("register")]
@@ -53,7 +55,7 @@ namespace CineAPI.Controllers
         if (await IsValidUser(loginRequest))
           {
 
-          var user = await _userService.GetUserByNameAsync(loginRequest.Username);
+          var user = await _userService.AuthenticateAsync(loginRequest.Username, loginRequest.Password);
           var token = await GenerateJwtToken(user);
 
           var response = new LoginResponseDTO
@@ -98,11 +100,11 @@ namespace CineAPI.Controllers
       }
 
     [HttpPut("update")]
-    public async Task<IActionResult> UpdateUserData([FromBody] UserAccount userData)
+    public async Task<IActionResult> UpdateUserData([FromBody] UserAccountUpdateRequestDTO userData)
       {
       try
         {
-        if (string.IsNullOrEmpty(userData.Username))
+        if (string.IsNullOrEmpty(userData.NewUsername))
           {
           return BadRequest("El nombre de usuario no puede estar vacío.");
           }
@@ -143,18 +145,38 @@ namespace CineAPI.Controllers
         new Claim("userId", user.UserAccountId.ToString())
         };
 
-      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("hRF0mGEuNcldIPzK4skzQ4RdhLWlDsW5bs4Gn7aio2w="));
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]));
       var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
       var token = new JwtSecurityToken(
-          issuer: "*",
-          audience: "*",
+          issuer: _configuration["Jwt:Issuer"],
+          audience: _configuration["Jwt:Audience"],
           claims: claims,
           expires: DateTime.Now.AddMinutes(30),
           signingCredentials: credentials
         );
 
       return new JwtSecurityTokenHandler().WriteToken(token);
+      }
+
+    [HttpPut("deactivate")]
+    public async Task<IActionResult> DeactivateUser([FromQuery] int userId)
+      {
+      int authenticatedUserId = int.Parse(User.Identity.Name);
+
+      if (userId != authenticatedUserId)
+        {
+        return Forbid();
+        }
+
+      bool isDeactivated = await _userService.DeactivateUser(authenticatedUserId, userId);
+
+      if (isDeactivated)
+        {
+        return Ok("Cuenta desactivada con éxito");
+        }
+
+      return BadRequest("No se pudo desactivar la cuenta");
       }
     }
   }

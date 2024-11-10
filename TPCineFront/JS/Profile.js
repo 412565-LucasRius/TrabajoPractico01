@@ -1,11 +1,7 @@
-
-
 async function FetchUserBookings() {
 
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("JWT-Token")
-  console.log(token, userId);
-
 
   if (!userId || !token) {
     console.error("Usuario no autenticado.");
@@ -23,6 +19,7 @@ async function FetchUserBookings() {
 
     if (response.ok) {
       const bookings = await response.json();
+
       const reservationsList = document.getElementById("reservationsList");
       reservationsList.innerHTML = ""; // Limpiar la lista actual
 
@@ -37,6 +34,10 @@ async function FetchUserBookings() {
                         <strong>Fecha de Reserva:</strong> ${new Date(booking.bookingDate).toLocaleDateString()}
                     </div>
                     <div>
+                      <strong>Sala: </strong> ${booking.tickets[0].showtime.showtimeId}
+                    </div>
+                    <div>
+                        
                         <strong>Asientos:</strong>
                         <ul>
                             ${booking.tickets.map(ticket => `<li>Asiento ${ticket.seatNumber} - Precio: $${ticket.price}</li>`).join('')}
@@ -45,6 +46,8 @@ async function FetchUserBookings() {
                     <div>
                         <strong>Pelicula:</strong> ${booking.tickets[0].showtime.movie.title}
                     </div>
+                    <p>__________________________________</p>
+                    
                 `;
 
         bookingElement.innerHTML = bookingDetails;
@@ -60,12 +63,11 @@ async function FetchUserBookings() {
 
 async function LoadUserProfile() {
   const userId = localStorage.getItem("userId");
-  const token = localStorage.getItem("JWT-Token")
-  console.log(token, userId);
+  const token = localStorage.getItem("JWT-Token");
 
   if (!userId || !token) {
     console.error("Usuario no autenticado.");
-    return;
+    window.location.href = 'login.html';
   }
 
   try {
@@ -79,7 +81,6 @@ async function LoadUserProfile() {
 
     if (response.ok) {
       const userData = await response.json();
-      console.log("Datos del usuario: ", userData);
 
       document.getElementById("userName").textContent = userData.username
       document.getElementById("userEmail").textContent = userData.email
@@ -92,3 +93,69 @@ async function LoadUserProfile() {
 
 window.addEventListener("DOMContentLoaded", LoadUserProfile)
 window.addEventListener("DOMContentLoaded", FetchUserBookings)
+
+// Función para abrir el modal
+function openModal() {
+  document.getElementById('editUsernameModal').style.display = 'block';
+}
+
+// Función para cerrar el modal
+function closeModal() {
+  document.getElementById('editUsernameModal').style.display = 'none';
+}
+
+// Función para abrir el modal al hacer clic en el botón de "Actualizar Información"
+document.querySelector('.update-button').addEventListener('click', openModal);
+
+
+async function UpdateUserData() {
+  const userId = localStorage.getItem("userId");
+  const newUsername = document.getElementById('newUsername').value;
+
+  if (!newUsername.trim()) {
+    alert("El nombre de usuario no puede estar vacío.");
+    return;
+  }
+
+  const token = localStorage.getItem("JWT-Token");
+
+  if (!token || !userId) {
+    alert("No se pudo encontrar el token o el ID del usuario.");
+    console.log(token, userId);
+
+    return;
+  }
+
+  const requestBody = {
+    userAccountId: userId,
+    newUsername: newUsername
+  };
+
+  try {
+    const response = await fetch(`https://localhost:7276/api/User/update`, {
+      method: 'PUT',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(requestBody)
+    });
+
+    if (response.ok) {
+      const result = await response.json();
+      alert("Nombre de usuario actualizado correctamente");
+      document.getElementById('userName').textContent = newUsername;
+      document.getElementById('editUsernameModal').style.display = 'none';
+    } else {
+      const errorData = await response.json();
+      alert(`Error: ${errorData.message || 'No se pudo actualizar el nombre de usuario'}`);
+    }
+  } catch (error) {
+    alert("Error al intentar actualizar el nombre de usuario: " + error.message);
+  }
+}
+
+
+async function SetUserAsInactive() {
+  
+}

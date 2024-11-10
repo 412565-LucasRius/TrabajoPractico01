@@ -102,14 +102,24 @@ namespace CineRepository.Services.Implementations
       return _userRepository.GetUserAccountById(userAccountId);
       }
 
-    public async Task<UserAccount> UpdateUserData(UserAccount userData)
+    public async Task<UserAccount> UpdateUserData(UserAccountUpdateRequestDTO userData)
       {
-      if (string.IsNullOrEmpty(userData.Username))
+      if (string.IsNullOrEmpty(userData.NewUsername))
         {
         throw new ArgumentException("El nombre de usuario no puede estar vacío.");
         }
 
-      return await _userRepository.UpdateUsernameAsync(userData.UserAccountId, userData.Username);
+      return await _userRepository.UpdateUsernameAsync(userData.UserAccountId, userData.NewUsername);
+      }
+
+    public async Task<bool> DeactivateUser(int authenticatedUserId, int userId)
+      {
+      if (authenticatedUserId != userId)
+        {
+        return false;
+        }
+
+      return await _userRepository.DeactivateUserAsync(userId);
       }
     }
   }

@@ -2,27 +2,24 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
-using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
 public partial class Showtime
-  {
-  public int ShowtimeId { get; set; }
+{
+    public int ShowtimeId { get; set; }
 
-  public int? MovieId { get; set; }
+    public int? MovieId { get; set; }
 
-  public int? ScreenId { get; set; }
+    public int? ScreenId { get; set; }
 
-  public DateTime? StartDate { get; set; }
+    public DateTime? StartDate { get; set; }
 
-  public DateTime? EndDate { get; set; }
+    public DateTime? EndDate { get; set; }
 
-  public virtual Movie Movie { get; set; }
+    public virtual Movie Movie { get; set; }
 
-  [JsonIgnore]
-  public virtual Screen Screen { get; set; }
+    public virtual Screen Screen { get; set; }
 
-  [JsonIgnore]
-  public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
+    public virtual ICollection<Ticket> Tickets { get; set; } = new List<Ticket>();
 }
