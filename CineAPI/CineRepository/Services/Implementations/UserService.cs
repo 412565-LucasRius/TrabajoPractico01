@@ -19,7 +19,7 @@ namespace CineRepository.Services.Implementations
       {
       var userAccount = await _userRepository.GetUserByNameAsync(username);
 
-      if (userAccount == null)
+      if (userAccount == null || !userAccount.IsActive)
         return null;
 
       if (!VerifyPasswordHash(password, userAccount.PasswordHash))

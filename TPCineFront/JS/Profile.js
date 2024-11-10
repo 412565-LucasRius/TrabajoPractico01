@@ -157,5 +157,18 @@ async function UpdateUserData() {
 
 
 async function SetUserAsInactive() {
+  const userId = localStorage.getItem("userId");
+  const token = localStorage.getItem("JWT-Token");
+
+  fetch(`${API_URL}/deactivate?userId=${userId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({ userId: userId })
+  })
+
   
+
 }

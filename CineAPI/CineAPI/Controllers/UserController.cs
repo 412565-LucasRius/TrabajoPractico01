@@ -162,7 +162,18 @@ namespace CineAPI.Controllers
     [HttpPut("deactivate")]
     public async Task<IActionResult> DeactivateUser([FromQuery] int userId)
       {
-      int authenticatedUserId = int.Parse(User.Identity.Name);
+      var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "userId");
+      if (userIdClaim == null)
+        {
+        return Unauthorized("No se encontró el ID de usuario en los claims.");
+        }
+
+      if (!int.TryParse(userIdClaim.Value, out int authenticatedUserId))
+        {
+        return Unauthorized("El ID de usuario en los claims no es válido.");
+        }
+      authenticatedUserId = int.Parse(userIdClaim.Value);
+
 
       if (userId != authenticatedUserId)
         {
