@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -11,5 +12,6 @@ public partial class Producer
 
     public string Company { get; set; }
 
-    public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
+  [JsonIgnore]
+  public virtual ICollection<Movie> Movies { get; set; } = new List<Movie>();
 }

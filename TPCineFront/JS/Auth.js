@@ -13,8 +13,10 @@ async function login() {
       body: JSON.stringify({ username, password })
     });
 
-    if (!response.ok)
-      throw new Error('Usuario o contraseña incorrectos.')
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Usuario o contraseña incorrectos.');
+    }
 
     const data = await response.json();
 

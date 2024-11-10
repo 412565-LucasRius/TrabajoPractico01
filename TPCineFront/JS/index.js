@@ -21,7 +21,6 @@ async function fetchMovies() {
     try {
         const response = await fetch('https://localhost:7276/api/Movies/GetAllPremiere');
         const movies = await response.json();
-        console.log(movies);
 
         loadMovies(movies);
     } catch (error) {

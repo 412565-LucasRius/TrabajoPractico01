@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -27,15 +28,19 @@ public partial class Movie
 
     public virtual Genre Genre { get; set; }
 
-    public virtual ICollection<MovieCast> MovieCasts { get; set; } = new List<MovieCast>();
+  [JsonIgnore]
+
+  public virtual ICollection<MovieCast> MovieCasts { get; set; } = new List<MovieCast>();
 
     public virtual ICollection<MovieDirector> MovieDirectors { get; set; } = new List<MovieDirector>();
 
     public virtual Producer Producer { get; set; }
 
-    public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
+  [JsonIgnore]
+  public virtual ICollection<Review> Reviews { get; set; } = new List<Review>();
 
-    public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
+  [JsonIgnore]
+  public virtual ICollection<Showtime> Showtimes { get; set; } = new List<Showtime>();
 
     public virtual ICollection<UserMovieHistory> UserMovieHistories { get; set; } = new List<UserMovieHistory>();
 }

@@ -2,6 +2,7 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace CineRepository.Models.Entities;
 
@@ -11,5 +12,6 @@ public partial class ScreensType
 
     public string Description { get; set; }
 
-    public virtual ICollection<Screen> Screens { get; set; } = new List<Screen>();
+  [JsonIgnore]
+  public virtual ICollection<Screen> Screens { get; set; } = new List<Screen>();
 }

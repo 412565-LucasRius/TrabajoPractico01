@@ -56,6 +56,17 @@ namespace CineAPI.Controllers
           {
 
           var user = await _userService.AuthenticateAsync(loginRequest.Username, loginRequest.Password);
+
+          if (user == null)
+            {
+            return Unauthorized(new { message = "Usuario o contraseña incorrectos." });
+            }
+
+          if (!user.IsActive)
+            {
+            return StatusCode(403, new { message = "La cuenta del usuario está desactivada. Contacta al soporte para más información." });
+
+            }
           var token = await GenerateJwtToken(user);
 
           var response = new LoginResponseDTO
@@ -68,13 +79,14 @@ namespace CineAPI.Controllers
           return Ok(response);
           }
 
-        return Unauthorized("Invalid username or password");
+        return Unauthorized(new { message = "Usuario o contraseña incorrectos." });
 
         }
       catch (Exception ex)
         {
         Console.WriteLine(ex.Message);
-        throw;
+        return StatusCode(500, new { message = "Error interno del servidor." });
+
         }
       }
 
