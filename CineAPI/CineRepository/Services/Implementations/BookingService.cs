@@ -39,5 +39,10 @@ namespace CineRepository.Services.Implementations
       {
       return await _bookingRepository.GetBookingsByUserAccountIdAsync(userAccountId);
       }
+
+    public async Task<List<string>> GetBookedSeatNumbersByShowtimeId(int showtimeId)
+    {
+        return await _bookingRepository.GetBookedSeatNumbersByShowtimeId(showtimeId);
+    }
     }
   }

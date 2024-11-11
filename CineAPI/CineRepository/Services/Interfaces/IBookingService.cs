@@ -8,6 +8,8 @@ namespace CineRepository.Services.Interfaces
 
     Task<IEnumerable<Booking>> GetBookingsByUser(int userId);
 
+    Task<List<string>> GetBookedSeatNumbersByShowtimeId(int showtimeId);
+
     Task<List<Booking>> GetBookingsByUserAccountIdAsync(int userAccountId);
 
     Task<Booking> GetBookingById(int id);
