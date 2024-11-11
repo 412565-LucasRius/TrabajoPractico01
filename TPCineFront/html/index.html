@@ -95,9 +95,24 @@
     <!-- Modal -->
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span class="close" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle">Título de la Película</h2>
-            <p id="modalDescription">Descripción de la película.</p>
+            <div class="modal-header">
+                <h2 id="modalTitle">Título de la Película</h2>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div class="row mt-4">
+                <div class="col-6 d-flex justify-content-center align-items-center">
+                    <img id="modalImage" class="img-fluid"></img>
+                </div>
+                <div class="col-6">
+                    <p id="modalGenre">Genero.</p>
+                    <p id="modalDuration">Duración.</p>
+                    <p id="modalClasification">Clasificación</p>
+                    <p id="modalProducer">Productor</p>
+                    <a href="" >
+                        <button id="modalBookMovie" class="btn btn-primary" onclick="CheckUserSession()">Reservar</button>                    
+                    </a>
+                </div>
+            </div>
         </div>
     </div>
 

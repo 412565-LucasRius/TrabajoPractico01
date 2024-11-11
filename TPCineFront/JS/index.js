@@ -1,8 +1,34 @@
 // Funciones para abrir y cerrar el modal
-function openModal(title, description) {
-    document.getElementById("modalTitle").innerText = title;
-    document.getElementById("modalDescription").innerText = description;
-    document.getElementById("myModal").style.display = "block";
+function openModal(movie) {
+    const myModal = document.getElementById("myModal");
+    myModal.style.display = "block";
+    myModal.style.width = "80%";
+    myModal.style.margin = "auto";
+    myModal.style.position = "fixed";
+    myModal.style.top = "50%";
+    myModal.style.left = "50%";
+    myModal.style.transform = "translate(-50%, -50%)";
+    const title = document.getElementById('modalTitle');
+    title.innerText = movie.title;
+    
+    const genre = document.getElementById('modalGenre');
+    genre.innerHTML = `<strong>Género:</strong> ${movie.genre.description}`;
+    
+    const duration = document.getElementById('modalDuration');
+    duration.innerHTML = `<strong>Duración:</strong> ${movie.duration} minutos`;
+    
+    const image = document.getElementById('modalImage');
+    image.src = `assets/${movie.imageName}.jfif`;
+
+    
+    const clasification = document.getElementById('modalClasification');
+    clasification.innerHTML = `<strong>Clasificación:</strong> ${movie.clasification.description}`;
+    
+    const producer = document.getElementById('modalProducer');
+    producer.innerHTML = `<strong>Productor:</strong> ${movie.producer.company}`;
+
+    const actionButton = document.getElementById('modalBookMovie');
+    actionButton.onclick = CheckUserSession();
 }
 
 function closeModal() {
@@ -42,20 +68,26 @@ function loadMovies(movies) {
             const movie = movies[j];
             const movieCard = document.createElement('div');
             movieCard.className = 'col-md-3 movie-card';
-            movieCard.onclick = () => openModal(movie.title, movie.description, movie.movieId);
+            movieCard.onclick = () => openModal(movie);
 
+
+            const releaseDate = new Date(movie.lastReleaseDate).toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
 
             movieCard.innerHTML = `
                 <div class="card card-body movie-poster">
-                    // <img class="img-fluid" src="assets/${movie.imageName}.jfif" alt="${movie.title}">
+                   <img class="img-fluid" src="assets/${movie.imageName}.jfif" alt="${movie.title}">
                    <div class="movie-info">
-                        <span class="duration" style="color: white; background-color: red; padding: 5px; border-radius: 5px;">Duración: ${movie.duration} minutos</span>
+                        <span class="duration" style="color: white; background-color: red; padding: 5px; border-radius: 5px;">Estreno: ${releaseDate} </span>
                     </div>
                 </div>
                 <div class="movie-details">
                 <h3>${movie.title}</h3>
-                <a href="asientos.html?movieId=${movie.movieId}" class="btn btn-primary">
-                    <button onclick="${CheckUserSession()}">Seleccionar Asientos</button>                    
+                <a href="asientos.html?movieId=${movie.movieId}">
+                    <button class="btn btn-primary" onclick="${CheckUserSession()}">Reservar</button>                    
                 </a>
             `;
 

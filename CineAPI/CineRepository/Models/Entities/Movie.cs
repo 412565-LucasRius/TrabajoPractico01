@@ -24,6 +24,8 @@ public partial class Movie
 
     public string ImageName { get; set; }
 
+    public DateTime? LastReleaseDate { get; set; }
+
     public virtual Clasification Clasification { get; set; }
 
     public virtual Genre Genre { get; set; }

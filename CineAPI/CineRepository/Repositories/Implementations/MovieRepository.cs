@@ -15,14 +15,45 @@ namespace CineRepository.Repositories.Implementations
       _context = context;
       }
 
-    public async Task<IEnumerable<Movie>> GetAllPremiereAsync()
-      {
-      DateTime currentDate = DateTime.Now;
+        public async Task<IEnumerable<Movie>> GetAllPremiereAsync()
+        {
+            DateTime currentDate = DateTime.Now;
 
-            return await (from movie in _context.Movies
-                          join showtime in _context.Showtimes on movie.MovieId equals showtime.MovieId
-                          where showtime.EndDate >= currentDate && showtime.StartDate <= currentDate
-                          select movie).Distinct().ToListAsync();
+            var movies = await (from movie in _context.Movies
+                                join showtime in _context.Showtimes on movie.MovieId equals showtime.MovieId
+                                join genre in _context.Genres on movie.GenreId equals genre.GenreId
+                                join clasificacion in _context.Clasifications on movie.ClasificationId equals clasificacion.ClasificationId
+                                join producer in _context.Producers on movie.ProducerId equals producer.ProducerId
+                                where showtime.EndDate >= currentDate && showtime.StartDate <= currentDate
+                                select new
+                                {
+                                    movie.MovieId,
+                                    movie.Title,
+                                    movie.ReleaseDate,
+                                    movie.LastReleaseDate,
+                                    Genre = genre,
+                                    Clasification = clasificacion,
+                                    Producer = producer,
+                                    movie.Duration,
+                                    movie.ImageName,
+                                    Showtimes = movie.Showtimes
+                                }).ToListAsync();
+
+            var distinctMovies = movies.GroupBy(m => m.MovieId).Select(g => g.First()).ToList();
+
+            return distinctMovies.Select(m => new Movie
+            {
+                MovieId = m.MovieId,
+                Title = m.Title,
+                ReleaseDate = m.ReleaseDate,
+                LastReleaseDate = m.LastReleaseDate,
+                Genre = m.Genre,
+                Clasification = m.Clasification,
+                Producer = m.Producer,
+                Duration = m.Duration,
+                ImageName = m.ImageName,
+                Showtimes = m.Showtimes
+            });
         }
 
 
