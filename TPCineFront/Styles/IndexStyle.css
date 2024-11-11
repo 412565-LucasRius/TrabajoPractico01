@@ -61,7 +61,12 @@ body {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.7);
+  /* background-color: rgba(0, 0, 0, 0.7); */
+  max-width: 43.75rem;
+}
+.modal-header {
+  display: inline-flex;
+  justify-content: space-between;
 }
 .modal-content {
   background-color: #fff;
@@ -201,6 +206,12 @@ body {
   background: linear-gradient(transparent, rgba(0,0,0,0.8));
 }
 
+.movie-details {
+  display: flex;
+  align-items: center;
+  margin-top: 0.5rem;
+  flex-direction: column;
+}
 .rating, .release-date {
   display: inline-block;
   padding: 0.25rem 0.5rem;
