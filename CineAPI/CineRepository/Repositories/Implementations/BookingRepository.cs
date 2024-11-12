@@ -18,23 +18,44 @@ namespace CineRepository.Repositories.Implementations
       {
       return await _context.Bookings.FirstOrDefaultAsync(i => i.BookingId == id);
       }
+    public async Task<List<string>> GetBookedSeatNumbersByShowtimeId(int showtimeId)
+    {
+        try
+        {
+            var bookedSeats = await _context.Tickets
+                .Where(t => t.ShowtimeId == showtimeId &&
+                            t.Booking.BookingStateId != 3) // Excluye reservas canceladas
+                .Select(t => t.SeatNumber)
+                .Distinct()
+                .ToListAsync();
+
+            return bookedSeats;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception($"Error al obtener los asientos reservados: {ex.Message}");
+        }
+    }
 
     public async Task<IEnumerable<Booking>> GetBookingsByUser(int userId)
-      {
-      var bookingData = await _context.Bookings
-          .Where(b => b.Customer.CustomerId == userId)
-          .Include(b => b.Tickets)
-              .ThenInclude(t => t.Showtime)
-                  .ThenInclude(s => s.Movie)
-          .Include(b => b.Tickets)
-              .ThenInclude(t => t.Showtime)
-                  .ThenInclude(s => s.Screen)
-                      .ThenInclude(sc => sc.Cinema)
-          .Include(b => b.BookingState)
-          .AsNoTracking()
-          .ToListAsync();
-      return bookingData;
-      }
+    {
+    var bookingData = await _context.Bookings
+        .Where(b => b.Customer.CustomerId == userId &&
+                            b.BookingStateId != 3)
+        .Include(b => b.Tickets)
+            .ThenInclude(t => t.Showtime)
+                .ThenInclude(s => s.Movie)
+        .Include(b => b.Tickets)
+            .ThenInclude(t => t.Showtime)
+                .ThenInclude(s => s.Screen)
+                    .ThenInclude(sc => sc.Cinema)
+        .Include(b => b.BookingState)
+        .OrderByDescending(b => b.BookingDate) // Orden descendente por BookingState
+        .ThenBy(b => b.BookingState)
+        .AsNoTracking()
+        .ToListAsync();
+    return bookingData;
+    }
 
     public async Task<List<Booking>> GetBookingsByUserAccountIdAsync(int userAccountId)
       {
