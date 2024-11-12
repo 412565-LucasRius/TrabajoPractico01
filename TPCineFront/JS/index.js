@@ -29,6 +29,8 @@ function openModal(movie) {
 
     const actionButton = document.getElementById('modalBookMovie');
     actionButton.onclick = CheckUserSession();
+
+    document.getElementById("modalBookLink").href = "asientos.html?movieId=" + movie.movieId;
 }
 
 function closeModal() {
@@ -81,7 +83,7 @@ function loadMovies(movies) {
                 <div class="card card-body movie-poster">
                    <img class="img-fluid" src="assets/${movie.imageName}.jfif" alt="${movie.title}">
                    <div class="movie-info">
-                        <span class="duration" style="color: white; background-color: red; padding: 5px; border-radius: 5px;">Estreno: ${releaseDate} </span>
+                        <span class="lastReleaseDate" style="color: white; background-color: red; padding: 5px; border-radius: 5px;">Estreno: ${releaseDate} </span>
                     </div>
                 </div>
                 <div class="movie-details">
