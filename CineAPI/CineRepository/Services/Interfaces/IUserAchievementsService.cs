@@ -5,12 +5,11 @@ namespace CineRepository.Services.Interfaces
   {
   public interface IUserAchievementsService
     {
-    Task<IEnumerable<UserAchievement>> GetAchievementByUsernameAsync(int userId);
-    Task<bool> ValidateUsernameAsync(int userId);
+    Task<IEnumerable<object>> GetAchievementByUserIdAsync(int userId);
+    Task<bool> UserIdExistsAsync(int userId);
 
     //create
     Task<UserAchievement> CreateAchievementAsync(UserAchievementPostRequestDTO userAchievement);
-    Task<bool> UserExistsAsync(int userAccountId);
     Task<bool> AchievementExistsAsync(int achievementId);
 
     }

@@ -1,92 +1,87 @@
 
-document.getElementById('achievementsDropdown').addEventListener('change', UserAchievementsGet);
-async function UserAchievementsGet() {
-  try {
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      alert('No estás logueado. Inicia sesión para ver tus logros.');
-      return;
+document.addEventListener('DOMContentLoaded', initializeAchievements);
+
+// Función principal asíncrona que inicializa y maneja los logros
+async function initializeAchievements() {
+    try {
+        const userId = localStorage.getItem('userId');
+
+        const response = await fetch(`https://localhost:7276/api/UserAchievements/AchievementUser?userId=${userId}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error('No se pudo obtener los datos necesarios de la API');
+        }
+
+        const achievements = await response.json();
+        console.log('Logros recibidos:', achievements);
+
+        updateCounters(achievements);
+        displayAchievements(achievements);
+
+        setInterval(() => initializeAchievements(), 30000);
+
+    } catch (error) {
+        console.error('Error al cargar los datos:', error);
+        const container = document.getElementById('achievementsContainer');
+        if (container) {
+            container.innerHTML = '<p class="error-message">Error al cargar los logros. Por favor, intenta más tarde.</p>';
+        }
     }
-
-    const response = await fetch(`https://localhost:7276/api/UserAchievements/AchievementUser?userId=${userId}`);
-
-
-    if (!response.ok) {
-      throw new error('no se pudo obtener los datos necesarios de la API')
-    }
-    const data = await response.json();
-    const includeData = data.data[0].include;
-
-    const comboBox = document.getElementById('achievementsDropdown');
-    if (!comboBox) {
-      throw new Error('No se encontró el comboBox');
-    }
-
-    if (includeData.length === 0) {
-      // validacion para ver si se cargó algun logro
-      alert('¡No tienes logros aún! Comienza a completar tareas para ganar logros.');
-    } else {
-      // si no entra al if, se cargan los logros q trae el GET
-      includeData.forEach(item => {
-        const option = document.createElement('option');
-        option.value = item.id; //valor unico de cada logro
-        option.textContent = item.name;  // el nombre de logro q se vé en el desplegable
-        comboBox.appendChild(option);
-      });
-    };
-
-  } catch (error) {
-    console.error('error al cargar los datos', error)
-  }
 }
 
-UserAchievementsGet()
 
-// Función para obtener el ID de usuario
-function getUserId() {
-  const userId = localStorage.getItem('userId');
-  if (userId) {
-    return userId;
-  }
-
-  // Si no hay ID de usuario en el localStorage, devuelve 0
-  return 0;
+function updateCounters(achievements) {
+    
+    const pointsCounter = document.querySelector('.points');
+    const movieCounter = document.querySelector('.count');
+    
+    const totalPoints = achievements.reduce((sum, achievement) => sum + achievement.points, 0);
+    
+    pointsCounter.textContent = totalPoints;
+    movieCounter.textContent = achievements.length;
 }
 
-// Función para obtener los datos de la base de datos y actualizar la página
-async function updateMovieData() {
-  try {
-    const userId = getUserId();
 
-    // Conectar a la base de datos y obtener los datos
-    const response = await fetch(`https://localhost:7276/api/UserGenre/userGenresMovie?userId=${userId}`);
-    const movieData = await response.json();
+function displayAchievements(achievements) {
+    const container = document.getElementById('achievementsContainer');
+    container.innerHTML = '';
 
-    // Calcular el total de películas vistas
-    const totalMoviesWatched = movieData.reduce((total, data) => total + data.viewCount, 0);
+    if (achievements.length === 0) {
+        container.innerHTML = '<p class="no-achievements">¡No tienes logros aún!</p>';
+        return;
+    }
 
-    // Actualizar el contador de películas
-    document.querySelector('.count').textContent = totalMoviesWatched;
+    function getIconForAchievement(name) {
+        if (name.includes('Novato')) return 'fa-solid fa-star';
+        if (name.includes('Experto')) return 'fa-solid fa-trophy';
+        if (name.includes('Terror')) return 'fa-solid fa-ghost';
+        return 'fa-solid fa-award'; 
+    }
 
-    // Calcular los puntos totales
-    let totalPoints = 0;
-    const achievementElements = document.querySelectorAll('.achievement');
-    achievementElements.forEach((achievement, index) => {
-      const achievementPoints = parseInt(achievement.querySelector('.achievement-points').textContent);
-      const achievementThreshold = parseInt(achievement.querySelector('.achievement-content p').textContent.match(/\d+/)[0]);
-      const isUnlocked = movieData.some(data => data.viewCount >= achievementThreshold);
-      if (isUnlocked) {
-        achievement.querySelector('.achievement-icon').innerHTML = '<i class="fas fa-check"></i>';
-        totalPoints += achievementPoints;
-      }
+    achievements.forEach(achievement => {
+        const achievementElement = document.createElement('div');
+        achievementElement.className = 'achievement';
+
+        const icon = getIconForAchievement(achievement.name); 
+
+        achievementElement.innerHTML = `
+            <div class="achievement-icon">
+                <i class="${icon}"></i>
+            </div>
+            <div class="achievement-content">
+                <h3>${achievement.name}</h3>
+                <p class="achievement-description">${achievement.description}</p>
+            </div>
+            <div class="achievement-points">
+                ${achievement.points} pts
+            </div>
+        `;
+
+        container.appendChild(achievementElement);
     });
-
-    // Actualizar el marcador de puntos totales
-    document.querySelector('.points').textContent = totalPoints;
-  } catch (error) {
-    console.error('Error al obtener los datos de la base de datos:', error);
-  }
 }
-
-// Ejecutar la función para actualizar los datos inicialmente
-updateMovieData();

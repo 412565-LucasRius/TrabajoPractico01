@@ -22,7 +22,7 @@ namespace CineAPI.Controllers
       try
         {
 
-        if (!await _achievementsService.UserExistsAsync(Convert.ToInt32(userAchievement.UserId)))
+        if (!await _achievementsService.UserIdExistsAsync(Convert.ToInt32(userAchievement.UserId)))
           {
           return BadRequest($"User with ID {userAchievement.UserId} not found");
           }
@@ -52,12 +52,12 @@ namespace CineAPI.Controllers
           return BadRequest("User id cannot be empty.");
           }
 
-        if (!await _achievementsService.ValidateUsernameAsync(userId))
+        if (!await _achievementsService.UserIdExistsAsync(userId))
           {
           return NotFound($"User '{userId}' not found.");
           }
 
-        var achievement = await _achievementsService.GetAchievementByUsernameAsync(userId);
+        var achievement = await _achievementsService.GetAchievementByUserIdAsync(userId);
         if (achievement == null)
           {
           return NotFound($"No achievements found for user '{userId}'.");

@@ -15,17 +15,17 @@ namespace CineRepository.Services.Implementations
       _userAchievementsRepository = userAchievementsRepository;
       }
 
-    public async Task<IEnumerable<UserAchievement>> GetAchievementByUsernameAsync(int userId)
+    public async Task<IEnumerable<object>> GetAchievementByUserIdAsync(int userId)
       {
-      return await _userAchievementsRepository.GetAchievementByUsernameAsync(userId);
+      return await _userAchievementsRepository.GetAchievementByUserIdAsync(userId);
       }
 
-    public async Task<bool> ValidateUsernameAsync(int userId)
+    public async Task<bool> UserIdExistsAsync(int userId)
       {
       if (userId == 0)
         return false;
 
-      return await _userAchievementsRepository.UserExistsAsync(userId);
+      return await _userAchievementsRepository.UserIdExistsAsync(userId);
       }
 
     //create
@@ -33,11 +33,6 @@ namespace CineRepository.Services.Implementations
     public async Task<UserAchievement> CreateAchievementAsync(UserAchievementPostRequestDTO userAchievement)
       {
       return await _userAchievementsRepository.CreateAchievementAsync(userAchievement);
-      }
-
-    public async Task<bool> UserExistsAsync(int userAccountId)
-      {
-      return await _userAchievementsRepository.UserExistsAsync(userAccountId);
       }
 
     public async Task<bool> AchievementExistsAsync(int achievementId)

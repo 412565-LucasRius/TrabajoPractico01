@@ -15,33 +15,23 @@ namespace CineRepository.Repositories.Implementations
       _context = context;
       }
 
-    public async Task<IEnumerable<UserAchievement>> GetAchievementByUsernameAsync(int userId)
-      {
-      return await _context.UserAchievements
-       .Include(ua => ua.UserAccount)
-       .Include(ua => ua.Achievement)
-       .Where(ua => ua.UserAccount.UserAccountId == userId)
-       .Select(ua => new UserAchievement
-         {
-         UserAchievementId = ua.UserAchievementId,
-         UserAccountId = ua.UserAccountId,
-         AchievementId = ua.AchievementId,
-         AchievedAt = ua.AchievedAt,
-         Achievement = new Achievement
-           {
-           AchievementId = ua.Achievement.AchievementId,
-           Name = ua.Achievement.Name,
-           Description = ua.Achievement.Description,
-           Points = ua.Achievement.Points
-           }
-         })
-  .ToListAsync();
-      }
+        public async Task<IEnumerable<object>> GetAchievementByUserIdAsync(int userId)
+        {
+            return await _context.UserAchievements
+                .Where(ua => ua.UserAccount.UserAccountId == userId)
+                .Select(ua => new
+                {
+                    ua.Achievement.Name,   // Nombre del logro
+                    ua.Achievement.Points,  // Puntos asociados al logro
+                    ua.Achievement.Description // descripcion de cada logro
+                })
+                .ToListAsync();
+        }
 
-    public async Task<bool> UsernameExistsAsync(string username)
+        public async Task<bool> UserIdExistsAsync(int userId)
       {
       return await _context.UserAccounts
-          .AnyAsync(u => u.Username.ToLower() == username.ToLower());
+          .AnyAsync(u => u.UserAccountId == userId);
       }
 
     //create
@@ -59,11 +49,6 @@ namespace CineRepository.Repositories.Implementations
       await _context.UserAchievements.AddAsync(newUserAchievement);
       await _context.SaveChangesAsync();
       return newUserAchievement;
-      }
-
-    public async Task<bool> UserExistsAsync(int userAccountId)
-      {
-      return await _context.UserAccounts.AnyAsync(u => u.UserAccountId == userAccountId);
       }
 
     public async Task<bool> AchievementExistsAsync(int achievementId)
