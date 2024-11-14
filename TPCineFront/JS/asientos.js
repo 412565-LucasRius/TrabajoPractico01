@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const urlParams = new URLSearchParams(window.location.search);
   const movieId = urlParams.get('movieId');
+  const bookingId = urlParams.get('bookingId');
+  const isUpdate = urlParams.get('isUpdate');
 
   let movieData;
 
@@ -28,17 +30,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 
       // Populate the showtime selector
       const showtimeSelector = document.getElementById('showtimeSelector');
-      const firstAvailableShowtime = movieData.showtimes.find(showtime => showtime.showtimeId);
-      if (firstAvailableShowtime) {
-        showtimeSelector.value = firstAvailableShowtime.showtimeId;
-        await createSeats([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]);
-      }
       movieData.showtimes.forEach(showtime => {
         const option = document.createElement('option');
         option.value = showtime.showtimeId;
-        option.textContent = `Sala ${showtime.screenId} - ${new Date(showtime.startDate).toLocaleString()} to ${new Date(showtime.endDate).toLocaleString()}`;
+        option.textContent = `Sala ${showtime.screenId} - ${new Date(showtime.movieTime).toLocaleString()}`;
         showtimeSelector.appendChild(option);
       });
+      showtimeSelector.selectedIndex = 0;
       return movieData;
     } catch (error) {
       console.error('Error al obtener los showtimes:', error);
@@ -47,19 +45,45 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   async function fetchOccupiedSeats(showtimeId) {
     try {
-      const response = await fetch(`https://localhost:7276/api/Booking/BookedByShowtimeId/${showtimeId}`, {
-        headers: { "Authorization": `Bearer ${token}` }
-      });
-      const occupiedSeats = await response.json();
-      console.log("Asientos ocupados obtenidos de la API:", occupiedSeats);
-      return occupiedSeats;
-    } catch (error) {
-      console.error('Error al obtener los asientos ocupados:', error);
-    }
-  }
+        let response;
+        const bookingId = urlParams.get('bookingId');
+        console.log('isUpdate:', isUpdate);
+        console.log('bookingId:', bookingId);
+        console.log('showtimeId:', showtimeId);
 
+        if (isUpdate === 'True'){
+            console.log("Executing update path");
+            response = await fetch(
+                `https://localhost:7276/api/Booking/BookedByShowtimeIdandBooking/${showtimeId}/${bookingId}`,
+                {
+                    headers: { "Authorization": `Bearer ${token}` }
+                }
+            );
+            console.log('Update path response:', response);
+        } else {
+            response = await fetch(
+                `https://localhost:7276/api/Booking/BookedByShowtimeId/${showtimeId}`,
+                {
+                    headers: { "Authorization": `Bearer ${token}` }
+                }
+            );
+        }
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const occupiedSeats = await response.json();
+        console.log("Asientos ocupados obtenidos de la API:", occupiedSeats);
+        return occupiedSeats;
+
+    } catch (error) {
+        console.error('Error al obtener los asientos ocupados:', error);
+        throw error;
+    }
+}
   async function createSeats(seatsArray) {
-    seatingChart.innerHTML = ''; // Limpiar el contenedor de asientos
+    seatingChart.innerHTML = '';
 
     const showtimeId = document.getElementById("showtimeSelector").value;
     const occupiedSeats = await fetchOccupiedSeats(showtimeId) || [];
@@ -102,72 +126,88 @@ document.addEventListener("DOMContentLoaded", async () => {
     const userId = localStorage.getItem("userId");
     const token = localStorage.getItem("JWT-Token");
     const showtimeId = document.getElementById("showtimeSelector").value;
-    const pricePerSeat = 1500;
+    
+
+    if (!token) {
+        alert("No hay sesión activa. Por favor inicia sesión.");
+        return;
+    }
 
     if (!showtimeId) {
-      alert("Por favor, selecciona un horario");
-      return;
+        alert("Por favor, selecciona un horario");
+        return;
+    }
+
+    if (!selectedSeats || selectedSeats.length === 0) {
+        alert("Por favor, selecciona al menos un asiento");
+        return;
     }
 
     const selectedShowtime = movieData.showtimes.find(showtime => showtime.showtimeId == showtimeId);
 
     if (!selectedShowtime) {
-      alert("Error: no se encontró el showtime seleccionado.");
-      return;
+        alert("Error: no se encontró el showtime seleccionado.");
+        return;
     }
-
-    function formatDate(date) {
-      const year = date.getFullYear();
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const day = String(date.getDate()).padStart(2, '0');
-      return `${year}-${month}-${day}`;
-    }
-
-    const bookingRequest = {
-      customerId: userId,
-      bookingDate: formatDate(new Date(selectedShowtime.startDate))
-    };
-
-    const ticketRequest = selectedSeats.map(seat => {
-      const seatNumber = String.fromCharCode(65 + seat.row) + String(seat.seat + 1).padStart(2, '0');
-      return {
-        showtimeId: showtimeId,
-        seatNumber: seatNumber,
-        saleDate: formatDate(new Date()),
-        price: pricePerSeat
-      };
-    });
-
-    const requestData = {
-      bookingRequest: bookingRequest,
-      ticketRequest: ticketRequest
-    };
 
     try {
-      const response = await fetch('https://localhost:7276/api/Booking', {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify(requestData)
-      });
+        const ticketRequest = selectedSeats.map(seat => {
+            const seatNumber = String.fromCharCode(65 + seat.row) + String(seat.seat + 1).padStart(2, '0');
+            return {
+                showtimeId: showtimeId,
+                seatNumber: seatNumber,
+                saleDate: new Date().toISOString()
+            };
+        });
 
-      const result = await response.json();
+        let response;
+        let result;
 
-      if (response.ok) {
+        if (isUpdate === 'True') {
+            response = await fetch(`https://localhost:7276/api/Booking/UpdateBooking?bookingId=${bookingId}`, {
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(ticketRequest)
+            });
+        } else {
+            const bookingRequest = {
+                customerId: userId,
+                bookingDate: new Date(selectedShowtime.movieTime).toISOString()
+            };          
+            const requestData = {
+                bookingRequest: bookingRequest,
+                ticketRequest: ticketRequest
+            };
+
+            response = await fetch('https://localhost:7276/api/Booking', {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify(requestData)
+            });
+        }
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
+        }
+
+        result = await response.json();
         alert("Reserva realizada con éxito.");
         selectedSeats = [];
         createSeats([[1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1], [1, 1, 1, 1, 1]]);
         window.location.href = 'index.html';
-      } else {
-        alert("Error al realizar la reserva: " + result.message);
-      }
+
     } catch (error) {
-      console.error("Error en la solicitud:", error);
-      alert("Hubo un error al realizar la reserva.");
+        console.error('Error en la operación de reserva:', error);
+        alert('Ocurrió un error al procesar la reserva. Por favor, intente nuevamente.');
     }
-  });
+});
 
   await fetchShowtimes(movieId);
   document.getElementById('showtimeSelector').addEventListener('change', () => {
@@ -175,7 +215,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   cancelBtn.addEventListener('click', function () {
-    window.location.href = 'index.html';  // Redirige a index.html al cancelar
+    window.location.href = 'index.html'; 
   });
   
 });

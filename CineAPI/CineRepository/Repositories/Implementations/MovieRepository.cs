@@ -84,9 +84,10 @@ namespace CineRepository.Repositories.Implementations
           ShowtimeId = s.ShowtimeId,
           StartDate = s.StartDate,
           EndDate = s.EndDate,
-          ScreenId = s.ScreenId ?? 0
-          }).ToList()
-        };
+          ScreenId = s.ScreenId ?? 0,
+          MovieTime = s.MovieTime
+        }).ToList()
+      };
       }
 
 

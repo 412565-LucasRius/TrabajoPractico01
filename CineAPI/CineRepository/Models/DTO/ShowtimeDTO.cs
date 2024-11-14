@@ -5,6 +5,7 @@
     public int ShowtimeId { get; set; }
     public DateTime? StartDate { get; set; }
     public DateTime? EndDate { get; set; }
+    public DateTime? MovieTime { get; set; }
     public int ScreenId { get; set; }
     }
   }

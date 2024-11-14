@@ -480,6 +480,9 @@ public partial class Cine_1W3_TPContext : DbContext
             entity.Property(e => e.StartDate)
                 .HasColumnType("date")
                 .HasColumnName("start_date");
+            entity.Property(e => e.MovieTime)
+                    .HasColumnType("datetime")
+                    .HasColumnName("movie_time");
 
             entity.HasOne(d => d.Movie).WithMany(p => p.Showtimes)
                 .HasForeignKey(d => d.MovieId)

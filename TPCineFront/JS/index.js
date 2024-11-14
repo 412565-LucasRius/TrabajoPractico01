@@ -1,4 +1,3 @@
-// Funciones para abrir y cerrar el modal
 function openModal(movie) {
     const myModal = document.getElementById("myModal");
     myModal.style.display = "block";
@@ -30,21 +29,35 @@ function openModal(movie) {
     const actionButton = document.getElementById('modalBookMovie');
     actionButton.onclick = CheckUserSession();
 
-    document.getElementById("modalBookLink").href = "asientos.html?movieId=" + movie.movieId;
+    document.getElementById("modalBookLink").href = "asientos.html?movieId=" + movie.movieId +"&isUpdate=False";
 }
 
 function closeModal() {
-    document.getElementById("myModal").style.display = "none";
+    const modal = document.getElementById("myModal");
+    if (!modal) return;
+    
+    modal.style.display = "none";
+    document.body.classList.remove('modal-open');
 }
 
-// Cerrar el modal si se hace clic fuera de él
-window.onclick = function (event) {
-    if (event.target == document.getElementById("myModal")) {
+function handleOutsideClick(event) {
+    const modal = document.getElementById("myModal");
+    if (!modal) return;
+    
+    if (event.target === modal) {
         closeModal();
     }
 }
 
-// Cargar las películas
+window.addEventListener('click', handleOutsideClick);
+
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeModal();
+    }
+});
+
+
 async function fetchMovies() {
     try {
         const response = await fetch('https://localhost:7276/api/Movies/GetAllPremiere');
@@ -56,16 +69,16 @@ async function fetchMovies() {
     }
 }
 
-// Cargar las películas en el carrusel
+
 function loadMovies(movies) {
     const movieGrid = document.getElementById('premiere-list');
 
-    // Agrupar las películas en conjuntos de 4 para cada elemento del carrusel
+    
     for (let i = 0; i < movies.length; i += 4) {
         const carouselItem = document.createElement('div');
         carouselItem.className = `carousel-item ${i === 0 ? 'active' : ''} movie-card-group`;
 
-        // Agregar 4 películas por elemento del carrusel
+        
         for (let j = i; j < i + 4 && j < movies.length; j++) {
             const movie = movies[j];
             const movieCard = document.createElement('div');
@@ -88,7 +101,7 @@ function loadMovies(movies) {
                 </div>
                 <div class="movie-details">
                 <h3>${movie.title}</h3>
-                <a href="asientos.html?movieId=${movie.movieId}">
+                <a href="asientos.html?movieId=${movie.movieId}&isUpdate=False">
                     <button class="btn btn-primary" onclick="${CheckUserSession()}">Reservar</button>                    
                 </a>
             `;
@@ -102,42 +115,6 @@ function loadMovies(movies) {
 
 document.addEventListener('DOMContentLoaded', fetchMovies);
 
-async function fetchCinemas() {
-    try {
-        const response = await fetch('https://localhost:7276/api/Cinema/GetAllCinemas');
-        const cinemas = await response.json();
-        loadCinemas(cinemas);
-    } catch (error) {
-        console.error('Error al obtener los Cines:', error);
-    }
-}
-
-function loadCinemas(cinemas) {
-    const select = document.getElementById("locationSelect");
-    // Limpiar cualquier opción existente antes de agregar las nuevas
-    select.innerHTML = '';
-
-    // Agregar la opción predeterminada
-    const opcionPredeterminada = document.createElement('option');
-    opcionPredeterminada.value = '';
-    opcionPredeterminada.disabled = true;
-    opcionPredeterminada.selected = true;
-    opcionPredeterminada.textContent = 'Seleccionar Cine';
-    select.appendChild(opcionPredeterminada);
-
-    // Agregar las opciones del arreglo
-    cinemas.forEach(cinema => {
-        const option = document.createElement('option');
-        option.value = cinema.cinemaId;
-        option.textContent = cinema.name;
-        select.appendChild(option);
-    });
-}
-
-document.addEventListener('DOMContentLoaded', fetchCinemas);
-
-
-// Comprobación de sesión de usuario
 
 async function CheckUserSession() {
     const userId = localStorage.getItem('userId');
@@ -145,8 +122,9 @@ async function CheckUserSession() {
 
 
     if (!userId || !token) {
-        window.location.href = 'login.html'; // Redirigir a la página de login si no hay sesión
+        window.location.href = 'login.html';
     } else {
         document.getElementById("userIconLink").setAttribute('href', 'perfil.html');
     }
 }
+
