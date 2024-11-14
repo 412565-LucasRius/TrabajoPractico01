@@ -59,27 +59,29 @@ namespace CineAPI.Controllers
       }
     [HttpGet("BookedByShowtimeId/{showtimeId}")]
     public async Task<ActionResult<List<string>>> GetBookedSeats(int showtimeId)
-    {
-        try
+      {
+      try
         {
-            var bookedSeats = await _bookingService.GetBookedSeatNumbersByShowtimeId(showtimeId);
+        var bookedSeats = await _bookingService.GetBookedSeatNumbersByShowtimeId(showtimeId);
 
-            if (bookedSeats == null || !bookedSeats.Any())
-            {
-                return Ok(new List<string>()); // Retorna lista vacía si no hay asientos reservados
-            }
+        if (bookedSeats == null || !bookedSeats.Any())
+          {
+          return Ok(new List<string>()); // Retorna lista vacía si no hay asientos reservados
+          }
 
-            return Ok(bookedSeats);
+        return Ok(bookedSeats);
         }
-        catch (Exception ex)
+      catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Error al obtener los asientos reservados", error = ex.Message });
+        return StatusCode(500, new { message = "Error al obtener los asientos reservados", error = ex.Message });
         }
+
     }
     [HttpGet("BookedByShowtimeIdandBooking/{showtimeId}/{bookingid}")]
     public async Task<ActionResult<List<string>>> GetBookedSeatsbyShowandBook(int showtimeId, int bookingid)
     {
         try
+
         {
             var bookedSeats = await _bookingService.GetBookedSeatNumbersByShowtimeIdandBookingId(showtimeId, bookingid);
 
@@ -147,25 +149,25 @@ namespace CineAPI.Controllers
 
         [HttpPut("DeleteBooking/{id}/{state}")]
     public async Task<IActionResult> UpdateBookingState(int id, int state)
-    {
-        try
+      {
+      try
         {
-            bool updated = await _bookingService.UpdateBookingState(id, state);
+        bool updated = await _bookingService.UpdateBookingState(id, state);
 
-            if (updated)
-            {
-                return Ok(new { message = "Componente actualizado con éxito", id, state });
-            }
-            else
-            {
-                return NotFound(new { message = "No se encontró la reserva o el estado no cambió.", id });
-            }
+        if (updated)
+          {
+          return Ok(new { message = "Componente actualizado con éxito", id, state });
+          }
+        else
+          {
+          return NotFound(new { message = "No se encontró la reserva o el estado no cambió.", id });
+          }
         }
-        catch (Exception ex)
+      catch (Exception ex)
         {
-            return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
+        return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
         }
-    }
+      }
 
 
 

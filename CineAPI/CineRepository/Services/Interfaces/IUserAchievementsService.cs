@@ -1,21 +1,16 @@
-﻿using CineRepository.Models.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 
 namespace CineRepository.Services.Interfaces
-{
-    public interface IUserAchievementsService
+  {
+  public interface IUserAchievementsService
     {
-        Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username);
-        Task<bool> ValidateUsernameAsync(string username);
+    Task<IEnumerable<object>> GetAchievementByUserIdAsync(int userId);
+    Task<bool> UserIdExistsAsync(int userId);
 
-        //create
-        Task<UserAchievement> CreateAchievementAsync(UserAchievement userAchievement);
-        Task<bool> UserExistsAsync(int userAccountId);
-        Task<bool> AchievementExistsAsync(int achievementId);
+    //create
+    Task<UserAchievement> CreateAchievementAsync(UserAchievementPostRequestDTO userAchievement);
+    Task<bool> AchievementExistsAsync(int achievementId);
 
     }
-}
+  }
