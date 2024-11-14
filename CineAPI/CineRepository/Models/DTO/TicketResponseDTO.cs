@@ -8,6 +8,5 @@
     public DateTime ShowtimeStartDate { get; set; }
     public string MovieTitle { get; set; }
     public string CinemaName { get; set; }
-    public decimal Price { get; set; }
     }
   }

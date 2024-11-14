@@ -18,6 +18,8 @@ public partial class Showtime
 
     public DateTime? EndDate { get; set; }
 
+    public DateTime? MovieTime { get; set; }
+
     public virtual Movie Movie { get; set; }
 
   [JsonIgnore] 

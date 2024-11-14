@@ -41,8 +41,7 @@ function closeModal() {
   document.getElementById('editUsernameModal').style.display = 'none';
 }
 
-// Función para abrir el modal al hacer clic en el botón de "Actualizar Información"
-document.querySelector('.update-button').addEventListener('click', openModal);
+
 
 
 async function UpdateUserData() {
@@ -222,9 +221,43 @@ async function deleteReservation(bookingId) {
 }
 
 // Función para actualizar una reserva (ejemplo de acción)
-function updateReservation(bookingId) {
-  alert(`Actualizar reserva con ID: ${bookingId}`);
-  // Aquí se podría agregar lógica para redirigir o mostrar un formulario para editar la reserva
+async function updateReservation(bookingId) {
+  const token = localStorage.getItem("JWT-Token");
+  const userId = localStorage.getItem("userId");
+  
+  try {
+    const response = await fetch(`https://localhost:7276/api/Booking/GetBookingByUser?userId=${userId}`, {
+      method: 'GET',
+      headers: {
+        "Authorization": `Bearer ${token}`,
+        "Content-Type": "application/json"
+      }
+    });
+    if (response.ok) {
+      const bookings = await response.json();
+      console.log("Bookings:", bookings);
+      console.log(bookingId);
+      // Encontrar la reserva específica
+      const booking = bookings.find(b => b.bookingId === bookingId);
+      console.log(booking);
+      if (booking) {
+        // Obtener el ID de la película de la reserva actual
+        const movieId = booking.tickets[0].showtime.movie.movieId;
+        console.log("MovieId:", movieId);
+        
+        
+        // Redirigir a la página de selección de asientos con los parámetros necesarios
+        window.location.href = `asientos.html?movieId=${movieId}&bookingId=${bookingId}&isUpdate=True`;
+      } else {
+        throw new Error('No se encontró la reserva especificada');
+      }
+    } else {
+      throw new Error('No se pudo obtener la información de las reservas');
+    }
+  } catch (error) {
+    console.error("Error al obtener la información de la reserva:", error);
+    alert("Error al intentar actualizar la reserva: " + error.message);
+  }
 }
 
 // Llamamos a las funciones cuando el DOM esté completamente cargado

@@ -2,6 +2,7 @@
 using CineRepository.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CineAPI.Controllers
   {
@@ -17,7 +18,7 @@ namespace CineAPI.Controllers
       }
 
     [HttpGet("GetBookingById")]
-    [Authorize]
+    //[Authorize]
     public async Task<IActionResult> GetbyIdGetBookingById(int id)
       {
       try
@@ -74,29 +75,29 @@ namespace CineAPI.Controllers
         {
         return StatusCode(500, new { message = "Error al obtener los asientos reservados", error = ex.Message });
         }
-      }
 
-    [HttpGet("GetBookingByUserwithSP")]
-    public async Task<IActionResult> GetbyIdGetBookingByUserWihSP(int userId)
-      {
-      try
+    }
+    [HttpGet("BookedByShowtimeIdandBooking/{showtimeId}/{bookingid}")]
+    public async Task<ActionResult<List<string>>> GetBookedSeatsbyShowandBook(int showtimeId, int bookingid)
+    {
+        try
+
         {
-        var booking = await _bookingService.GetBookingsByUserAccountIdAsync(userId);
+            var bookedSeats = await _bookingService.GetBookedSeatNumbersByShowtimeIdandBookingId(showtimeId, bookingid);
 
-        if (booking == null)
-          {
-          return BadRequest("Booking no existe");
-          }
+            if (bookedSeats == null || !bookedSeats.Any())
+            {
+                return Ok(new List<string>()); // Retorna lista vacía si no hay asientos reservados
+            }
 
-        return Ok(booking[0]);
+            return Ok(bookedSeats);
         }
-      catch (Exception ex)
+        catch (Exception ex)
         {
-        return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
+            return StatusCode(500, new { message = "Error al obtener los asientos reservados", error = ex.Message });
         }
-      }
-
-    [HttpPost]
+    }
+     [HttpPost]
     //[Authorize]
     public async Task<IActionResult> SaveBooking([FromBody] BookingWithTicketsRequest bookingWithTicketsRequest)
       {
@@ -121,8 +122,32 @@ namespace CineAPI.Controllers
         return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
         }
       }
+    [HttpPut("UpdateBooking")]
+    //[Authorize]
+    public async Task<IActionResult> UpdateBooking([FromQuery] int bookingId, [FromBody] List<TicketRequest> ticketList)
+    {
+        try
+        {
+            var isSuccess = await _bookingService.UpdateBooking(bookingId, ticketList);
 
-    [HttpPut("DeleteBooking/{id}/{state}")]
+            if (!isSuccess)
+            {
+                    return BadRequest("No se puedo actualizar la reserva.");
+            }
+
+            return Ok(new
+            {
+                message = "Reserva actualizada correctamente",
+
+            });
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
+        }
+    }
+
+        [HttpPut("DeleteBooking/{id}/{state}")]
     public async Task<IActionResult> UpdateBookingState(int id, int state)
       {
       try
@@ -143,6 +168,8 @@ namespace CineAPI.Controllers
         return StatusCode(500, new { message = "Ha ocurrido un error interno.", error = ex.Message });
         }
       }
+
+
 
     }
 

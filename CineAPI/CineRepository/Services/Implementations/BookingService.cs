@@ -2,6 +2,8 @@
 using CineRepository.Models.Entities;
 using CineRepository.Repositories.Contracts;
 using CineRepository.Services.Interfaces;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CineRepository.Services.Implementations
   {
@@ -38,11 +40,23 @@ namespace CineRepository.Services.Implementations
     public async Task<List<Booking>> GetBookingsByUserAccountIdAsync(int userAccountId)
       {
       return await _bookingRepository.GetBookingsByUserAccountIdAsync(userAccountId);
-      }
+        }
 
+     public async Task<List<string>> GetBookedSeatNumbersByShowtimeIdandBookingId(int showtimeId, int bookingid)
+        {
+            return await _bookingRepository.GetBookedSeatNumbersByShowtimeIdandBookingId(showtimeId, bookingid);
+        }
     public async Task<List<string>> GetBookedSeatNumbersByShowtimeId(int showtimeId)
     {
         return await _bookingRepository.GetBookedSeatNumbersByShowtimeId(showtimeId);
     }
+
+    public async Task<bool> UpdateBooking(int bookingId, List<TicketRequest> ticketsList)
+        {
+            if (bookingId == 0 && ticketsList.Count == 0) return false;
+            return await _bookingRepository.UpdateBooking(bookingId, ticketsList);
+        }
+
+
     }
   }

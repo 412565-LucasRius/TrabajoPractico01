@@ -1,5 +1,6 @@
 ﻿using CineRepository.Models.DTO;
 using CineRepository.Models.Entities;
+using System.Threading.Tasks;
 
 namespace CineRepository.Services.Interfaces
   {
@@ -9,6 +10,11 @@ namespace CineRepository.Services.Interfaces
     Task<IEnumerable<Booking>> GetBookingsByUser(int userId);
 
     Task<List<string>> GetBookedSeatNumbersByShowtimeId(int showtimeId);
+
+    Task<List<string>> GetBookedSeatNumbersByShowtimeIdandBookingId(int showtimeId, int bookingid);
+
+    Task<bool> UpdateBooking(int bookingId, List<TicketRequest> ticketsList);
+
 
     Task<List<Booking>> GetBookingsByUserAccountIdAsync(int userAccountId);
 
