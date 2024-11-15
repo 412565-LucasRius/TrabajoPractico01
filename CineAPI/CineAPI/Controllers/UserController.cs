@@ -35,7 +35,7 @@ namespace CineAPI.Controllers
 
         await _userService.RegisterAsync(registerRequest);
 
-        return Ok("User registered successfully");
+               return Ok(new { message = "Usuario registrado exitosamente"});
         }
       catch (Exception ex)
         {

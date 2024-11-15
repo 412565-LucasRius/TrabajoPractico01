@@ -3,6 +3,7 @@ using CineRepository.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CineAPI.Controllers
   {
@@ -18,7 +19,7 @@ namespace CineAPI.Controllers
       }
 
     [HttpGet("GetBookingById")]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> GetbyIdGetBookingById(int id)
       {
       try
@@ -38,7 +39,7 @@ namespace CineAPI.Controllers
         }
       }
     [HttpGet("GetBookingByUser")]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> GetBookingByUser(int userId)
       {
       try
@@ -95,8 +96,37 @@ namespace CineAPI.Controllers
             return StatusCode(500, new { message = "Error al obtener los asientos reservados", error = ex.Message });
         }
     }
-     [HttpPost]
-    //[Authorize]
+        [HttpGet("UniqueBookingCounts/")]
+        public async Task<ActionResult<string>> GetUniqueBookingCountsByGenreAsync([FromQuery] int userId, [FromQuery] int genreId)
+        {
+            try
+            {
+                if (userId <= 0)
+                {
+                    return BadRequest("Invalid userId");
+                }
+
+                if (genreId <= 0)
+                {
+                    return BadRequest("Invalid genreId");
+                }
+
+                var result = await _bookingService.GetUniqueBookingCountsByGenreAsync(userId, genreId);
+
+                if (result == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An error occurred while processing your request");
+            }
+        }
+        [HttpPost]
+    [Authorize]
     public async Task<IActionResult> SaveBooking([FromBody] BookingWithTicketsRequest bookingWithTicketsRequest)
       {
       try
@@ -121,7 +151,7 @@ namespace CineAPI.Controllers
         }
       }
     [HttpPut("UpdateBooking")]
-    //[Authorize]
+    [Authorize]
     public async Task<IActionResult> UpdateBooking([FromQuery] int bookingId, [FromBody] List<TicketRequest> ticketList)
     {
         try

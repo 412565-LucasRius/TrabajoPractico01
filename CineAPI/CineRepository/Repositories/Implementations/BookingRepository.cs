@@ -3,6 +3,8 @@ using CineRepository.Models.Entities;
 using CineRepository.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Net.Sockets;
+using System.Text.Json;
 
 namespace CineRepository.Repositories.Implementations
   {
@@ -25,7 +27,7 @@ namespace CineRepository.Repositories.Implementations
         {
             var bookedSeats = await _context.Tickets
                 .Where(t => t.ShowtimeId == showtimeId &&
-                            t.Booking.BookingStateId != 3) // Excluye reservas canceladas
+                            t.Booking.BookingStateId != 3) 
                 .Select(t => t.SeatNumber)
                 .Distinct()
                 .ToListAsync();
@@ -45,7 +47,7 @@ namespace CineRepository.Repositories.Implementations
                 .Where(t => t.ShowtimeId == showtimeId &&
                             t.Booking.BookingStateId != 3 &&
                             t.BookingId != bookingid
-                            ) // Excluye reservas canceladas
+                            ) 
                 .Select(t => t.SeatNumber)
                 .Distinct()
                 .ToListAsync();
@@ -62,7 +64,7 @@ namespace CineRepository.Repositories.Implementations
             using var transaction = await _context.Database.BeginTransactionAsync();
             try
             {
-                // Obtener la reserva de manera asíncrona
+                
                 var booking = await GetBookingById(bookingId);
                 if (booking == null)
                     return false;
@@ -72,12 +74,12 @@ namespace CineRepository.Repositories.Implementations
 
                 await _context.SaveChangesAsync();
 
-                // Obtiene los tickets actuales y los elimina
+                
                 var existingTickets = await _context.Tickets.Where(t => t.BookingId == bookingId).ToListAsync();
                 _context.Tickets.RemoveRange(existingTickets);
-                await _context.SaveChangesAsync();  // Guarda cambios tras eliminación
+                await _context.SaveChangesAsync();  
 
-                // Agrega los nuevos tickets
+                
                 foreach (TicketRequest ticket in ticketsList)
                 {
                     var ticketEntity = new Ticket
@@ -91,13 +93,13 @@ namespace CineRepository.Repositories.Implementations
                     _context.Tickets.Add(ticketEntity);
                 }
 
-                await _context.SaveChangesAsync();  // Guarda cambios tras la adición
-                await transaction.CommitAsync();    // Confirma la transacción
+                await _context.SaveChangesAsync();  
+                await transaction.CommitAsync();    
                 return true;
             }
             catch (Exception ex)
             {
-                await transaction.RollbackAsync();  // Revierte en caso de error
+                await transaction.RollbackAsync();  
                 Console.WriteLine(ex.Message);
                 return false;
             }
@@ -116,7 +118,7 @@ namespace CineRepository.Repositories.Implementations
                 .ThenInclude(s => s.Screen)
                     .ThenInclude(sc => sc.Cinema)
         .Include(b => b.BookingState)
-        .OrderByDescending(b => b.BookingDate) // Orden descendente por BookingState
+        .OrderByDescending(b => b.BookingDate) 
         .ThenBy(b => b.BookingState)
         .AsNoTracking()
         .ToListAsync();
@@ -147,7 +149,7 @@ namespace CineRepository.Repositories.Implementations
             using var transaction = _context.Database.BeginTransaction();
             try
             {
-                // Crear la reserva de la compra
+                
                 var booking = new Booking
                 {
                     CustomerId = bookingRequest.CustomerId,
@@ -160,40 +162,40 @@ namespace CineRepository.Repositories.Implementations
 
                 foreach (var ticket in ticketRequest)
                 {
-                    // Obtener el screen_id asociado al ShowtimeId del ticket
+                    
                     var showtime = await _context.Showtimes
                         .Where(s => s.ShowtimeId == ticket.ShowtimeId)
                         .FirstOrDefaultAsync();
 
                     if (showtime == null)
                     {
-                        // Si no se encuentra el Showtime, puedes lanzar un error o hacer alguna validación
+                        
                         throw new Exception("Showtime no encontrado.");
                     }
 
-                    // Obtener la capacidad de la sala desde la tabla Screens
+                    
                     var screen = await _context.Screens
                         .Where(s => s.ScreenId == showtime.ScreenId)
                         .FirstOrDefaultAsync();
 
                     if (screen == null)
                     {
-                        // Si no se encuentra la sala, puedes lanzar un error
+                        
                         throw new Exception("Sala no encontrada.");
                     }
 
-                    // Obtener la cantidad de tickets vendidos, incluyendo el ticket que se está intentando agregar
+                    
                     var totalTickets = await _context.Tickets
                         .Where(t => t.ShowtimeId == ticket.ShowtimeId)
                         .CountAsync();
 
-                    // Verificar si la capacidad de la sala se ha superado
+                    
                     if (1 + screen.SeatsTaken > screen.Capacity)
                     {
                         throw new Exception("La capacidad de la sala ha sido superada.");
                     }
 
-                    // Crear el ticket
+                    
                     var ticketEntity = new Ticket
                     {
                         ShowtimeId = ticket.ShowtimeId,
@@ -205,7 +207,7 @@ namespace CineRepository.Repositories.Implementations
 
                     _context.Tickets.Add(ticketEntity);
 
-                    // Actualizar el número de asientos ocupados en la sala (SeatsTaken)
+                    
                     screen.SeatsTaken++;
                     _context.Screens.Update(screen);
                 }
@@ -239,10 +241,10 @@ namespace CineRepository.Repositories.Implementations
                 var screen = screenGroup.Key;
                 var ticketCount = screenGroup.Count();
 
-                // Restamos la cantidad de tickets del seats_taken
+                
                 screen.SeatsTaken -= ticketCount;
 
-                // Aseguramos que seats_taken no sea negativo
+                
                 if (screen.SeatsTaken < 0)
                 {
                     screen.SeatsTaken = 0;
@@ -257,5 +259,50 @@ namespace CineRepository.Repositories.Implementations
         return await _context.SaveChangesAsync() > 0;
 
     }
+    public async Task<string> GetUniqueBookingCountsByGenreAsync(int userId, int genreId)
+    {
+            var lista = new List<int>();
+
+            
+            var totalBookingCount = await _context.Bookings
+                .Where(b => b.CustomerId == userId && b.BookingStateId == 1)
+                .CountAsync();
+
+            
+            var uniqueBookingsCount = await (
+                from b in _context.Bookings
+                join t in _context.Tickets on b.BookingId equals t.BookingId
+                join s in _context.Showtimes on t.ShowtimeId equals s.ShowtimeId
+                join m in _context.Movies on s.MovieId equals m.MovieId
+                where b.BookingStateId == 1 && m.GenreId == genreId && b.CustomerId == userId
+                select b.BookingId
+            ).Distinct().CountAsync();
+
+            switch (totalBookingCount)
+            {
+                case > 4:
+                    lista.AddRange(new[] { 1, 2, 3 });
+                    break;
+                case > 2:
+                    lista.AddRange(new[] { 1, 2 });
+                    break;
+                case > 0:
+                    lista.Add(1);
+                    break;
+            }
+            switch (uniqueBookingsCount)
+            {
+                case > 2:
+                    lista.AddRange(new[] { 4, 5 });
+                    break;
+                case > 1:
+                    lista.AddRange(new[] { 4 });
+                    break;
+            }
+
+            return JsonSerializer.Serialize(lista);
+        }
+
+
     }
-  }
+}

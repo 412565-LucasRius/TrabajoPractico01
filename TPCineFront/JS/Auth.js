@@ -33,37 +33,43 @@ async function login() {
   }
 }
 
-
-async function register() {
-  const name = document.getElementById('name').value;
-  const username = document.getElementById('username').value;
-  const email = document.getElementById('email').value;
-  const password = document.getElementById('password').value;
-  const borndate = document.getElementById('birthdate').value;
-
-  try {
-    const response = await fetch('https://localhost:7276/api/User/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ name, username, email, password, borndate })
-    })
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log('Usuario registrado:', data);
-      alert('Registro exitoso');
-      window.location.href = 'login.html';
-    } else {
-      const errorData = await response.json();
-      alert("Error al registrar el usuario: " + errorData.message || "Error desconocido");
-    }
-  } catch (error) {
-    console.error("Error en el registro:", error.message);
-    alert("Hubo un error al registrar el usuario: " + error.message);
+document.getElementById('registerButton').addEventListener('click', async () => {
+const name = document.getElementById('name').value.trim(); 
+const username = document.getElementById('username').value.trim(); 
+const email = document.getElementById('email').value.trim();    
+const password = document.getElementById('password').value.trim(); 
+let borndate = document.getElementById('birthdate').value.trim();
+borndate = new Date(borndate).toISOString().split('T')[0]; 
+try {
+const requestBody = {
+  name,
+  username,
+  email,
+  password,
+  borndate,
+};
+const response = await fetch('https://localhost:7276/api/User/register', {
+  method: 'POST', 
+  headers: {
+    'Content-Type': 'application/json', 
+  },
+  body: JSON.stringify(requestBody),
+});
+  if (response.ok) {
+    const data = await response.json();
+    console.log('Usuario registrado:', data);
+    alert('Registro exitoso');
+    window.location.href = 'login.html';
+  } else {
+    const errorData = await response.json();
+    alert("Error al registrar el usuario: " + (errorData.message || "Error desconocido"));
   }
+} catch (error) {
+  console.error("Error en el registro:", error.message);
+  alert("Hubo un error al registrar el usuario: " + error.message);
 }
+});
+
 
 async function logout() {
   localStorage.removeItem('JWT-Token')

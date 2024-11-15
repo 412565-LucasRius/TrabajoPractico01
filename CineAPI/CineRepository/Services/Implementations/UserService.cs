@@ -44,7 +44,7 @@ namespace CineRepository.Services.Implementations
 
     public async Task RegisterAsync(RegisterRequestDTO registerRequest)
       {
-      // Validaciones
+      
       if (string.IsNullOrWhiteSpace(registerRequest.Username) || string.IsNullOrWhiteSpace(registerRequest.Password))
         {
         throw new ArgumentException("Username and password are required");
@@ -82,7 +82,7 @@ namespace CineRepository.Services.Implementations
           }
         };
 
-      // Llamar al repositorio para registrar
+      
       await _userRepository.RegisterAsync(newUser);
       }
 

@@ -21,14 +21,14 @@ namespace CineAPI.Controllers
 
         [HttpPost("AchievementUser")]
 
-        public async Task<IActionResult> CreateAchievement([FromBody] UserAchievement userAchievement)
+        public async Task<IActionResult> CreateAchievement([FromBody] UserAchievementPostRequestDTO userAchievement)
         {
             try
             {
 
-                if (!await _achievementsService.UserExistsAsync(Convert.ToInt32(userAchievement.UserAccountId)))
+                if (!await _achievementsService.UserIdExistsAsync(Convert.ToInt32(userAchievement.UserId)))
                 {
-                    return BadRequest($"User with ID {userAchievement.UserAccountId} not found");
+                    return BadRequest($"User with ID {userAchievement.UserId} not found");
                 }
 
                 if (!await _achievementsService.AchievementExistsAsync(Convert.ToInt32(userAchievement.AchievementId)))
@@ -47,24 +47,24 @@ namespace CineAPI.Controllers
 
         [HttpGet("AchievementUser")]
 
-        public async Task<IActionResult> GetByUsernameAsync([FromQuery] string username)
+        public async Task<IActionResult> GetByUsernameAsync([FromQuery] int userId)
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(username))
+                if (userId == 0)
                 {
-                    return BadRequest("Username cannot be empty.");
+                    return BadRequest("User id cannot be empty.");
                 }
 
-                if (!await _achievementsService.ValidateUsernameAsync(username))
+                if (!await _achievementsService.UserIdExistsAsync(userId))
                 {
-                    return NotFound($"User '{username}' not found.");
+                    return NotFound($"User '{userId}' not found.");
                 }
 
-                var achievement = await _achievementsService.GetAchievementByUsurnameAsync(username);
+                var achievement = await _achievementsService.GetAchievementByUserIdAsync(userId);
                 if (achievement == null)
                 {
-                    return NotFound($"No achievements found for user '{username}'.");
+                    return NotFound($"No achievements found for user '{userId}'.");
                 }
 
                 return Ok(achievement);
@@ -73,6 +73,14 @@ namespace CineAPI.Controllers
             {
                 return StatusCode(500, "An internal server error occurred." + ex.Message);
             }
+        }
+
+        [HttpPost("GetAchievementsByIds")]
+        public async Task<IActionResult> GetAchievementsByIds([FromBody] List<int> achievementIds)
+        {
+
+            var achievements = await _achievementsService.GetAchievementsByIdsAsync(achievementIds);
+            return Ok(achievements);
         }
 
     }

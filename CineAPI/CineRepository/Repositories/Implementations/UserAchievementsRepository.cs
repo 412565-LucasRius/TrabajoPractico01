@@ -1,4 +1,5 @@
-﻿using CineRepository.Models.Entities;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 using CineRepository.Repositories.Contracts;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,46 +21,51 @@ namespace CineRepository.Repositories.Implementations
                 _context = context;
         }
 
-        public async Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username)
+        public async Task<IEnumerable<object>> GetAchievementByUserIdAsync(int userId)
         {
             return await _context.UserAchievements
-             .Include(ua => ua.UserAccount)
-             .Include(ua => ua.Achievement)
-             .Where(ua => ua.UserAccount.Username.ToLower() == username.ToLower())
-             .Select(ua => new UserAchievement
-             {
-            UserAchievementId = ua.UserAchievementId,
-            UserAccountId = ua.UserAccountId,
-            AchievementId = ua.AchievementId,
-            AchievedAt = ua.AchievedAt,
-            Achievement = new Achievement
-                 {
-                    AchievementId = ua.Achievement.AchievementId,
-                    Name = ua.Achievement.Name,
-                    Description = ua.Achievement.Description
-                 }
-             }      )
-        .ToListAsync();
+                .Where(ua => ua.UserAccount.UserAccountId == userId)
+                .Select(ua => new
+                {
+                    ua.Achievement.Name,   
+                    ua.Achievement.Points, 
+                    ua.Achievement.Description 
+                })
+                .ToListAsync();
         }
-
-        public async Task<bool> UsernameExistsAsync(string username)
+        public async Task<IEnumerable<object>> GetAchievementsByIdsAsync(List<int> achievementIds)
+        {
+            return await _context.Achievements
+                .Where(a => achievementIds.Contains(a.AchievementId))
+                .Select(a => new
+                {
+                    a.Name,         
+                    a.Points,       
+                    a.Description   
+                })
+                .ToListAsync();
+        }
+        public async Task<bool> UserIdExistsAsync(int userId)
         {
             return await _context.UserAccounts
-                .AnyAsync(u => u.Username.ToLower() == username.ToLower());
+                .AnyAsync(u => u.UserAccountId == userId);
         }
 
-        //create
+       
 
-        public async Task<UserAchievement> CreateAchievementAsync(UserAchievement userAchievement)
+        public async Task<UserAchievement> CreateAchievementAsync(UserAchievementPostRequestDTO userAchievement)
         {
-            await _context.UserAchievements.AddAsync(userAchievement);
+
+            UserAchievement newUserAchievement = new UserAchievement
+            {
+                UserAccountId = userAchievement.UserId,
+                AchievementId = userAchievement.AchievementId,
+                AchievedAt = DateTime.Now
+            };
+
+            await _context.UserAchievements.AddAsync(newUserAchievement);
             await _context.SaveChangesAsync();
-            return userAchievement;
-        }
-
-        public async Task<bool> UserExistsAsync(int userAccountId)
-        {
-            return await _context.UserAccounts.AnyAsync(u => u.UserAccountId == userAccountId);
+            return newUserAchievement;
         }
 
         public async Task<bool> AchievementExistsAsync(int achievementId)

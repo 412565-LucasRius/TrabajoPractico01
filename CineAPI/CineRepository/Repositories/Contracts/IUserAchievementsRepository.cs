@@ -1,4 +1,5 @@
-﻿using CineRepository.Models.Entities;
+﻿using CineRepository.Models.DTO;
+using CineRepository.Models.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +10,11 @@ namespace CineRepository.Repositories.Contracts
 {
     public interface IUserAchievementsRepository
     {
-        Task<IEnumerable<UserAchievement>> GetAchievementByUsurnameAsync(string username);
-        Task<bool> UsernameExistsAsync(string username);
+        Task<IEnumerable<object>> GetAchievementByUserIdAsync(int userId);
+        Task<bool> UserIdExistsAsync(int userId);
 
-        //create
-        Task<UserAchievement> CreateAchievementAsync(UserAchievement userAchievement);
-        Task<bool> UserExistsAsync(int userAccountId);
+        Task<IEnumerable<object>> GetAchievementsByIdsAsync(List<int> achievementIds);
+        Task<UserAchievement> CreateAchievementAsync(UserAchievementPostRequestDTO userAchievement);
         Task<bool> AchievementExistsAsync(int achievementId);
 
     }

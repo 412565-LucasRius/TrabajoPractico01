@@ -1,23 +1,41 @@
 
-document.addEventListener('DOMContentLoaded', initializeAchievements);
+document.addEventListener('DOMContentLoaded', () => {
+    initializeAchievements();
+    CheckUserSession();
+});
 
-// Función principal asíncrona que inicializa y maneja los logros
 async function initializeAchievements() {
     try {
         const userId = localStorage.getItem('userId');
 
-        const response = await fetch(`https://localhost:7276/api/UserAchievements/AchievementUser?userId=${userId}`, {
+        const response = await fetch(`https://localhost:7276/api/Booking/UniqueBookingCounts?userId=${userId}&genreId=2`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
             }
         });
-
         if (!response.ok) {
             throw new Error('No se pudo obtener los datos necesarios de la API');
         }
 
-        const achievements = await response.json();
+        const logros = await response.json();
+        console.log('Logros recibidos:', logros);
+
+        console.log('Logros recibidos:', JSON.stringify(logros) );
+
+        const response2 = await fetch(`https://localhost:7276/api/UserAchievements/GetAchievementsByIds`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(logros)
+        });
+
+        if (!response2.ok) {
+            throw new Error('No se pudo obtener los datos necesarios de la API');
+        }
+
+        const achievements = await response2.json();
         console.log('Logros recibidos:', achievements);
 
         updateCounters(achievements);
@@ -84,4 +102,16 @@ function displayAchievements(achievements) {
 
         container.appendChild(achievementElement);
     });
+}
+
+async function CheckUserSession() {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('JWT-Token');
+
+
+    if (!userId || !token) {
+        window.location.href = 'login.html';
+    } else {
+        document.getElementById("userIconLink").setAttribute('href', 'perfil.html');
+    }
 }
