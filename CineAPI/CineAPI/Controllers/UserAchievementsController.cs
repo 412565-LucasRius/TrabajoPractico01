@@ -17,15 +17,15 @@ namespace CineAPI.Controllers
 
     [HttpPost("AchievementUser")]
 
-    public async Task<IActionResult> CreateAchievement([FromBody] UserAchievementPostRequestDTO userAchievement)
-      {
-      try
+        public async Task<IActionResult> CreateAchievement([FromBody] UserAchievementPostRequestDTO userAchievement)
         {
+            try
+            {
 
-        if (!await _achievementsService.UserIdExistsAsync(Convert.ToInt32(userAchievement.UserId)))
-          {
-          return BadRequest($"User with ID {userAchievement.UserId} not found");
-          }
+                if (!await _achievementsService.UserIdExistsAsync(Convert.ToInt32(userAchievement.UserId)))
+                {
+                    return BadRequest($"User with ID {userAchievement.UserId} not found");
+                }
 
         if (!await _achievementsService.AchievementExistsAsync(Convert.ToInt32(userAchievement.AchievementId)))
           {
@@ -43,33 +43,41 @@ namespace CineAPI.Controllers
 
     [HttpGet("AchievementUser")]
 
-    public async Task<IActionResult> GetByUsernameAsync([FromQuery] int userId)
-      {
-      try
+        public async Task<IActionResult> GetByUsernameAsync([FromQuery] int userId)
         {
-        if (userId == 0)
-          {
-          return BadRequest("User id cannot be empty.");
-          }
+            try
+            {
+                if (userId == 0)
+                {
+                    return BadRequest("User id cannot be empty.");
+                }
 
-        if (!await _achievementsService.UserIdExistsAsync(userId))
-          {
-          return NotFound($"User '{userId}' not found.");
-          }
+                if (!await _achievementsService.UserIdExistsAsync(userId))
+                {
+                    return NotFound($"User '{userId}' not found.");
+                }
 
-        var achievement = await _achievementsService.GetAchievementByUserIdAsync(userId);
-        if (achievement == null)
-          {
-          return NotFound($"No achievements found for user '{userId}'.");
-          }
+                var achievement = await _achievementsService.GetAchievementByUserIdAsync(userId);
+                if (achievement == null)
+                {
+                    return NotFound($"No achievements found for user '{userId}'.");
+                }
 
-        return Ok(achievement);
+                return Ok(achievement);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, "An internal server error occurred." + ex.Message);
+            }
         }
-      catch (Exception ex)
+
+        [HttpPost("GetAchievementsByIds")]
+        public async Task<IActionResult> GetAchievementsByIds([FromBody] List<int> achievementIds)
         {
-        return StatusCode(500, "An internal server error occurred." + ex.Message);
+
+            var achievements = await _achievementsService.GetAchievementsByIdsAsync(achievementIds);
+            return Ok(achievements);
         }
-      }
 
     }
   }

@@ -14,7 +14,6 @@
         <div class="profile-card">
             <div class="profile-sidebar">
                 <div class="profile-avatar">
-                    <!-- La imagen se obtiene desde la API -->
                     <img id="profileImage" src="assets/profile.jpg" alt="Avatar">
                 </div>
                 <div class="user-title">
@@ -31,12 +30,12 @@
 
 
 
-                    <!-- Botón para redirigir a la página de logros -->
+
                     <div class="logros-button">
                         <a href="logros.html"><button>Mis Logros</button></a>
                     </div>
 
-                    <!-- Botones de acción: Editar y Eliminar usuario -->
+                    
                     <div class="profile-actions">
                         <button id="update-button" onclick="openModal()">Editar Usuario</button>
                         <div id="editUsernameModal" class="modal">
@@ -57,7 +56,6 @@
 
             <div class="profile-content">
                 <h2>Mis Reservas</h2>
-                <!-- Tabla para mostrar las reservas -->
                 <table id="reservationsTable">
                     <thead>
                         <tr>
@@ -65,12 +63,11 @@
                             <th>Sala</th>
                             <th>Pelicula</th>
                             <th>Asientos</th>
-                            <th>Estado</th> <!-- Nueva columna -->
+                            <th>Estado</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody id="reservationsList">
-                        <!-- Las reservas se cargarán dinámicamente aquí -->
                     </tbody>
                 </table>
             </div>

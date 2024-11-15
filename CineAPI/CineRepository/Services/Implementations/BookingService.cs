@@ -57,6 +57,9 @@ namespace CineRepository.Services.Implementations
             return await _bookingRepository.UpdateBooking(bookingId, ticketsList);
         }
 
-
+    public async Task<string> GetUniqueBookingCountsByGenreAsync(int userId, int genreId)
+    {
+        return await _bookingRepository.GetUniqueBookingCountsByGenreAsync(userId, genreId);
+    }
     }
   }

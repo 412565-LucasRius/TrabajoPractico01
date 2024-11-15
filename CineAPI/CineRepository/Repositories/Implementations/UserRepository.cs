@@ -87,7 +87,7 @@ namespace CineRepository.Repositories.Implementations
       {
       var emailContact = newUser.Customer.Contacts.FirstOrDefault(c => c.ContactTypeId == 2);
 
-      // Asegúrate de que emailContact no sea nulo
+      
       if (emailContact == null)
         {
         throw new ArgumentException("Email contact is required.");

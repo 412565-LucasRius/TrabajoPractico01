@@ -102,7 +102,7 @@ function loadMovies(movies) {
                 <div class="movie-details">
                 <h3>${movie.title}</h3>
                 <a href="asientos.html?movieId=${movie.movieId}&isUpdate=False">
-                    <button class="btn btn-primary" onclick="${CheckUserSession()}">Reservar</button>                    
+                    <button class="btn btn-primary" onclick="${() => CheckUserSession()}">Reservar</button>                    
                 </a>
             `;
 
@@ -113,7 +113,10 @@ function loadMovies(movies) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', fetchMovies);
+document.addEventListener('DOMContentLoaded', () => {
+    fetchMovies();
+    CheckUserBotton();
+});
 
 
 async function CheckUserSession() {
@@ -125,6 +128,18 @@ async function CheckUserSession() {
         window.location.href = 'login.html';
     } else {
         document.getElementById("userIconLink").setAttribute('href', 'perfil.html');
+    }
+}
+
+async function CheckUserBotton() {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('JWT-Token');
+
+    if (!userId || !token) {
+        document.getElementById("logout-button").textContent = "Iniciar sesión";
+        document.getElementById("profile-button").style.display = "none";
+    } else {
+        document.getElementById("logout-button").textContent = "Cerrar sesión";
     }
 }
 

@@ -28,7 +28,6 @@ document.addEventListener("DOMContentLoaded", async () => {
       document.getElementById('movieProducer').textContent = movieData.producer.company;
       document.getElementById('movieDuration').textContent = movieData.duration;
 
-      // Populate the showtime selector
       const showtimeSelector = document.getElementById('showtimeSelector');
       movieData.showtimes.forEach(showtime => {
         const option = document.createElement('option');

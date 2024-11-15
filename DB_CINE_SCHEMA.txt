@@ -1,0 +1,638 @@
+USE [Cine_1W3_TP]
+GO
+/****** Object:  Table [dbo].[Achievements]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[Achievements](
+	[achievement_id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](100) NOT NULL,
+	[description] [varchar](255) NOT NULL,
+	[points] [int] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[achievement_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[actors]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[actors](
+	[actor_id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](50) NOT NULL,
+	[birth_date] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[actor_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[booking_states]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[booking_states](
+	[booking_state_id] [int] IDENTITY(1,1) NOT NULL,
+	[description] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[booking_state_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[bookings]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[bookings](
+	[booking_id] [int] IDENTITY(1,1) NOT NULL,
+	[customer_id] [int] NULL,
+	[booking_date] [date] NULL,
+	[booking_state_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[booking_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[cinemas]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[cinemas](
+	[cinema_id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](50) NOT NULL,
+	[location] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[cinema_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[clasification]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[clasification](
+	[clasification_id] [int] IDENTITY(1,1) NOT NULL,
+	[description] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[clasification_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[contact_type]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[contact_type](
+	[contact_type_id] [int] IDENTITY(1,1) NOT NULL,
+	[description] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[contact_type_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[contacts]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[contacts](
+	[contact_id] [int] IDENTITY(1,1) NOT NULL,
+	[customer_id] [int] NULL,
+	[contact_type_id] [int] NULL,
+	[contact] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[contact_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[customers]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[customers](
+	[customer_id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](50) NOT NULL,
+	[born_date] [date] NULL,
+	[retired] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[customer_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[directors]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[directors](
+	[director_id] [int] IDENTITY(1,1) NOT NULL,
+	[name] [varchar](50) NOT NULL,
+	[birth_date] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[director_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[genres]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[genres](
+	[genre_id] [int] IDENTITY(1,1) NOT NULL,
+	[description] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[genre_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[movie_cast]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[movie_cast](
+	[movie_cast_id] [int] IDENTITY(1,1) NOT NULL,
+	[movie_id] [int] NULL,
+	[actor_id] [int] NULL,
+	[role] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[movie_cast_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[movie_directors]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[movie_directors](
+	[movie_director_id] [int] IDENTITY(1,1) NOT NULL,
+	[movie_id] [int] NULL,
+	[director_id] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[movie_director_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[movies]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[movies](
+	[movie_id] [int] IDENTITY(1,1) NOT NULL,
+	[title] [varchar](50) NOT NULL,
+	[release_date] [date] NULL,
+	[producer_id] [int] NULL,
+	[genre_id] [int] NULL,
+	[clasification_id] [int] NULL,
+	[duration] [int] NULL,
+	[image_name] [varchar](50) NULL,
+	[last_release_date] [date] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[movie_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[payment_methods]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[payment_methods](
+	[payment_method_id] [int] IDENTITY(1,1) NOT NULL,
+	[method_name] [varchar](50) NOT NULL,
+	[recharge] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[payment_method_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[payment_methods_booking]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[payment_methods_booking](
+	[id_payment_methods_booking] [int] IDENTITY(1,1) NOT NULL,
+	[payment_method_id] [int] NULL,
+	[booking_id] [int] NULL,
+	[price] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[id_payment_methods_booking] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[producers]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[producers](
+	[producer_id] [int] IDENTITY(1,1) NOT NULL,
+	[company] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[producer_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[reviews]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[reviews](
+	[review_id] [int] IDENTITY(1,1) NOT NULL,
+	[movie_id] [int] NULL,
+	[user_account_id] [int] NULL,
+	[rating] [int] NULL,
+	[comment] [varchar](150) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[review_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[screens]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[screens](
+	[screen_id] [int] IDENTITY(1,1) NOT NULL,
+	[cinema_id] [int] NULL,
+	[screen_type] [int] NULL,
+	[capacity] [int] NULL,
+	[seats_taken] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[screen_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[screens_types]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[screens_types](
+	[screen_type_id] [int] IDENTITY(1,1) NOT NULL,
+	[description] [varchar](50) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[screen_type_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[showtimes]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[showtimes](
+	[showtime_id] [int] IDENTITY(1,1) NOT NULL,
+	[movie_id] [int] NULL,
+	[screen_id] [int] NULL,
+	[start_date] [date] NULL,
+	[end_date] [date] NULL,
+	[movie_time] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[showtime_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[tickets]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[tickets](
+	[ticket_id] [int] IDENTITY(1,1) NOT NULL,
+	[showtime_id] [int] NULL,
+	[booking_id] [int] NULL,
+	[seat_number] [varchar](50) NULL,
+	[sale_date] [date] NULL,
+	[price] [decimal](10, 2) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ticket_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[user_accounts]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[user_accounts](
+	[user_account_id] [int] IDENTITY(1,1) NOT NULL,
+	[customer_id] [int] NULL,
+	[username] [varchar](50) NOT NULL,
+	[password_hash] [varchar](255) NOT NULL,
+	[created_at] [date] NULL,
+	[last_login] [date] NULL,
+	[is_active] [bit] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[user_account_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY],
+UNIQUE NONCLUSTERED 
+(
+	[username] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User_achievements]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User_achievements](
+	[user_achievement_id] [int] IDENTITY(1,1) NOT NULL,
+	[user_account_id] [int] NULL,
+	[achievement_id] [int] NULL,
+	[achieved_at] [datetime] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[user_achievement_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User_Genre_Stats]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User_Genre_Stats](
+	[user_account_id] [int] NOT NULL,
+	[genre_id] [int] NOT NULL,
+	[view_count] [int] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[user_account_id] ASC,
+	[genre_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+/****** Object:  Table [dbo].[User_Movie_History]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[User_Movie_History](
+	[history_id] [int] IDENTITY(1,1) NOT NULL,
+	[user_account_id] [int] NULL,
+	[movie_id] [int] NULL,
+	[viewed_date] [datetime] NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[history_id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[user_accounts] ADD  DEFAULT ((1)) FOR [is_active]
+GO
+ALTER TABLE [dbo].[User_achievements] ADD  DEFAULT (getdate()) FOR [achieved_at]
+GO
+ALTER TABLE [dbo].[User_Genre_Stats] ADD  DEFAULT ((0)) FOR [view_count]
+GO
+ALTER TABLE [dbo].[bookings]  WITH CHECK ADD  CONSTRAINT [FK_booking_b_state] FOREIGN KEY([booking_state_id])
+REFERENCES [dbo].[booking_states] ([booking_state_id])
+GO
+ALTER TABLE [dbo].[bookings] CHECK CONSTRAINT [FK_booking_b_state]
+GO
+ALTER TABLE [dbo].[bookings]  WITH CHECK ADD  CONSTRAINT [FK_booking_customer] FOREIGN KEY([customer_id])
+REFERENCES [dbo].[customers] ([customer_id])
+GO
+ALTER TABLE [dbo].[bookings] CHECK CONSTRAINT [FK_booking_customer]
+GO
+ALTER TABLE [dbo].[contacts]  WITH CHECK ADD  CONSTRAINT [FK_contact_contact_type] FOREIGN KEY([contact_type_id])
+REFERENCES [dbo].[contact_type] ([contact_type_id])
+GO
+ALTER TABLE [dbo].[contacts] CHECK CONSTRAINT [FK_contact_contact_type]
+GO
+ALTER TABLE [dbo].[contacts]  WITH CHECK ADD  CONSTRAINT [FK_contact_customer] FOREIGN KEY([customer_id])
+REFERENCES [dbo].[customers] ([customer_id])
+GO
+ALTER TABLE [dbo].[contacts] CHECK CONSTRAINT [FK_contact_customer]
+GO
+ALTER TABLE [dbo].[movie_cast]  WITH CHECK ADD  CONSTRAINT [FK_cast_actor] FOREIGN KEY([actor_id])
+REFERENCES [dbo].[actors] ([actor_id])
+GO
+ALTER TABLE [dbo].[movie_cast] CHECK CONSTRAINT [FK_cast_actor]
+GO
+ALTER TABLE [dbo].[movie_cast]  WITH CHECK ADD  CONSTRAINT [FK_cast_movie] FOREIGN KEY([movie_id])
+REFERENCES [dbo].[movies] ([movie_id])
+GO
+ALTER TABLE [dbo].[movie_cast] CHECK CONSTRAINT [FK_cast_movie]
+GO
+ALTER TABLE [dbo].[movie_directors]  WITH CHECK ADD  CONSTRAINT [FK_movie_director_director] FOREIGN KEY([director_id])
+REFERENCES [dbo].[directors] ([director_id])
+GO
+ALTER TABLE [dbo].[movie_directors] CHECK CONSTRAINT [FK_movie_director_director]
+GO
+ALTER TABLE [dbo].[movie_directors]  WITH CHECK ADD  CONSTRAINT [FK_movie_director_movie] FOREIGN KEY([movie_id])
+REFERENCES [dbo].[movies] ([movie_id])
+GO
+ALTER TABLE [dbo].[movie_directors] CHECK CONSTRAINT [FK_movie_director_movie]
+GO
+ALTER TABLE [dbo].[movies]  WITH CHECK ADD  CONSTRAINT [FK_movie_clasification] FOREIGN KEY([clasification_id])
+REFERENCES [dbo].[clasification] ([clasification_id])
+GO
+ALTER TABLE [dbo].[movies] CHECK CONSTRAINT [FK_movie_clasification]
+GO
+ALTER TABLE [dbo].[movies]  WITH CHECK ADD  CONSTRAINT [FK_movie_genre] FOREIGN KEY([genre_id])
+REFERENCES [dbo].[genres] ([genre_id])
+GO
+ALTER TABLE [dbo].[movies] CHECK CONSTRAINT [FK_movie_genre]
+GO
+ALTER TABLE [dbo].[movies]  WITH CHECK ADD  CONSTRAINT [FK_movies_producers] FOREIGN KEY([producer_id])
+REFERENCES [dbo].[producers] ([producer_id])
+GO
+ALTER TABLE [dbo].[movies] CHECK CONSTRAINT [FK_movies_producers]
+GO
+ALTER TABLE [dbo].[payment_methods_booking]  WITH CHECK ADD  CONSTRAINT [FK_p_method_booking_p_method] FOREIGN KEY([payment_method_id])
+REFERENCES [dbo].[payment_methods] ([payment_method_id])
+GO
+ALTER TABLE [dbo].[payment_methods_booking] CHECK CONSTRAINT [FK_p_method_booking_p_method]
+GO
+ALTER TABLE [dbo].[payment_methods_booking]  WITH CHECK ADD  CONSTRAINT [FK_payment_method_X_booking] FOREIGN KEY([booking_id])
+REFERENCES [dbo].[bookings] ([booking_id])
+GO
+ALTER TABLE [dbo].[payment_methods_booking] CHECK CONSTRAINT [FK_payment_method_X_booking]
+GO
+ALTER TABLE [dbo].[reviews]  WITH CHECK ADD  CONSTRAINT [FK_review_customer] FOREIGN KEY([user_account_id])
+REFERENCES [dbo].[user_accounts] ([user_account_id])
+GO
+ALTER TABLE [dbo].[reviews] CHECK CONSTRAINT [FK_review_customer]
+GO
+ALTER TABLE [dbo].[reviews]  WITH CHECK ADD  CONSTRAINT [FK_review_movie] FOREIGN KEY([movie_id])
+REFERENCES [dbo].[movies] ([movie_id])
+GO
+ALTER TABLE [dbo].[reviews] CHECK CONSTRAINT [FK_review_movie]
+GO
+ALTER TABLE [dbo].[screens]  WITH CHECK ADD  CONSTRAINT [FK_screen_cinema] FOREIGN KEY([cinema_id])
+REFERENCES [dbo].[cinemas] ([cinema_id])
+GO
+ALTER TABLE [dbo].[screens] CHECK CONSTRAINT [FK_screen_cinema]
+GO
+ALTER TABLE [dbo].[screens]  WITH CHECK ADD  CONSTRAINT [FK_screen_type_screen] FOREIGN KEY([screen_type])
+REFERENCES [dbo].[screens_types] ([screen_type_id])
+GO
+ALTER TABLE [dbo].[screens] CHECK CONSTRAINT [FK_screen_type_screen]
+GO
+ALTER TABLE [dbo].[showtimes]  WITH CHECK ADD  CONSTRAINT [FK_showtime_movie] FOREIGN KEY([movie_id])
+REFERENCES [dbo].[movies] ([movie_id])
+GO
+ALTER TABLE [dbo].[showtimes] CHECK CONSTRAINT [FK_showtime_movie]
+GO
+ALTER TABLE [dbo].[showtimes]  WITH CHECK ADD  CONSTRAINT [FK_showtime_screen] FOREIGN KEY([screen_id])
+REFERENCES [dbo].[screens] ([screen_id])
+GO
+ALTER TABLE [dbo].[showtimes] CHECK CONSTRAINT [FK_showtime_screen]
+GO
+ALTER TABLE [dbo].[tickets]  WITH CHECK ADD  CONSTRAINT [FK_ticket_booking] FOREIGN KEY([booking_id])
+REFERENCES [dbo].[bookings] ([booking_id])
+GO
+ALTER TABLE [dbo].[tickets] CHECK CONSTRAINT [FK_ticket_booking]
+GO
+ALTER TABLE [dbo].[tickets]  WITH CHECK ADD  CONSTRAINT [FK_ticket_showtime] FOREIGN KEY([showtime_id])
+REFERENCES [dbo].[showtimes] ([showtime_id])
+GO
+ALTER TABLE [dbo].[tickets] CHECK CONSTRAINT [FK_ticket_showtime]
+GO
+ALTER TABLE [dbo].[user_accounts]  WITH CHECK ADD  CONSTRAINT [FK_user_account_customer] FOREIGN KEY([customer_id])
+REFERENCES [dbo].[customers] ([customer_id])
+GO
+ALTER TABLE [dbo].[user_accounts] CHECK CONSTRAINT [FK_user_account_customer]
+GO
+ALTER TABLE [dbo].[User_achievements]  WITH CHECK ADD  CONSTRAINT [FK_Achievements_User_Achievements] FOREIGN KEY([achievement_id])
+REFERENCES [dbo].[Achievements] ([achievement_id])
+GO
+ALTER TABLE [dbo].[User_achievements] CHECK CONSTRAINT [FK_Achievements_User_Achievements]
+GO
+ALTER TABLE [dbo].[User_achievements]  WITH CHECK ADD  CONSTRAINT [FK_User_Account_User_Achievements] FOREIGN KEY([user_account_id])
+REFERENCES [dbo].[user_accounts] ([user_account_id])
+GO
+ALTER TABLE [dbo].[User_achievements] CHECK CONSTRAINT [FK_User_Account_User_Achievements]
+GO
+ALTER TABLE [dbo].[User_Genre_Stats]  WITH CHECK ADD  CONSTRAINT [FK_User_Stats_Genre] FOREIGN KEY([genre_id])
+REFERENCES [dbo].[genres] ([genre_id])
+GO
+ALTER TABLE [dbo].[User_Genre_Stats] CHECK CONSTRAINT [FK_User_Stats_Genre]
+GO
+ALTER TABLE [dbo].[User_Genre_Stats]  WITH CHECK ADD  CONSTRAINT [FK_User_Stats_User] FOREIGN KEY([user_account_id])
+REFERENCES [dbo].[user_accounts] ([user_account_id])
+GO
+ALTER TABLE [dbo].[User_Genre_Stats] CHECK CONSTRAINT [FK_User_Stats_User]
+GO
+ALTER TABLE [dbo].[User_Movie_History]  WITH CHECK ADD  CONSTRAINT [FK_Movies_User_History] FOREIGN KEY([movie_id])
+REFERENCES [dbo].[movies] ([movie_id])
+GO
+ALTER TABLE [dbo].[User_Movie_History] CHECK CONSTRAINT [FK_Movies_User_History]
+GO
+ALTER TABLE [dbo].[User_Movie_History]  WITH CHECK ADD  CONSTRAINT [FK_User_Account_User_History] FOREIGN KEY([user_account_id])
+REFERENCES [dbo].[user_accounts] ([user_account_id])
+GO
+ALTER TABLE [dbo].[User_Movie_History] CHECK CONSTRAINT [FK_User_Account_User_History]
+GO
+/****** Object:  StoredProcedure [dbo].[GetBookingByUserAccountId]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE PROCEDURE [dbo].[GetBookingByUserAccountId]
+@UserAccountId INT
+AS
+BEGIN
+SELECT 
+	b.booking_id,
+    b.customer_id, 
+    b.booking_date, 
+    b.booking_state_id
+FROM 
+    bookings b
+INNER JOIN 
+    customers c ON b.customer_id = c.customer_id
+INNER JOIN 
+    user_accounts u ON c.customer_id = u.customer_id
+WHERE 
+    u.user_account_id = @UserAccountId;
+END;
+GO
+/****** Object:  StoredProcedure [dbo].[SP_GET_USER_EMAIL]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create PROCEDURE [dbo].[SP_GET_USER_EMAIL]
+	@UserAccountId INT
+AS
+BEGIN
+	SELECT CO.contact AS Email
+    FROM user_accounts UA
+    JOIN customers CU ON CU.customer_id = UA.customer_id
+    JOIN contacts CO ON CO.customer_id = CU.customer_id
+    JOIN contact_type CT ON CT.contact_type_id = CO.contact_type_id
+    WHERE UA.user_account_id = @UserAccountId
+      AND CT.contact_type_id = 2; -- Tipo "Email"
+END
+GO
+/****** Object:  StoredProcedure [dbo].[SP_REGISTER_USER]    Script Date: 11/15/2024 11:40:37 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+create PROCEDURE [dbo].[SP_REGISTER_USER]
+    @Username NVARCHAR(50),
+    @PasswordHash NVARCHAR(255),
+    @CustomerName NVARCHAR(100),
+    @BornDate DATE,
+    @Retired BIT,
+    @Email NVARCHAR(255)
+AS
+BEGIN
+    DECLARE @NewCustomerId INT;
+    
+    -- Inserta el nuevo cliente y obtiene el ID
+    INSERT INTO customers (name, born_date, Retired)
+    VALUES (@CustomerName, @BornDate, @Retired);
+
+    SET @NewCustomerId = SCOPE_IDENTITY();
+
+    -- Inserta el nuevo usuario
+    INSERT INTO user_accounts (Username, password_hash, customer_id, created_at)
+    VALUES (@Username, @PasswordHash, @NewCustomerId, GETDATE());
+
+    -- Inserta el contacto asociado (email)
+    INSERT INTO contacts (customer_id, contact_type_id, contact)
+    VALUES (@NewCustomerId, 2, @Email); -- 2 es el ID para "Email"
+END
+GO

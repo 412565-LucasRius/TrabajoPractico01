@@ -10,7 +10,7 @@ namespace CineRepository.Repositories.Contracts
     public interface ICinemaRepository
     {
 
-        Task<IEnumerable<Cinema>> GetAllCinemasAsync(); // Trae todos los cines.
+        Task<IEnumerable<Cinema>> GetAllCinemasAsync(); 
 
 
 

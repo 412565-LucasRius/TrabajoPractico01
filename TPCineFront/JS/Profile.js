@@ -31,12 +31,12 @@ async function LoadUserProfile() {
 window.addEventListener("DOMContentLoaded", LoadUserProfile)
 window.addEventListener("DOMContentLoaded", FetchUserBookings)
 
-// Función para abrir el modal
+
 function openModal() {
   document.getElementById('editUsernameModal').style.display = 'block';
 }
 
-// Función para cerrar el modal
+
 function closeModal() {
   document.getElementById('editUsernameModal').style.display = 'none';
 }
@@ -96,7 +96,7 @@ async function SetUserAsInactive() {
   const userId = localStorage.getItem("userId");
   const token = localStorage.getItem("JWT-Token");
 
-  // Solicita confirmación antes de proceder
+
   const confirmDelete = confirm("¿Seguro que deseas eliminar el usuario?");
   if (!confirmDelete) return;
 
@@ -111,7 +111,6 @@ async function SetUserAsInactive() {
 
     if (response.ok) {
       alert("Usuario desactivado con éxito.");
-      // Opcionalmente redirige al usuario o realiza otra acción después de la desactivación
       window.location.href = 'login.html';
     } else {
       const errorMessage = await response.text();
@@ -148,13 +147,13 @@ async function FetchUserBookings() {
       console.log(bookings);
 
       const reservationsList = document.getElementById("reservationsList");
-      reservationsList.innerHTML = ""; // Limpiar la lista actual
+      reservationsList.innerHTML = ""; 
 
-      // Recorremos las reservas y creamos el HTML dinámicamente
+      
       bookings.forEach(booking => {
         const bookingElement = document.createElement("tr");
 
-        // Crear el contenido de la reserva
+        
         const bookingDetails = `
           <td>${new Date(booking.bookingDate).toLocaleDateString()}</td>
           <td>${booking.tickets[0].showtime.screenId}</td>
@@ -180,21 +179,21 @@ async function FetchUserBookings() {
 
 async function deleteReservation(bookingId) {
   try {
-    // Confirmar con el usuario
+    
     const userConfirmed = confirm('¿Estás seguro de que deseas eliminar esta reserva?');
     if (!userConfirmed) return;
 
     const state = 3;
     console.log(`Eliminando reserva con ID: ${bookingId}, state: ${state}`);
 
-    // Realizar la solicitud PUT
+    
     const response = await fetch(`https://localhost:7276/api/Booking/DeleteBooking/${bookingId}/${state}`, {
       method: 'PUT'
     });
 
-    // Verificar si la respuesta fue exitosa
+    
     if (response.ok) {
-      // Verificar si hay contenido en la respuesta
+      
       const contentType = response.headers.get("content-type");
       if (contentType && contentType.includes("application/json")) {
         const responseData = await response.json();
@@ -203,9 +202,9 @@ async function deleteReservation(bookingId) {
         alert("Reserva eliminada correctamente.");
       }
       
-      await FetchUserBookings(); // Actualizar la lista de reservas
+      await FetchUserBookings(); 
     } else {
-      // Manejar error de la respuesta
+      
       try {
         const errorData = await response.json();
         throw new Error(errorData.message || 'Error al eliminar la reserva');
@@ -220,7 +219,7 @@ async function deleteReservation(bookingId) {
   }
 }
 
-// Función para actualizar una reserva (ejemplo de acción)
+
 async function updateReservation(bookingId) {
   const token = localStorage.getItem("JWT-Token");
   const userId = localStorage.getItem("userId");
@@ -237,16 +236,16 @@ async function updateReservation(bookingId) {
       const bookings = await response.json();
       console.log("Bookings:", bookings);
       console.log(bookingId);
-      // Encontrar la reserva específica
+      
       const booking = bookings.find(b => b.bookingId === bookingId);
       console.log(booking);
       if (booking) {
-        // Obtener el ID de la película de la reserva actual
+        
         const movieId = booking.tickets[0].showtime.movie.movieId;
         console.log("MovieId:", movieId);
         
         
-        // Redirigir a la página de selección de asientos con los parámetros necesarios
+        
         window.location.href = `asientos.html?movieId=${movieId}&bookingId=${bookingId}&isUpdate=True`;
       } else {
         throw new Error('No se encontró la reserva especificada');
@@ -260,6 +259,6 @@ async function updateReservation(bookingId) {
   }
 }
 
-// Llamamos a las funciones cuando el DOM esté completamente cargado
+
 window.addEventListener("DOMContentLoaded", LoadUserProfile);
 window.addEventListener("DOMContentLoaded", FetchUserBookings);

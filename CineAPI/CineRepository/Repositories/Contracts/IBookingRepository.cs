@@ -19,5 +19,7 @@ namespace CineRepository.Repositories.Contracts
     Task<bool> SaveBooking(BookingRequest bookingRequest, List<TicketRequest> ticketRequest);
 
    Task<bool> UpdateBookingState(int id, int state);
+
+   Task<string> GetUniqueBookingCountsByGenreAsync(int userId, int genreId);
     }
   }
