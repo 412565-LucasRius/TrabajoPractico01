@@ -1,14 +1,7 @@
 ﻿using CineRepository.Models.DTO;
 using CineRepository.Models.Entities;
 using CineRepository.Repositories.Contracts;
-using CineRepository.Repositories.Implementations;
 using CineRepository.Services.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace CineRepository.Services.Implementations

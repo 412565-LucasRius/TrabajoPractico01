@@ -69,6 +69,9 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IUserGenreStatRepository, UserGenreStatRepository>();
 builder.Services.AddScoped<IUserGenreStatService, UserGenreStatService>();
 
+builder.Services.AddScoped<IAchievementsRepository, AchievementsRepository>();
+builder.Services.AddScoped<IAchievementsService, AchievementsService>();
+
 
 var app = builder.Build();
 
